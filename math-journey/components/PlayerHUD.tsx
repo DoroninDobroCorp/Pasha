@@ -12,6 +12,14 @@ const LEVEL_NAMES = {
   4: "Hero",
 };
 
+// Hero skins based on level (changes at each third of progress)
+const HERO_SKINS = {
+  1: "/images/hero.jpg",
+  2: "/images/hero2.jpg",
+  3: "/images/hero3.jpg",
+  4: "/images/hero4.jpg",
+};
+
 export default function PlayerHUD() {
   const [stats, setStats] = useState<PlayerStats | null>(null);
 
@@ -26,6 +34,8 @@ export default function PlayerHUD() {
     LEVEL_NAMES[stats.level as keyof typeof LEVEL_NAMES] || "Beginner";
   const nextLevelName =
     LEVEL_NAMES[(stats.level + 1) as keyof typeof LEVEL_NAMES] || "Hero";
+  const heroSkin =
+    HERO_SKINS[stats.level as keyof typeof HERO_SKINS] || "/images/hero.jpg";
 
   return (
     <div className="fixed top-4 right-4 z-50 space-y-3">
@@ -33,7 +43,7 @@ export default function PlayerHUD() {
       <div className="flex items-center gap-3 bg-black/60 backdrop-blur-sm border-2 border-cyan-500/50 rounded-lg p-3">
         <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-cyan-400 shadow-lg">
           <Image
-            src="/images/hero.jpg"
+            src={heroSkin}
             alt="Hero"
             fill
             className="object-cover"
