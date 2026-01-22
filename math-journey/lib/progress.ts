@@ -3,6 +3,7 @@ import { topics } from "@/data/topics";
 
 const STORAGE_KEY = "math_journey_progress";
 const STATS_KEY = "math_journey_stats";
+const STREAK_KEY = "math_journey_streak";
 
 // Calculate total subtopics across all topics
 const TOTAL_SUBTOPICS = topics.reduce(
@@ -10,6 +11,13 @@ const TOTAL_SUBTOPICS = topics.reduce(
   0,
 );
 const MAX_STARS = TOTAL_SUBTOPICS * 3; // 3 stars per subtopic = 90 stars
+
+interface StreakData {
+  currentStreak: number;
+  lastPracticeDate: string; // ISO date string
+  problemsToday: number;
+  dailyHistory: { [date: string]: number }; // date -> problems solved
+}
 
 export function getProgress(): UserProgress[] {
   if (typeof window === "undefined") return [];
@@ -27,7 +35,9 @@ export function getPlayerStats(): PlayerStats {
     return { level: 1, totalStars: 0, maxStars: MAX_STARS, streak: 0 };
   }
   const stored = localStorage.getItem(STATS_KEY);
-  return stored
+  const streakData = getStreakData();
+  
+  const baseStats = stored
     ? JSON.parse(stored)
     : {
         level: 1,
@@ -35,6 +45,11 @@ export function getPlayerStats(): PlayerStats {
         maxStars: MAX_STARS,
         streak: 0,
       };
+  
+  // Update streak from streak data
+  baseStats.streak = streakData.currentStreak;
+  
+  return baseStats;
 }
 
 export function savePlayerStats(stats: PlayerStats): void {
@@ -138,7 +153,94 @@ export function updatePlayerStats(): void {
   stats.totalStars = totalStars;
   stats.maxStars = MAX_STARS;
   stats.level = calculateLevel(totalStars);
+  // Don't update streak here - it's managed separately
   savePlayerStats(stats);
+}
+
+// Streak management functions
+export function getStreakData(): StreakData {
+  if (typeof window === "undefined") {
+    return {
+      currentStreak: 0,
+      lastPracticeDate: "",
+      problemsToday: 0,
+      dailyHistory: {},
+    };
+  }
+  
+  const stored = localStorage.getItem(STREAK_KEY);
+  return stored
+    ? JSON.parse(stored)
+    : {
+        currentStreak: 0,
+        lastPracticeDate: "",
+        problemsToday: 0,
+        dailyHistory: {},
+      };
+}
+
+function saveStreakData(data: StreakData): void {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(STREAK_KEY, JSON.stringify(data));
+}
+
+function getTodayDateString(): string {
+  const today = new Date();
+  return today.toISOString().split('T')[0]; // YYYY-MM-DD
+}
+
+function getYesterdayDateString(): string {
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  return yesterday.toISOString().split('T')[0];
+}
+
+export function recordProblemSolved(): void {
+  const streakData = getStreakData();
+  const today = getTodayDateString();
+  const yesterday = getYesterdayDateString();
+  
+  // Check if this is a new day
+  if (streakData.lastPracticeDate !== today) {
+    // New day - check if streak continues
+    if (streakData.lastPracticeDate === yesterday) {
+      // Practiced yesterday, continue streak
+      streakData.currentStreak += 1;
+    } else if (streakData.lastPracticeDate === "") {
+      // First time practicing
+      streakData.currentStreak = 1;
+    } else {
+      // Streak broken, start over
+      streakData.currentStreak = 1;
+    }
+    
+    // Reset today's counter
+    streakData.problemsToday = 1;
+    streakData.lastPracticeDate = today;
+  } else {
+    // Same day, increment counter
+    streakData.problemsToday += 1;
+  }
+  
+  // Update daily history
+  streakData.dailyHistory[today] = streakData.problemsToday;
+  
+  saveStreakData(streakData);
+}
+
+export function getProblemsToday(): number {
+  const streakData = getStreakData();
+  const today = getTodayDateString();
+  
+  if (streakData.lastPracticeDate === today) {
+    return streakData.problemsToday;
+  }
+  return 0;
+}
+
+export function getDailyHistory(): { [date: string]: number } {
+  const streakData = getStreakData();
+  return streakData.dailyHistory;
 }
 
 export { MAX_STARS };

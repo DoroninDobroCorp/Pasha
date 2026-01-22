@@ -5,6 +5,7 @@ import { getPlayerStats, starsForNextLevel } from "@/lib/progress";
 import { PlayerStats } from "@/types";
 import Image from "next/image";
 import HeroModal from "./HeroModal";
+import StreakModal from "./StreakModal";
 
 const LEVEL_NAMES = {
   1: "Beginner",
@@ -24,6 +25,7 @@ const HERO_SKINS = {
 export default function PlayerHUD() {
   const [stats, setStats] = useState<PlayerStats | null>(null);
   const [showHeroModal, setShowHeroModal] = useState(false);
+  const [showStreakModal, setShowStreakModal] = useState(false);
 
   useEffect(() => {
     setStats(getPlayerStats());
@@ -89,12 +91,16 @@ export default function PlayerHUD() {
       </div>
 
       {/* Stats */}
-      <div className="bg-black/60 backdrop-blur-sm border-2 border-yellow-500/50 rounded-lg p-4 space-y-2">
+      <button
+        onClick={() => setShowStreakModal(true)}
+        className="bg-black/60 backdrop-blur-sm border-2 border-yellow-500/50 rounded-lg p-4 space-y-2 hover:border-yellow-400 hover:bg-black/70 transition-all cursor-pointer w-full"
+      >
         <div className="flex items-center justify-between">
           <span className="text-gray-300 text-sm">Streak</span>
           <span className="text-orange-400 font-bold">{stats.streak} 🔥</span>
         </div>
-      </div>
+        <p className="text-xs text-gray-400 text-center">Click for details</p>
+      </button>
     </div>
 
     {/* Hero Modal */}
@@ -102,6 +108,13 @@ export default function PlayerHUD() {
       <HeroModal
         currentLevel={stats.level}
         onClose={() => setShowHeroModal(false)}
+      />
+    )}
+    
+    {/* Streak Modal */}
+    {showStreakModal && (
+      <StreakModal
+        onClose={() => setShowStreakModal(false)}
       />
     )}
   </>

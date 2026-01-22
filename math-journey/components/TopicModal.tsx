@@ -5,8 +5,9 @@ import { Topic } from "@/types";
 import { getRandomProblems, Problem as SavedProblem } from "@/data/problems";
 import {
   getProgress,
-  updateSubtopicStars,
   getSubtopicStars,
+  recordProblemSolved,
+  getProblemsToday,
 } from "@/lib/progress";
 
 interface Problem {
@@ -116,39 +117,22 @@ export default function TopicModal({ topic, onClose }: TopicModalProps) {
     const correct =
       userAnswer.toLowerCase().trim() ===
       currentProblem.answer.toString().toLowerCase().trim();
-    const currentSubtopic = topic.subtopics[currentSubtopicIndex];
-    const currentStars = subtopicStars[currentSubtopic] || 0;
 
     if (correct) {
-      const newProblemsInSubtopic = problemsInSubtopic + 1;
-      setProblemsInSubtopic(newProblemsInSubtopic);
-
-      // Complete subtopic after 3 correct problems
-      if (newProblemsInSubtopic >= 3 && currentStars < 3) {
-        // Award 3 stars for completing
-        updateSubtopicStars(topic.id, currentSubtopic, 3);
-        setSubtopicStars((prev) => ({ ...prev, [currentSubtopic]: 3 }));
-
-        setFeedback({
-          correct: true,
-          message: `🎉 Subtopic completed! You earned 3⭐ for "${currentSubtopic}"!`,
-        });
-        setProblemsInSubtopic(0);
-      } else if (currentStars === 3) {
-        setFeedback({
-          correct: true,
-          message: "✓ Correct! You already have 3⭐ for this subtopic.",
-        });
-      } else {
-        setFeedback({
-          correct: true,
-          message: `✓ Correct! ${3 - newProblemsInSubtopic} more to earn 3⭐`,
-        });
-      }
+      // Record problem solved for streak tracking
+      recordProblemSolved();
+      
+      const problemsToday = getProblemsToday();
+      
+      setFeedback({
+        correct: true,
+        message: `✓ Correct! Problems solved today: ${problemsToday}`,
+      });
     } else {
+      // Wrong answer - allow retry, don't show solution yet
       setFeedback({
         correct: false,
-        message: `✗ Not quite. ${currentProblem.explanation}`,
+        message: `✗ Not quite. Try again!`,
       });
     }
   };
@@ -336,13 +320,37 @@ export default function TopicModal({ topic, onClose }: TopicModalProps) {
                     )}
                   </>
                 )}
-                {feedback && (
+                {feedback && feedback.correct && (
                   <button
                     onClick={startPractice}
                     className="flex-1 py-2 bg-purple-500 hover:bg-purple-600 text-white font-bold rounded-lg transition-colors"
                   >
                     Next Problem
                   </button>
+                )}
+                {feedback && !feedback.correct && (
+                  <>
+                    <button
+                      onClick={() => {
+                        setFeedback(null);
+                        setUserAnswer("");
+                      }}
+                      className="flex-1 py-2 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-lg transition-colors"
+                    >
+                      Try Again
+                    </button>
+                    <button
+                      onClick={() => {
+                        setFeedback({
+                          correct: false,
+                          message: `Solution: ${currentProblem.explanation}`,
+                        });
+                      }}
+                      className="px-4 py-2 bg-yellow-500/20 hover:bg-yellow-500/30 border border-yellow-500/50 text-yellow-400 font-bold rounded-lg transition-colors"
+                    >
+                      Show Solution
+                    </button>
+                  </>
                 )}
               </div>
 
