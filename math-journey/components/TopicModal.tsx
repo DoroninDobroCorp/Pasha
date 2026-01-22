@@ -272,9 +272,12 @@ export default function TopicModal({ topic, onClose }: TopicModalProps) {
                 </span>
               </div>
 
-              <p className="text-white text-lg mb-4">
-                {currentProblem.question}
-              </p>
+              {/* Question text - made more prominent */}
+              <div className="bg-white/10 border-2 border-white/20 rounded-lg p-4 mb-4">
+                <p className="text-white text-xl font-semibold leading-relaxed">
+                  {currentProblem.question}
+                </p>
+              </div>
 
               <input
                 type="text"
