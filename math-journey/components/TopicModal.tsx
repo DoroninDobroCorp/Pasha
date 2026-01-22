@@ -78,20 +78,22 @@ export default function TopicModal({ topic, onClose }: TopicModalProps) {
     const stars = [];
     for (let i = 0; i < 3; i++) {
       if (i < count) {
+        // Earned star - bright yellow
         stars.push(
-          <span key={i} className="text-yellow-400">
+          <span key={i} className="text-yellow-400 text-lg">
             ⭐
           </span>,
         );
       } else {
+        // Unearned star - gray and transparent (like in games)
         stars.push(
-          <span key={i} className="text-gray-600">
+          <span key={i} className="text-gray-500 opacity-30 text-lg">
             ⭐
           </span>,
         );
       }
     }
-    return <span className="inline-flex">{stars}</span>;
+    return <span className="inline-flex gap-0.5">{stars}</span>;
   };
 
   const checkAnswer = () => {
