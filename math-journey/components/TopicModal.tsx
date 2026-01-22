@@ -5,8 +5,6 @@ import { Topic } from "@/types";
 import {
   generateNumberTheoryProblem,
   generateAlgebraProblem,
-  generateGeometryProblem,
-  generateCombinatoricsProblem,
   Problem,
 } from "@/lib/problemGenerator";
 import {
@@ -57,10 +55,6 @@ export default function TopicModal({ topic, onClose }: TopicModalProps) {
       problem = generateNumberTheoryProblem(subtopic, "easy");
     } else if (topic.category === "algebra") {
       problem = generateAlgebraProblem(subtopic, "easy");
-    } else if (topic.category === "geometry") {
-      problem = generateGeometryProblem(subtopic, "easy");
-    } else if (topic.category === "combinatorics") {
-      problem = generateCombinatoricsProblem(subtopic, "easy");
     } else {
       problem = {
         id: "placeholder",
