@@ -20,7 +20,7 @@ export const topics: Topic[] = [
       "Divisibility tests for 3, 4, 8, 9, 11",
       "Euclidean division",
     ],
-    position: { x: 280, y: 280 },
+    position: { x: 250, y: 280 },
     xpReward: 100,
   },
   {
@@ -33,7 +33,7 @@ export const topics: Topic[] = [
       "Fundamental theorem of arithmetic",
       "Greatest Common Divisor and Least Common Multiple",
     ],
-    position: { x: 420, y: 280 },
+    position: { x: 450, y: 280 },
     xpReward: 150,
   },
 
@@ -44,7 +44,7 @@ export const topics: Topic[] = [
     category: "algebra",
     description: "Percents and inequalities",
     subtopics: ["Percents", "Inequalities and operations with them"],
-    position: { x: 980, y: 200 },
+    position: { x: 950, y: 200 },
     xpReward: 100,
   },
   {
@@ -57,7 +57,7 @@ export const topics: Topic[] = [
       "Linear equations and inequalities",
       "System of equations",
     ],
-    position: { x: 1120, y: 240 },
+    position: { x: 1100, y: 240 },
     xpReward: 150,
   },
   {
@@ -68,7 +68,7 @@ export const topics: Topic[] = [
     subtopics: [
       "Properties of graphs of linear functions. Parallel and orthogonal lines",
     ],
-    position: { x: 1200, y: 320 },
+    position: { x: 1220, y: 320 },
     xpReward: 100,
   },
   {
@@ -82,7 +82,7 @@ export const topics: Topic[] = [
       'Average speed and "joint work" text problems',
       "Remarkable identities",
     ],
-    position: { x: 1060, y: 380 },
+    position: { x: 1040, y: 380 },
     xpReward: 200,
   },
 
@@ -93,7 +93,7 @@ export const topics: Topic[] = [
     category: "combinatorics",
     description: "Venn diagrams and counting rules",
     subtopics: ["Venn's diagram", "Rule of sum", "Rule of product"],
-    position: { x: 980, y: 680 },
+    position: { x: 950, y: 680 },
     xpReward: 100,
   },
   {
@@ -102,7 +102,7 @@ export const topics: Topic[] = [
     category: "combinatorics",
     description: "Permutations and arrangements",
     subtopics: ["Permutations", "Arrangement with repetition"],
-    position: { x: 1120, y: 720 },
+    position: { x: 1100, y: 720 },
     xpReward: 100,
   },
   {
@@ -115,7 +115,7 @@ export const topics: Topic[] = [
       "Average, median, mode",
       "Quartiles",
     ],
-    position: { x: 1200, y: 780 },
+    position: { x: 1220, y: 780 },
     xpReward: 150,
   },
 
@@ -130,7 +130,7 @@ export const topics: Topic[] = [
       "Angles between parallel lines and a transversal",
       "Sum of angles of a triangle, quadrilateral, pentagon, n-gon",
     ],
-    position: { x: 280, y: 720 },
+    position: { x: 250, y: 720 },
     xpReward: 150,
   },
   {
@@ -141,7 +141,7 @@ export const topics: Topic[] = [
     subtopics: [
       "Properties of isosceles triangles. The median, altitude, and angle bisector drawn from the vertex opposite the base coincide.",
     ],
-    position: { x: 420, y: 720 },
+    position: { x: 450, y: 720 },
     xpReward: 100,
   },
   {
@@ -153,7 +153,7 @@ export const topics: Topic[] = [
       "Area of a rectangle, right triangle, disc, composite figures",
       "Circle, radius, diameter. Properties of radius orthogonal to diameter.",
     ],
-    position: { x: 350, y: 800 },
+    position: { x: 350, y: 820 },
     xpReward: 150,
   },
 ];

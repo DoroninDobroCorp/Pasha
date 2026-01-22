@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getPlayerStats, starsForNextLevel } from "@/lib/progress";
 import { PlayerStats } from "@/types";
 import Image from "next/image";
+import HeroModal from "./HeroModal";
 
 const LEVEL_NAMES = {
   1: "Beginner",
@@ -22,6 +23,7 @@ const HERO_SKINS = {
 
 export default function PlayerHUD() {
   const [stats, setStats] = useState<PlayerStats | null>(null);
+  const [showHeroModal, setShowHeroModal] = useState(false);
 
   useEffect(() => {
     setStats(getPlayerStats());
@@ -38,24 +40,28 @@ export default function PlayerHUD() {
     HERO_SKINS[stats.level as keyof typeof HERO_SKINS] || "/pasha/images/hero.jpg";
 
   return (
-    <div className="fixed top-4 right-4 z-50 space-y-3">
-      {/* Player avatar */}
-      <div className="flex items-center gap-3 bg-black/60 backdrop-blur-sm border-2 border-cyan-500/50 rounded-lg p-3">
-        <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-cyan-400 shadow-lg">
-          <Image
-            src={heroSkin}
-            alt="Hero"
-            fill
-            className="object-cover"
-          />
-        </div>
-        <div>
-          <p className="text-white font-bold text-lg">Math Knight</p>
-          <p className="text-cyan-400 text-sm">
-            Level {stats.level}: {levelName}
-          </p>
-        </div>
-      </div>
+    <>
+      <div className="fixed top-4 right-4 z-50 space-y-3">
+        {/* Player avatar - clickable */}
+        <button
+          onClick={() => setShowHeroModal(true)}
+          className="flex items-center gap-3 bg-black/60 backdrop-blur-sm border-2 border-cyan-500/50 rounded-lg p-3 hover:border-cyan-400 hover:bg-black/70 transition-all cursor-pointer"
+        >
+          <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-cyan-400 shadow-lg">
+            <Image
+              src={heroSkin}
+              alt="Hero"
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div className="text-left">
+            <p className="text-white font-bold text-lg">Math Knight</p>
+            <p className="text-cyan-400 text-sm">
+              Level {stats.level}: {levelName}
+            </p>
+          </div>
+        </button>
 
       {/* Stars Progress */}
       <div className="bg-black/60 backdrop-blur-sm border-2 border-purple-500/50 rounded-lg p-4 min-w-[250px]">
@@ -90,5 +96,14 @@ export default function PlayerHUD() {
         </div>
       </div>
     </div>
+
+    {/* Hero Modal */}
+    {showHeroModal && (
+      <HeroModal
+        currentLevel={stats.level}
+        onClose={() => setShowHeroModal(false)}
+      />
+    )}
+  </>
   );
 }
