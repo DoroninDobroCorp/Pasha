@@ -24,6 +24,26 @@ const categoryIcons = {
 };
 
 export default function TopicNode({ topic, stars, onSelect }: TopicNodeProps) {
+  const maxStars = topic.subtopics.length * 3;
+  
+  const renderStars = () => {
+    const starElements = [];
+    for (let i = 0; i < maxStars; i++) {
+      if (i < stars) {
+        // Earned star - bright yellow
+        starElements.push(
+          <span key={i} className="text-yellow-400 text-lg">⭐</span>
+        );
+      } else {
+        // Unearned star - gray/transparent
+        starElements.push(
+          <span key={i} className="text-gray-600 opacity-40 text-lg">⭐</span>
+        );
+      }
+    }
+    return starElements;
+  };
+
   return (
     <div
       className="absolute transition-all duration-300 opacity-100 cursor-pointer hover:scale-110"
@@ -48,11 +68,15 @@ export default function TopicNode({ topic, stars, onSelect }: TopicNodeProps) {
         <div className={`absolute inset-0 bg-gradient-to-br ${categoryColors[topic.category]} opacity-30`} />
       </div>
 
-      {/* Topic title below node - NO STARS */}
+      {/* Topic title and stars below node */}
       <div className="absolute top-24 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
-        <p className="text-xs font-bold text-center text-white drop-shadow-lg bg-black/70 px-2 py-1 rounded">
+        <p className="text-xs font-bold text-center text-white drop-shadow-lg bg-black/70 px-2 py-1 rounded mb-1">
           {topic.title}
         </p>
+        {/* Stars display */}
+        <div className="flex justify-center gap-0.5 bg-black/70 px-2 py-1 rounded">
+          {renderStars()}
+        </div>
       </div>
 
       {/* Particles effect for new topics */}
