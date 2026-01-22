@@ -901,16 +901,7 @@ export const vennProblems: Problem[] = [
   },
 ];
 
-export const combinatoricsProblems: Problem[] = [
-  ...vennProblems,
-  ...sumRuleProblems,
-  ...productRuleProblems,
-  ...permutationProblems,
-  ...arrangementProblems,
-  ...probabilityProblems,
-  ...statisticsProblems,
-  ...quartileProblems,
-];
+export const combinatoricsProblems: Problem[] = vennProblems;
 
 // Export individual arrays
 export const sumRuleProblems = combinatoricsProblems.filter(p => p.subtopic === "Rule of sum");

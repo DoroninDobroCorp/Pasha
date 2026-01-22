@@ -1,7 +1,8 @@
 // Index file for all problems
 // Total: 360 problems (30 subtopics × 12 problems each)
 
-export { Problem, numberTheoryProblems, divisibilityProblems } from "./number_theory";
+export type { Problem } from "./number_theory";
+export { numberTheoryProblems, divisibilityProblems } from "./number_theory";
 export { algebraProblems, percentProblems } from "./algebra";
 export { combinatoricsProblems, vennProblems, probabilityProblems } from "./combinatorics";
 export { geometryProblems, congruenceProblems, areaProblems, circleProblems } from "./geometry";

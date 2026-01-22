@@ -677,14 +677,7 @@ export const congruenceProblems: Problem[] = [
   },
 ];
 
-export const geometryProblems: Problem[] = [
-  ...congruenceProblems,
-  ...parallelProblems,
-  ...angleProblems,
-  ...isoscelesProblems,
-  ...areaProblems,
-  ...circleProblems,
-];
+export const geometryProblems: Problem[] = congruenceProblems;
 
 // Export individual arrays
 export const parallelProblems = geometryProblems.filter(p => p.subtopic.includes("parallel"));

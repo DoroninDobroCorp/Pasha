@@ -84,7 +84,7 @@ export default function WorldMap() {
         {/* Background image with drawn islands */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url(/images/world_map_background.jpg)" }}
+          style={{ backgroundImage: "url(/pasha/images/world_map_background.jpg)" }}
         />
 
         {/* Subtle dark overlay for better contrast */}

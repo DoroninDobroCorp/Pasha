@@ -17,10 +17,10 @@ const categoryColors = {
 };
 
 const categoryIcons = {
-  number_theory: '/images/number_theory.jpg',
-  algebra: '/images/algebra.jpg',
-  combinatorics: '/images/Combinatoric.jpg',
-  geometry: '/images/geometry.jpg'
+  number_theory: '/pasha/images/number_theory.jpg',
+  algebra: '/pasha/images/algebra.jpg',
+  combinatorics: '/pasha/images/Combinatoric.jpg',
+  geometry: '/pasha/images/geometry.jpg'
 };
 
 export default function TopicNode({ topic, stars, onSelect }: TopicNodeProps) {

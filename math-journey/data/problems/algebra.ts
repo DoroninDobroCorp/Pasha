@@ -1125,18 +1125,7 @@ export const percentProblems: Problem[] = [
   },
 ];
 
-export const algebraProblems: Problem[] = [
-  ...percentProblems,
-  ...inequalityProblems,
-  ...exponentProblems,
-  ...linearEquationProblems,
-  ...systemProblems,
-  ...linearFunctionProblems,
-  ...absoluteValueProblems,
-  ...rationalProblems,
-  ...wordProblems,
-  ...identityProblems,
-];
+export const algebraProblems: Problem[] = percentProblems;
 
 // Export individual arrays for importing
 export const inequalityProblems = algebraProblems.filter(p => p.subtopic.includes("Inequalities"));
