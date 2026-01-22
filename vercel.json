@@ -1,0 +1,6 @@
+{
+  "buildCommand": "cd math-journey && npm run build",
+  "outputDirectory": "math-journey/.next",
+  "installCommand": "cd math-journey && npm install",
+  "framework": "nextjs"
+}
