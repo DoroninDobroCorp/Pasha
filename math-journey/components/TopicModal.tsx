@@ -2,16 +2,21 @@
 
 import { useState, useEffect } from "react";
 import { Topic } from "@/types";
-import {
-  generateNumberTheoryProblem,
-  generateAlgebraProblem,
-  Problem,
-} from "@/lib/problemGenerator";
+import { getRandomProblems, Problem as SavedProblem } from "@/data/problems";
 import {
   getProgress,
   updateSubtopicStars,
   getSubtopicStars,
 } from "@/lib/progress";
+
+interface Problem {
+  id: string;
+  question: string;
+  answer: string;
+  hints: string[];
+  explanation: string;
+  difficulty?: 1 | 2 | 3;
+}
 
 interface TopicModalProps {
   topic: Topic;
@@ -49,26 +54,35 @@ export default function TopicModal({ topic, onClose }: TopicModalProps) {
 
   const startPractice = () => {
     const subtopic = topic.subtopics[currentSubtopicIndex];
-    let problem: Problem;
-
-    if (topic.category === "number_theory") {
-      problem = generateNumberTheoryProblem(subtopic, "easy");
-    } else if (topic.category === "algebra") {
-      problem = generateAlgebraProblem(subtopic, "easy");
+    
+    // Get random problems from saved olympiad problems
+    const savedProblems = getRandomProblems(subtopic, 1);
+    
+    if (savedProblems.length > 0) {
+      const savedProblem = savedProblems[0];
+      // Map saved problem structure to component structure
+      const problem: Problem = {
+        id: savedProblem.id,
+        question: savedProblem.question,
+        answer: savedProblem.answer,
+        hints: [], // Saved problems don't have hints, but have full solutions
+        explanation: savedProblem.solution || "No solution available",
+        difficulty: savedProblem.difficulty,
+      };
+      
+      setCurrentProblem(problem);
     } else {
-      problem = {
+      // Fallback if no problems found
+      const problem: Problem = {
         id: "placeholder",
-        topicId: topic.id,
-        difficulty: "easy",
         question: "Practice problems coming soon for this topic!",
         answer: "0",
         hints: [],
-        explanation: "More problem generators will be added soon.",
-        xpReward: 0,
+        explanation: "More problems will be added soon.",
       };
+      setCurrentProblem(problem);
     }
-
-    setCurrentProblem(problem);
+    
     setFeedback(null);
     setUserAnswer("");
     setShowHint(false);
@@ -268,7 +282,7 @@ export default function TopicModal({ topic, onClose }: TopicModalProps) {
                   Problem {problemsInSubtopic + 1}/3
                 </span>
                 <span className="text-yellow-400 font-bold">
-                  {currentProblem.difficulty.toUpperCase()}
+                  {currentProblem.difficulty === 1 ? "EASY" : currentProblem.difficulty === 2 ? "MEDIUM" : currentProblem.difficulty === 3 ? "HARD" : ""}
                 </span>
               </div>
 
