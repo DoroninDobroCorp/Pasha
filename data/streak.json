@@ -1,0 +1,162 @@
+{
+  "currentStreak": 17,
+  "lastPracticeDate": "2026-02-10",
+  "problemsToday": 1,
+  "dailyHistory": {
+    "2026-01-25": 1,
+    "2026-01-26": 1,
+    "2026-01-27": 1,
+    "2026-01-28": 1,
+    "2026-01-29": 1,
+    "2026-01-30": 1,
+    "2026-01-31": 1,
+    "2026-02-01": 1,
+    "2026-02-02": 1,
+    "2026-02-03": 1,
+    "2026-02-04": 1,
+    "2026-02-05": 1,
+    "2026-02-06": 1,
+    "2026-02-07": 1,
+    "2026-02-08": 1,
+    "2026-02-09": 1,
+    "2026-02-10": 1
+  },
+  "solvedProblems": {
+    "2026-01-25": [
+      {
+        "id": "ineq-3",
+        "question": "Solve: -2x > 10",
+        "subtopic": "Inequalities and operations with them",
+        "solvedAt": "2026-01-25T18:28:28.307Z"
+      }
+    ],
+    "2026-01-26": [
+      {
+        "id": "pct-1",
+        "question": "What is 25% of 80?",
+        "subtopic": "Percents",
+        "solvedAt": "2026-01-26T18:39:37.674Z"
+      }
+    ],
+    "2026-01-27": [
+      {
+        "id": "pct-3",
+        "question": "If 15 is 20% of a number, what is the number?",
+        "subtopic": "Percents",
+        "solvedAt": "2026-01-27T20:01:18.338Z"
+      }
+    ],
+    "2026-01-28": [
+      {
+        "id": "pct-10",
+        "question": "A mixture is 30% alcohol. How much water must be added to 20 liters of mixture to reduce concentration to 24%?",
+        "subtopic": "Percents",
+        "solvedAt": "2026-01-28T20:51:27.987Z"
+      }
+    ],
+    "2026-01-29": [
+      {
+        "id": "pct-12",
+        "question": "A bank offers 5% annual interest compounded annually. After 2 years, an account has $1102.50. What was the initial deposit?",
+        "subtopic": "Percents",
+        "solvedAt": "2026-01-29T18:41:24.483Z"
+      }
+    ],
+    "2026-01-30": [
+      {
+        "id": "pct-11",
+        "question": "A store offers 20% off, then takes an additional 25% off the sale price. What single discount is equivalent?",
+        "subtopic": "Percents",
+        "solvedAt": "2026-01-30T21:36:11.154Z"
+      }
+    ],
+    "2026-01-31": [
+      {
+        "id": "pct-6",
+        "question": "The population of a town increased from 25,000 to 30,000. What is the percent increase?",
+        "subtopic": "Percents",
+        "solvedAt": "2026-01-31T18:55:42.339Z"
+      }
+    ],
+    "2026-02-01": [
+      {
+        "id": "abs-1",
+        "question": "Solve: |x - 3| = 5",
+        "subtopic": "Absolute value and its properties",
+        "solvedAt": "2026-02-01T19:30:00.000Z"
+      }
+    ],
+    "2026-02-02": [
+      {
+        "id": "pct-1",
+        "question": "What is 25% of 80?",
+        "subtopic": "Percents",
+        "solvedAt": "2026-02-02T15:57:30.889Z"
+      }
+    ],
+    "2026-02-03": [
+      {
+        "id": "pct-8",
+        "question": "A number is increased by 50%, then decreased by 40%. The result is 18. What was the original number?",
+        "subtopic": "Percents",
+        "solvedAt": "2026-02-03T19:56:16.622Z"
+      }
+    ],
+    "2026-02-04": [
+      {
+        "id": "pct-3",
+        "question": "If 15 is 20% of a number, what is the number?",
+        "subtopic": "Percents",
+        "solvedAt": "2026-02-04T20:37:15.292Z"
+      }
+    ],
+    "2026-02-05": [
+      {
+        "id": "pct-1",
+        "question": "What is 25% of 80?",
+        "subtopic": "Percents",
+        "solvedAt": "2026-02-05T18:44:37.261Z"
+      }
+    ],
+    "2026-02-06": [
+      {
+        "id": "pct-4",
+        "question": "A price increases by 20%, then decreases by 20%. What is the net percent change?",
+        "subtopic": "Percents",
+        "solvedAt": "2026-02-06T21:56:36.322Z"
+      }
+    ],
+    "2026-02-07": [
+      {
+        "id": "pct-3",
+        "question": "If 15 is 20% of a number, what is the number?",
+        "subtopic": "Percents",
+        "solvedAt": "2026-02-07T20:47:24.984Z"
+      }
+    ],
+    "2026-02-08": [
+      {
+        "id": "pct-1",
+        "question": "What is 25% of 80?",
+        "subtopic": "Percents",
+        "solvedAt": "2026-02-08T11:46:49.731Z"
+      }
+    ],
+    "2026-02-09": [
+      {
+        "id": "pct-1",
+        "question": "What is 25% of 80?",
+        "subtopic": "Percents",
+        "solvedAt": "2026-02-09T19:43:12.228Z"
+      }
+    ],
+    "2026-02-10": [
+      {
+        "id": "pct-4",
+        "question": "A price increases by 20%, then decreases by 20%. What is the net percent change?",
+        "subtopic": "Percents",
+        "solvedAt": "2026-02-10T18:20:33.774Z"
+      }
+    ]
+  }
+}

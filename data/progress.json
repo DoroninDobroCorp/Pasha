@@ -1,0 +1,194 @@
+[
+  {
+    "topicId": "nt-1",
+    "subtopicProgress": [
+      {
+        "name": "Divisibility and its properties",
+        "stars": 1
+      },
+      {
+        "name": "Divisibility tests for 3, 4, 8, 9, 11",
+        "stars": 1
+      },
+      {
+        "name": "Euclidean division",
+        "stars": 1
+      }
+    ],
+    "lastAccessed": "2026-01-23T12:00:00.000Z"
+  },
+  {
+    "topicId": "nt-2",
+    "subtopicProgress": [
+      {
+        "name": "Prime and composite numbers",
+        "stars": 1
+      },
+      {
+        "name": "Fundamental theorem of arithmetic",
+        "stars": 1
+      },
+      {
+        "name": "Greatest Common Divisor and Least Common Multiple",
+        "stars": 1
+      }
+    ],
+    "lastAccessed": "2026-01-23T12:00:00.000Z"
+  },
+  {
+    "topicId": "alg-1",
+    "subtopicProgress": [
+      {
+        "name": "Percents",
+        "stars": 1
+      },
+      {
+        "name": "Inequalities and operations with them",
+        "stars": 1
+      }
+    ],
+    "lastAccessed": "2026-01-23T12:00:00.000Z"
+  },
+  {
+    "topicId": "alg-2",
+    "subtopicProgress": [
+      {
+        "name": "Laws of exponents with integer exponents",
+        "stars": 1
+      },
+      {
+        "name": "Linear equations and inequalities",
+        "stars": 1
+      },
+      {
+        "name": "System of equations",
+        "stars": 1
+      }
+    ],
+    "lastAccessed": "2026-01-23T12:00:00.000Z"
+  },
+  {
+    "topicId": "alg-3",
+    "subtopicProgress": [
+      {
+        "name": "Properties of graphs of linear functions. Parallel and orthogonal lines",
+        "stars": 1
+      }
+    ],
+    "lastAccessed": "2026-01-23T12:00:00.000Z"
+  },
+  {
+    "topicId": "alg-4",
+    "subtopicProgress": [
+      {
+        "name": "Absolute value and its properties. Triangle inequality",
+        "stars": 1
+      },
+      {
+        "name": "Rational numbers. Infinite periodic decimals",
+        "stars": 1
+      },
+      {
+        "name": "Average speed and \"joint work\" text problems",
+        "stars": 1
+      },
+      {
+        "name": "Remarkable identities",
+        "stars": 1
+      }
+    ],
+    "lastAccessed": "2026-01-23T12:00:00.000Z"
+  },
+  {
+    "topicId": "comb-1",
+    "subtopicProgress": [
+      {
+        "name": "Venn's diagram",
+        "stars": 1
+      },
+      {
+        "name": "Rule of sum",
+        "stars": 1
+      },
+      {
+        "name": "Rule of product",
+        "stars": 1
+      }
+    ],
+    "lastAccessed": "2026-01-23T12:00:00.000Z"
+  },
+  {
+    "topicId": "comb-2",
+    "subtopicProgress": [
+      {
+        "name": "Permutations",
+        "stars": 1
+      },
+      {
+        "name": "Arrangement with repetition",
+        "stars": 1
+      }
+    ],
+    "lastAccessed": "2026-01-23T12:00:00.000Z"
+  },
+  {
+    "topicId": "comb-3",
+    "subtopicProgress": [
+      {
+        "name": "Definition of probability",
+        "stars": 1
+      },
+      {
+        "name": "Average, median, mode",
+        "stars": 1
+      },
+      {
+        "name": "Quartiles",
+        "stars": 1
+      }
+    ],
+    "lastAccessed": "2026-01-23T12:00:00.000Z"
+  },
+  {
+    "topicId": "geo-1",
+    "subtopicProgress": [
+      {
+        "name": "Congruent triangles. Criteria for congruence",
+        "stars": 2
+      },
+      {
+        "name": "Angles between parallel lines and a transversal",
+        "stars": 1
+      },
+      {
+        "name": "Sum of angles of a triangle, quadrilateral, pentagon, n-gon",
+        "stars": 1
+      }
+    ],
+    "lastAccessed": "2026-01-23T12:00:00.000Z"
+  },
+  {
+    "topicId": "geo-2",
+    "subtopicProgress": [
+      {
+        "name": "Properties of isosceles triangles. The median, altitude, and angle bisector drawn from the vertex opposite the base coincide.",
+        "stars": 1
+      }
+    ],
+    "lastAccessed": "2026-01-23T12:00:00.000Z"
+  },
+  {
+    "topicId": "geo-3",
+    "subtopicProgress": [
+      {
+        "name": "Area of a rectangle, right triangle, disc, composite figures",
+        "stars": 1
+      },
+      {
+        "name": "Circle, radius, diameter. Properties of radius orthogonal to diameter.",
+        "stars": 1
+      }
+    ],
+    "lastAccessed": "2026-01-23T12:00:00.000Z"
+  }
+]
