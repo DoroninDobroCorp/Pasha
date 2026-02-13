@@ -53,6 +53,10 @@ export default function AchievementsModal({ onClose }: AchievementsModalProps) {
   };
 
   const achievementsWithStatus = getAchievementWithStatus();
+  const sortedAchievements = [
+    ...achievementsWithStatus.filter(a => a.unlockedAt),
+    ...achievementsWithStatus.filter(a => !a.unlockedAt),
+  ];
   const unlockedCount = achievementsWithStatus.filter(a => a.unlockedAt).length;
 
   // Full-screen image viewer
@@ -128,7 +132,7 @@ export default function AchievementsModal({ onClose }: AchievementsModalProps) {
           <div className="text-center py-8 text-gray-400">Загрузка...</div>
         ) : (
           <div className="space-y-4 max-h-96 overflow-y-auto">
-            {achievementsWithStatus.map(achievement => {
+            {sortedAchievements.map(achievement => {
               const isUnlocked = !!achievement.unlockedAt;
               return (
                 <div
@@ -136,44 +140,49 @@ export default function AchievementsModal({ onClose }: AchievementsModalProps) {
                   className={`flex items-center gap-4 p-4 rounded-lg border-2 transition-all ${
                     isUnlocked
                       ? 'bg-yellow-900/20 border-yellow-500/50'
-                      : 'bg-gray-800/50 border-gray-600/30 opacity-50 grayscale'
+                      : 'bg-gray-800/50 border-gray-600/30'
                   }`}
                 >
-                  {/* Clickable image */}
-                  <button
-                    onClick={() => handleAchievementClick(achievement)}
-                    disabled={!isUnlocked}
-                    className={`relative w-16 h-16 rounded-lg overflow-hidden border-2 border-yellow-400/50 flex-shrink-0 transition-transform ${
-                      isUnlocked ? 'hover:scale-110 hover:border-yellow-400 cursor-pointer' : 'cursor-not-allowed'
-                    }`}
-                    title={isUnlocked ? "Нажми чтобы увеличить 🔍" : ""}
-                  >
-                    <Image
-                      src={achievement.icon}
-                      alt={achievement.title}
-                      fill
-                      className="object-cover"
-                    />
-                    {!isUnlocked && (
-                      <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
-                        <span className="text-2xl">🔒</span>
+                  {isUnlocked ? (
+                    <>
+                      {/* Clickable image — unlocked */}
+                      <button
+                        onClick={() => handleAchievementClick(achievement)}
+                        className="relative w-16 h-16 rounded-lg overflow-hidden border-2 border-yellow-400/50 flex-shrink-0 transition-transform hover:scale-110 hover:border-yellow-400 cursor-pointer"
+                        title="Нажми чтобы увеличить 🔍"
+                      >
+                        <Image
+                          src={achievement.icon}
+                          alt={achievement.title}
+                          fill
+                          className="object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black/0 hover:bg-black/30 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                          <span className="text-xl">🔍</span>
+                        </div>
+                      </button>
+                      <div className="flex-1">
+                        <h3 className="font-bold text-white">{achievement.title}</h3>
+                        <p className="text-sm text-gray-400">{achievement.description}</p>
+                        {achievement.unlockedAt && (
+                          <p className="text-xs text-yellow-400 mt-1">
+                            ✨ Получено {new Date(achievement.unlockedAt).toLocaleDateString('ru-RU')}
+                          </p>
+                        )}
                       </div>
-                    )}
-                    {isUnlocked && (
-                      <div className="absolute inset-0 bg-black/0 hover:bg-black/30 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                        <span className="text-xl">🔍</span>
+                    </>
+                  ) : (
+                    <>
+                      {/* Locked — no image, just lock icon */}
+                      <div className="relative w-16 h-16 rounded-lg overflow-hidden border-2 border-gray-600/50 flex-shrink-0 bg-gray-700/30 flex items-center justify-center">
+                        <span className="text-3xl">🔒</span>
                       </div>
-                    )}
-                  </button>
-                  <div className="flex-1">
-                    <h3 className="font-bold text-white">{achievement.title}</h3>
-                    <p className="text-sm text-gray-400">{achievement.description}</p>
-                    {isUnlocked && achievement.unlockedAt && (
-                      <p className="text-xs text-yellow-400 mt-1">
-                        ✨ Получено {new Date(achievement.unlockedAt).toLocaleDateString('ru-RU')}
-                      </p>
-                    )}
-                  </div>
+                      <div className="flex-1">
+                        <h3 className="font-bold text-gray-500">???</h3>
+                        <p className="text-sm text-gray-500">{achievement.hint}</p>
+                      </div>
+                    </>
+                  )}
                 </div>
               );
             })}
