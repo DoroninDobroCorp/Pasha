@@ -212,10 +212,18 @@ function getYesterdayDateString(): string {
   return yesterday.toISOString().split('T')[0];
 }
 
-export async function recordProblemSolved(problemInfo?: { id: string; question: string; subtopic: string }): Promise<void> {
+export interface MilestoneResult {
+  achievementId: string | null;
+}
+
+const STREAK_MILESTONES = [21, 42, 100];
+
+export async function recordProblemSolved(problemInfo?: { id: string; question: string; subtopic: string }): Promise<MilestoneResult> {
   const streakData = await getStreakData();
   const today = getTodayDateString();
   const yesterday = getYesterdayDateString();
+  
+  const previousStreak = streakData.currentStreak;
   
   if (streakData.lastPracticeDate !== today) {
     if (streakData.lastPracticeDate === yesterday) {
@@ -245,6 +253,31 @@ export async function recordProblemSolved(problemInfo?: { id: string; question: 
   }
   
   await saveStreakData(streakData);
+
+  // Check if a streak milestone was just reached
+  let achievementId: string | null = null;
+  for (const target of STREAK_MILESTONES) {
+    if (previousStreak < target && streakData.currentStreak >= target) {
+      achievementId = `streak_${target}`;
+      break;
+    }
+  }
+
+  if (achievementId) {
+    // Check if not already unlocked
+    try {
+      const res = await fetch('/pasha/api/achievements/');
+      const unlocked = await res.json();
+      if (!unlocked.find((a: { id: string }) => a.id === achievementId)) {
+        return { achievementId };
+      }
+    } catch {
+      // If check fails, still return the milestone
+      return { achievementId };
+    }
+  }
+
+  return { achievementId: null };
 }
 
 export async function getProblemsToday(): Promise<number> {

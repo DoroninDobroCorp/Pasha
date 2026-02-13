@@ -1,6 +1,6 @@
 {
-  "currentStreak": 17,
-  "lastPracticeDate": "2026-02-10",
+  "currentStreak": 19,
+  "lastPracticeDate": "2026-02-12",
   "problemsToday": 1,
   "dailyHistory": {
     "2026-01-25": 1,
@@ -19,7 +19,9 @@
     "2026-02-07": 1,
     "2026-02-08": 1,
     "2026-02-09": 1,
-    "2026-02-10": 1
+    "2026-02-10": 1,
+    "2026-02-11": 1,
+    "2026-02-12": 1
   },
   "solvedProblems": {
     "2026-01-25": [
@@ -156,6 +158,22 @@
         "question": "A price increases by 20%, then decreases by 20%. What is the net percent change?",
         "subtopic": "Percents",
         "solvedAt": "2026-02-10T18:20:33.774Z"
+      }
+    ],
+    "2026-02-11": [
+      {
+        "id": "gcdlcm-3",
+        "question": "If GCD(a, b) = 5 and LCM(a, b) = 60, find a × b.",
+        "subtopic": "Greatest Common Divisor and Least Common Multiple",
+        "solvedAt": "2026-02-11T19:50:08.799Z"
+      }
+    ],
+    "2026-02-12": [
+      {
+        "id": "fta-3",
+        "question": "If n = 2^3 × 5^2, what is the value of n?",
+        "subtopic": "Fundamental theorem of arithmetic",
+        "solvedAt": "2026-02-12T18:12:59.732Z"
       }
     ]
   }

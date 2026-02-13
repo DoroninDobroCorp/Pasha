@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Topic } from "@/types";
 import { getRandomProblems, Problem as SavedProblem } from "@/data/problems";
 import {
@@ -26,6 +27,7 @@ interface TopicModalProps {
 }
 
 export default function TopicModal({ topic, onClose }: TopicModalProps) {
+  const router = useRouter();
   const [currentProblem, setCurrentProblem] = useState<Problem | null>(null);
   const [userAnswer, setUserAnswer] = useState("");
   const [feedback, setFeedback] = useState<{
@@ -124,13 +126,18 @@ export default function TopicModal({ topic, onClose }: TopicModalProps) {
       currentProblem.answer.toString().toLowerCase().trim();
 
     if (correct) {
-      await recordProblemSolved({
+      const milestoneResult = await recordProblemSolved({
         id: currentProblem.id,
         question: currentProblem.question,
         subtopic: currentSubtopic,
       });
       
       const problemsToday = await getProblemsToday();
+
+      if (milestoneResult.achievementId) {
+        router.push(`/pasha/achievement/${milestoneResult.achievementId}/`);
+        return;
+      }
       
       setFeedback({
         correct: true,

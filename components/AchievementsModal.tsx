@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Achievement } from "@/types";
-import { achievements } from "@/data/achievements";
+import { achievements, streakMilestones } from "@/data/achievements";
 
 interface UnlockedAchievement {
   id: string;
@@ -15,9 +16,21 @@ interface AchievementsModalProps {
 }
 
 export default function AchievementsModal({ onClose }: AchievementsModalProps) {
+  const router = useRouter();
   const [unlockedAchievements, setUnlockedAchievements] = useState<UnlockedAchievement[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedAchievement, setSelectedAchievement] = useState<(Achievement & { unlockedAt?: string }) | null>(null);
+
+  const isStreakAchievement = (id: string) => streakMilestones.some(m => m.achievementId === id);
+
+  const handleAchievementClick = (achievement: Achievement & { unlockedAt?: string }) => {
+    if (!achievement.unlockedAt) return;
+    if (isStreakAchievement(achievement.id)) {
+      router.push(`/pasha/achievement/${achievement.id}/`);
+    } else {
+      setSelectedAchievement(achievement);
+    }
+  };
 
   useEffect(() => {
     fetch('/pasha/api/achievements/')
@@ -128,7 +141,7 @@ export default function AchievementsModal({ onClose }: AchievementsModalProps) {
                 >
                   {/* Clickable image */}
                   <button
-                    onClick={() => isUnlocked && setSelectedAchievement(achievement)}
+                    onClick={() => handleAchievementClick(achievement)}
                     disabled={!isUnlocked}
                     className={`relative w-16 h-16 rounded-lg overflow-hidden border-2 border-yellow-400/50 flex-shrink-0 transition-transform ${
                       isUnlocked ? 'hover:scale-110 hover:border-yellow-400 cursor-pointer' : 'cursor-not-allowed'
