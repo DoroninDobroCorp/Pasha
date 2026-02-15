@@ -254,27 +254,42 @@ export async function recordProblemSolved(problemInfo?: { id: string; question: 
   
   await saveStreakData(streakData);
 
-  // Check if a streak milestone was just reached
+  // Check for any streak milestone that qualifies but hasn't been unlocked yet
   let achievementId: string | null = null;
-  for (const target of STREAK_MILESTONES) {
-    if (previousStreak < target && streakData.currentStreak >= target) {
-      achievementId = `streak_${target}`;
-      break;
+  try {
+    const res = await fetch('/pasha/api/achievements/');
+    const unlocked = await res.json();
+    for (const target of STREAK_MILESTONES) {
+      if (streakData.currentStreak >= target) {
+        const id = `streak_${target}`;
+        if (!unlocked.find((a: { id: string }) => a.id === id)) {
+          achievementId = id;
+          break;
+        }
+      }
+    }
+  } catch {
+    // If check fails, still try to detect milestone from streak transition
+    for (const target of STREAK_MILESTONES) {
+      if (previousStreak < target && streakData.currentStreak >= target) {
+        achievementId = `streak_${target}`;
+        break;
+      }
     }
   }
 
   if (achievementId) {
-    // Check if not already unlocked
+    // Unlock the achievement immediately so it's persisted even if the page doesn't load
     try {
-      const res = await fetch('/pasha/api/achievements/');
-      const unlocked = await res.json();
-      if (!unlocked.find((a: { id: string }) => a.id === achievementId)) {
-        return { achievementId };
-      }
+      await fetch('/pasha/api/achievements/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ achievementId }),
+      });
     } catch {
-      // If check fails, still return the milestone
-      return { achievementId };
+      // Page will retry unlock — not critical
     }
+    return { achievementId };
   }
 
   return { achievementId: null };
