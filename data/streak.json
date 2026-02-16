@@ -1,6 +1,6 @@
 {
-  "currentStreak": 19,
-  "lastPracticeDate": "2026-02-12",
+  "currentStreak": 22,
+  "lastPracticeDate": "2026-02-15",
   "problemsToday": 1,
   "dailyHistory": {
     "2026-01-25": 1,
@@ -21,7 +21,10 @@
     "2026-02-09": 1,
     "2026-02-10": 1,
     "2026-02-11": 1,
-    "2026-02-12": 1
+    "2026-02-12": 1,
+    "2026-02-13": 1,
+    "2026-02-14": 2,
+    "2026-02-15": 1
   },
   "solvedProblems": {
     "2026-01-25": [
@@ -174,6 +177,36 @@
         "question": "If n = 2^3 × 5^2, what is the value of n?",
         "subtopic": "Fundamental theorem of arithmetic",
         "solvedAt": "2026-02-12T18:12:59.732Z"
+      }
+    ],
+    "2026-02-13": [
+      {
+        "id": "prime-2",
+        "question": "What is the smallest prime number greater than 50?",
+        "subtopic": "Prime and composite numbers",
+        "solvedAt": "2026-02-13T21:09:10.660Z"
+      }
+    ],
+    "2026-02-14": [
+      {
+        "id": "gcdlcm-1",
+        "question": "Find GCD(48, 36).",
+        "subtopic": "Greatest Common Divisor and Least Common Multiple",
+        "solvedAt": "2026-02-14T15:51:58.529Z"
+      },
+      {
+        "id": "gcdlcm-1",
+        "question": "Find GCD(48, 36).",
+        "subtopic": "Greatest Common Divisor and Least Common Multiple",
+        "solvedAt": "2026-02-14T15:52:11.769Z"
+      }
+    ],
+    "2026-02-15": [
+      {
+        "id": "gcdlcm-2",
+        "question": "Find LCM(12, 18).",
+        "subtopic": "Greatest Common Divisor and Least Common Multiple",
+        "solvedAt": "2026-02-15T16:12:27.355Z"
       }
     ]
   }
