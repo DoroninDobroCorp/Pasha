@@ -26,7 +26,7 @@ export default function AchievementsModal({ onClose }: AchievementsModalProps) {
   const handleAchievementClick = (achievement: Achievement & { unlockedAt?: string }) => {
     if (!achievement.unlockedAt) return;
     if (isStreakAchievement(achievement.id)) {
-      router.push(`/pasha/achievement/${achievement.id}/`);
+      router.push(`/achievement/${achievement.id}/`);
     } else {
       setSelectedAchievement(achievement);
     }

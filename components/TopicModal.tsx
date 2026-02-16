@@ -135,7 +135,7 @@ export default function TopicModal({ topic, onClose }: TopicModalProps) {
       const problemsToday = await getProblemsToday();
 
       if (milestoneResult.achievementId) {
-        router.push(`/pasha/achievement/${milestoneResult.achievementId}/`);
+        router.push(`/achievement/${milestoneResult.achievementId}/`);
         return;
       }
       

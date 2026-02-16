@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { getPlayerStats, starsForNextLevel } from "@/lib/progress";
 import { PlayerStats } from "@/types";
+import { streakMilestones } from "@/data/achievements";
 import Image from "next/image";
 import HeroModal from "./HeroModal";
 import StreakModal from "./StreakModal";
@@ -23,6 +25,7 @@ const HERO_SKINS = {
 };
 
 export default function PlayerHUD() {
+  const router = useRouter();
   const [stats, setStats] = useState<PlayerStats | null>(null);
   const [showHeroModal, setShowHeroModal] = useState(false);
   const [showStreakModal, setShowStreakModal] = useState(false);
@@ -31,6 +34,39 @@ export default function PlayerHUD() {
   useEffect(() => {
     getPlayerStats().then(setStats);
   }, []);
+
+  // Check for missed streak milestones on page load
+  useEffect(() => {
+    async function checkMissedMilestones() {
+      try {
+        const [achievementsRes, streakRes] = await Promise.all([
+          fetch("/pasha/api/achievements/"),
+          fetch("/pasha/api/streak/"),
+        ]);
+        const unlocked = await achievementsRes.json();
+        const streakData = await streakRes.json();
+
+        for (const milestone of streakMilestones) {
+          if (
+            streakData.currentStreak >= milestone.requiredStreak &&
+            !unlocked.find((a: { id: string }) => a.id === milestone.achievementId)
+          ) {
+            // Unlock and redirect
+            await fetch("/pasha/api/achievements/", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ achievementId: milestone.achievementId }),
+            });
+            router.push(`/achievement/${milestone.achievementId}/`);
+            return;
+          }
+        }
+      } catch {
+        // Silent fail — will retry on next page load
+      }
+    }
+    checkMissedMilestones();
+  }, [router]);
 
   if (!stats) return null;
 
