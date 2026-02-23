@@ -31,3 +31,12 @@ export interface PlayerStats {
   maxStars: number;
   streak: number;
 }
+
+export interface Achievement {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  hint: string; // shown when locked instead of title/description
+  unlockedAt?: string; // ISO date string when unlocked
+}

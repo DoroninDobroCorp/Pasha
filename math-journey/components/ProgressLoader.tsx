@@ -16,27 +16,30 @@ export default function ProgressLoader() {
   > | null>(null);
 
   useEffect(() => {
-    const loaded = isProgressLoaded();
-    setIsLoaded(loaded);
-    if (loaded) {
-      setSummary(getProgressSummary());
-    }
+    const checkProgress = async () => {
+      const loaded = await isProgressLoaded();
+      setIsLoaded(loaded);
+      if (loaded) {
+        setSummary(getProgressSummary());
+      }
+    };
+    checkProgress();
   }, []);
 
-  const handleLoadProgress = () => {
-    loadStudentProgress();
+  const handleLoadProgress = async () => {
+    await loadStudentProgress();
     setIsLoaded(true);
     setSummary(getProgressSummary());
-    window.location.reload(); // Reload to update UI
+    window.location.reload();
   };
 
-  const handleReset = () => {
+  const handleReset = async () => {
     if (
       confirm(
         "Are you sure you want to reset all progress? This cannot be undone.",
       )
     ) {
-      resetProgress();
+      await resetProgress();
       setIsLoaded(false);
       setSummary(null);
       window.location.reload();

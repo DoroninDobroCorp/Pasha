@@ -1,6 +1,6 @@
 // Utility to load initial student progress into localStorage
 import { initialStudentProgress, studentStats } from "./studentProgress";
-import { saveProgress, savePlayerStats, calculateLevel } from "./progress";
+import { saveProgress, savePlayerStats, calculateLevel, getProgress } from "./progress";
 import { UserProgress, SubtopicProgress } from "@/types";
 
 /**
@@ -11,17 +11,15 @@ import { UserProgress, SubtopicProgress } from "@/types";
  * - Grade 3 → 1⭐ (minimal progress)
  * - Grade <3 → 0⭐ (not started)
  */
-export function loadStudentProgress(): void {
+export async function loadStudentProgress(): Promise<void> {
   const userProgress: UserProgress[] = [];
 
-  // Convert initialStudentProgress to UserProgress format
   Object.entries(initialStudentProgress).forEach(([topicId, subtopics]) => {
     const subtopicProgress: SubtopicProgress[] = subtopics.map((sub) => ({
       name: sub.name,
       stars: sub.stars,
     }));
 
-    // Only add topics that have some progress
     if (subtopicProgress.some((sp) => sp.stars > 0)) {
       userProgress.push({
         topicId,
@@ -31,14 +29,12 @@ export function loadStudentProgress(): void {
     }
   });
 
-  // Save progress to localStorage
-  saveProgress(userProgress);
+  await saveProgress(userProgress);
 
-  // Calculate and save player stats
   const totalStars = studentStats.totalStars;
   const level = calculateLevel(totalStars);
 
-  savePlayerStats({
+  await savePlayerStats({
     level,
     totalStars,
     maxStars: 90,
@@ -56,20 +52,22 @@ export function loadStudentProgress(): void {
 /**
  * Checks if student progress has been loaded
  */
-export function isProgressLoaded(): boolean {
-  if (typeof window === "undefined") return false;
-  const stored = localStorage.getItem("math_journey_progress");
-  return stored !== null && stored !== "[]";
+export async function isProgressLoaded(): Promise<boolean> {
+  try {
+    const progress = await getProgress();
+    return progress.length > 0;
+  } catch (error) {
+    return false;
+  }
 }
 
-/**
- * Resets all progress (clears localStorage)
- */
-export function resetProgress(): void {
-  if (typeof window === "undefined") return;
-  localStorage.removeItem("math_journey_progress");
-  localStorage.removeItem("math_journey_stats");
-  console.log("🔄 Progress reset complete");
+export async function resetProgress(): Promise<void> {
+  try {
+    await fetch('/pasha/api/reset/', { method: 'POST' });
+    console.log("🔄 Progress reset complete");
+  } catch (error) {
+    console.error('Failed to reset progress:', error);
+  }
 }
 
 /**

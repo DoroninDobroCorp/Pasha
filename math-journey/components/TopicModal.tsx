@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Topic } from "@/types";
 import { getRandomProblems, Problem as SavedProblem } from "@/data/problems";
 import {
@@ -9,6 +10,7 @@ import {
   recordProblemSolved,
   getProblemsToday,
 } from "@/lib/progress";
+import VisualizationPicker from "./visualizations/VisualizationPicker";
 
 interface Problem {
   id: string;
@@ -25,6 +27,7 @@ interface TopicModalProps {
 }
 
 export default function TopicModal({ topic, onClose }: TopicModalProps) {
+  const router = useRouter();
   const [currentProblem, setCurrentProblem] = useState<Problem | null>(null);
   const [userAnswer, setUserAnswer] = useState("");
   const [feedback, setFeedback] = useState<{
@@ -37,9 +40,13 @@ export default function TopicModal({ topic, onClose }: TopicModalProps) {
     {},
   );
   const [problemsInSubtopic, setProblemsInSubtopic] = useState(0);
+  const [showVisualization, setShowVisualization] = useState(false);
 
-  const loadSubtopicStars = () => {
-    const progress = getProgress();
+  // Check if the current subtopic is GCD/LCM
+  const isGCDLCMSubtopic = topic.id === "nt-2" && currentSubtopicIndex === 2;
+
+  const loadSubtopicStars = async () => {
+    const progress = await getProgress();
     const stars: Record<string, number> = {};
 
     topic.subtopics.forEach((subtopicName) => {
@@ -51,7 +58,7 @@ export default function TopicModal({ topic, onClose }: TopicModalProps) {
 
   useEffect(() => {
     loadSubtopicStars();
-  }, [topic.id, loadSubtopicStars]);
+  }, [topic.id]);
 
   const startPractice = () => {
     const subtopic = topic.subtopics[currentSubtopicIndex];
@@ -111,7 +118,7 @@ export default function TopicModal({ topic, onClose }: TopicModalProps) {
     return <span className="inline-flex gap-0.5">{stars}</span>;
   };
 
-  const checkAnswer = () => {
+  const checkAnswer = async () => {
     if (!currentProblem) return;
 
     const correct =
@@ -119,17 +126,24 @@ export default function TopicModal({ topic, onClose }: TopicModalProps) {
       currentProblem.answer.toString().toLowerCase().trim();
 
     if (correct) {
-      // Record problem solved for streak tracking
-      recordProblemSolved();
+      const milestoneResult = await recordProblemSolved({
+        id: currentProblem.id,
+        question: currentProblem.question,
+        subtopic: currentSubtopic,
+      });
       
-      const problemsToday = getProblemsToday();
+      const problemsToday = await getProblemsToday();
+
+      if (milestoneResult.achievementId) {
+        router.push(`/achievement/${milestoneResult.achievementId}/`);
+        return;
+      }
       
       setFeedback({
         correct: true,
         message: `✓ Correct! Problems solved today: ${problemsToday}`,
       });
     } else {
-      // Wrong answer - allow retry, don't show solution yet
       setFeedback({
         correct: false,
         message: `✗ Not quite. Try again!`,
@@ -242,7 +256,9 @@ export default function TopicModal({ topic, onClose }: TopicModalProps) {
         </div>
 
         {/* Practice section */}
-        {!currentProblem ? (
+        {showVisualization ? (
+          <VisualizationPicker onBack={() => setShowVisualization(false)} />
+        ) : !currentProblem ? (
           <div className="space-y-4">
             <button
               onClick={startPractice}
@@ -252,6 +268,14 @@ export default function TopicModal({ topic, onClose }: TopicModalProps) {
                 ? "Practice Again (3⭐ Earned)"
                 : "Start Practice"}
             </button>
+            {isGCDLCMSubtopic && (
+              <button
+                onClick={() => setShowVisualization(true)}
+                className="w-full py-4 bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-bold rounded-lg transition-all transform hover:scale-105 shadow-lg"
+              >
+                🎨 Explore Visualizations
+              </button>
+            )}
             <p className="text-center text-gray-400 text-sm">
               {currentSubtopicStars === 3
                 ? "This subtopic is completed! Practice to reinforce or select another."

@@ -40,16 +40,20 @@ export default function WorldMap() {
   useEffect(() => {
     setMounted(true);
 
-    // Auto-load student progress on first visit
-    if (!isProgressLoaded()) {
-      loadStudentProgress();
-    }
-
-    setProgress(getProgress());
+    const loadData = async () => {
+      if (!(await isProgressLoaded())) {
+        await loadStudentProgress();
+      }
+      const data = await getProgress();
+      setProgress(data);
+    };
+    
+    loadData();
   }, []);
 
-  const refreshProgress = () => {
-    setProgress(getProgress());
+  const refreshProgress = async () => {
+    const data = await getProgress();
+    setProgress(data);
   };
 
   const getIslandProgress = (category: Category) => {

@@ -12,49 +12,68 @@ const TOTAL_SUBTOPICS = topics.reduce(
 );
 const MAX_STARS = TOTAL_SUBTOPICS * 3; // 3 stars per subtopic = 90 stars
 
+interface SolvedProblem {
+  id: string;
+  question: string;
+  subtopic: string;
+  solvedAt: string; // ISO timestamp
+}
+
 interface StreakData {
   currentStreak: number;
   lastPracticeDate: string; // ISO date string
   problemsToday: number;
   dailyHistory: { [date: string]: number }; // date -> problems solved
+  solvedProblems: { [date: string]: SolvedProblem[] }; // date -> list of solved problems
 }
 
-export function getProgress(): UserProgress[] {
-  if (typeof window === "undefined") return [];
-  const stored = localStorage.getItem(STORAGE_KEY);
-  return stored ? JSON.parse(stored) : [];
+export async function getProgress(): Promise<UserProgress[]> {
+  try {
+    const response = await fetch('/pasha/api/progress/');
+    return await response.json();
+  } catch (error) {
+    console.error('Failed to load progress:', error);
+    return [];
+  }
 }
 
-export function saveProgress(progress: UserProgress[]): void {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+export async function saveProgress(progress: UserProgress[]): Promise<void> {
+  try {
+    await fetch('/pasha/api/progress/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(progress),
+    });
+  } catch (error) {
+    console.error('Failed to save progress:', error);
+  }
 }
 
-export function getPlayerStats(): PlayerStats {
-  if (typeof window === "undefined") {
+export async function getPlayerStats(): Promise<PlayerStats> {
+  try {
+    const [statsResponse, streakData] = await Promise.all([
+      fetch('/pasha/api/stats/'),
+      getStreakData()
+    ]);
+    const stats = await statsResponse.json();
+    stats.streak = streakData.currentStreak;
+    return stats;
+  } catch (error) {
+    console.error('Failed to load stats:', error);
     return { level: 1, totalStars: 0, maxStars: MAX_STARS, streak: 0 };
   }
-  const stored = localStorage.getItem(STATS_KEY);
-  const streakData = getStreakData();
-  
-  const baseStats = stored
-    ? JSON.parse(stored)
-    : {
-        level: 1,
-        totalStars: 0,
-        maxStars: MAX_STARS,
-        streak: 0,
-      };
-  
-  // Update streak from streak data
-  baseStats.streak = streakData.currentStreak;
-  
-  return baseStats;
 }
 
-export function savePlayerStats(stats: PlayerStats): void {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+export async function savePlayerStats(stats: PlayerStats): Promise<void> {
+  try {
+    await fetch('/pasha/api/stats/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(stats),
+    });
+  } catch (error) {
+    console.error('Failed to save stats:', error);
+  }
 }
 
 export function getTopicStars(
@@ -64,7 +83,6 @@ export function getTopicStars(
   const userProgress = progress.find((p) => p.topicId === topicId);
   if (!userProgress) return 0;
 
-  // Sum up stars from all subtopics
   return userProgress.subtopicProgress.reduce((sum, sp) => sum + sp.stars, 0);
 }
 
@@ -102,32 +120,28 @@ export function starsForNextLevel(
   return 0; // Already Hero!
 }
 
-export function updateSubtopicStars(
+export async function updateSubtopicStars(
   topicId: string,
   subtopicName: string,
   stars: number,
-): void {
-  const progress = getProgress();
+): Promise<void> {
+  const progress = await getProgress();
   const existingIndex = progress.findIndex((p) => p.topicId === topicId);
 
   if (existingIndex >= 0) {
-    // Topic exists, update or add subtopic
     const existing = progress[existingIndex];
     const subtopicIndex = existing.subtopicProgress.findIndex(
       (sp) => sp.name === subtopicName,
     );
 
     if (subtopicIndex >= 0) {
-      // Update existing subtopic
       existing.subtopicProgress[subtopicIndex].stars = stars;
     } else {
-      // Add new subtopic
       existing.subtopicProgress.push({ name: subtopicName, stars });
     }
 
     existing.lastAccessed = new Date();
   } else {
-    // Topic doesn't exist, create it
     progress.push({
       topicId,
       subtopicProgress: [{ name: subtopicName, stars }],
@@ -135,53 +149,56 @@ export function updateSubtopicStars(
     });
   }
 
-  saveProgress(progress);
-  updatePlayerStats();
+  await saveProgress(progress);
+  await updatePlayerStats();
 }
 
-export function updatePlayerStats(): void {
-  const progress = getProgress();
+export async function updatePlayerStats(): Promise<void> {
+  const progress = await getProgress();
 
-  // Calculate total stars
   const totalStars = progress.reduce((sum, p) => {
     return (
       sum + p.subtopicProgress.reduce((subSum, sp) => subSum + sp.stars, 0)
     );
   }, 0);
 
-  const stats = getPlayerStats();
+  const stats = await getPlayerStats();
   stats.totalStars = totalStars;
   stats.maxStars = MAX_STARS;
   stats.level = calculateLevel(totalStars);
-  // Don't update streak here - it's managed separately
-  savePlayerStats(stats);
+  await savePlayerStats(stats);
 }
 
-// Streak management functions
-export function getStreakData(): StreakData {
-  if (typeof window === "undefined") {
+export async function getStreakData(): Promise<StreakData> {
+  try {
+    const response = await fetch('/pasha/api/streak/');
+    const data = await response.json();
+    if (!data.solvedProblems) {
+      data.solvedProblems = {};
+    }
+    return data;
+  } catch (error) {
+    console.error('Failed to load streak data:', error);
     return {
       currentStreak: 0,
       lastPracticeDate: "",
       problemsToday: 0,
       dailyHistory: {},
+      solvedProblems: {},
     };
   }
-  
-  const stored = localStorage.getItem(STREAK_KEY);
-  return stored
-    ? JSON.parse(stored)
-    : {
-        currentStreak: 0,
-        lastPracticeDate: "",
-        problemsToday: 0,
-        dailyHistory: {},
-      };
 }
 
-function saveStreakData(data: StreakData): void {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(STREAK_KEY, JSON.stringify(data));
+async function saveStreakData(data: StreakData): Promise<void> {
+  try {
+    await fetch('/pasha/api/streak/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+  } catch (error) {
+    console.error('Failed to save streak data:', error);
+  }
 }
 
 function getTodayDateString(): string {
@@ -195,41 +212,91 @@ function getYesterdayDateString(): string {
   return yesterday.toISOString().split('T')[0];
 }
 
-export function recordProblemSolved(): void {
-  const streakData = getStreakData();
+export interface MilestoneResult {
+  achievementId: string | null;
+}
+
+const STREAK_MILESTONES = [21, 42, 100];
+
+export async function recordProblemSolved(problemInfo?: { id: string; question: string; subtopic: string }): Promise<MilestoneResult> {
+  const streakData = await getStreakData();
   const today = getTodayDateString();
   const yesterday = getYesterdayDateString();
   
-  // Check if this is a new day
+  const previousStreak = streakData.currentStreak;
+  
   if (streakData.lastPracticeDate !== today) {
-    // New day - check if streak continues
     if (streakData.lastPracticeDate === yesterday) {
-      // Practiced yesterday, continue streak
       streakData.currentStreak += 1;
     } else if (streakData.lastPracticeDate === "") {
-      // First time practicing
       streakData.currentStreak = 1;
     } else {
-      // Streak broken, start over
       streakData.currentStreak = 1;
     }
     
-    // Reset today's counter
     streakData.problemsToday = 1;
     streakData.lastPracticeDate = today;
   } else {
-    // Same day, increment counter
     streakData.problemsToday += 1;
   }
   
-  // Update daily history
   streakData.dailyHistory[today] = streakData.problemsToday;
   
-  saveStreakData(streakData);
+  if (problemInfo) {
+    if (!streakData.solvedProblems[today]) {
+      streakData.solvedProblems[today] = [];
+    }
+    streakData.solvedProblems[today].push({
+      ...problemInfo,
+      solvedAt: new Date().toISOString(),
+    });
+  }
+  
+  await saveStreakData(streakData);
+
+  // Check for any streak milestone that qualifies but hasn't been unlocked yet
+  let achievementId: string | null = null;
+  try {
+    const res = await fetch('/pasha/api/achievements/');
+    const unlocked = await res.json();
+    for (const target of STREAK_MILESTONES) {
+      if (streakData.currentStreak >= target) {
+        const id = `streak_${target}`;
+        if (!unlocked.find((a: { id: string }) => a.id === id)) {
+          achievementId = id;
+          break;
+        }
+      }
+    }
+  } catch {
+    // If check fails, still try to detect milestone from streak transition
+    for (const target of STREAK_MILESTONES) {
+      if (previousStreak < target && streakData.currentStreak >= target) {
+        achievementId = `streak_${target}`;
+        break;
+      }
+    }
+  }
+
+  if (achievementId) {
+    // Unlock the achievement immediately so it's persisted even if the page doesn't load
+    try {
+      await fetch('/pasha/api/achievements/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ achievementId }),
+      });
+    } catch {
+      // Page will retry unlock — not critical
+    }
+    return { achievementId };
+  }
+
+  return { achievementId: null };
 }
 
-export function getProblemsToday(): number {
-  const streakData = getStreakData();
+export async function getProblemsToday(): Promise<number> {
+  const streakData = await getStreakData();
   const today = getTodayDateString();
   
   if (streakData.lastPracticeDate === today) {
@@ -238,9 +305,22 @@ export function getProblemsToday(): number {
   return 0;
 }
 
-export function getDailyHistory(): { [date: string]: number } {
-  const streakData = getStreakData();
+export async function getDailyHistory(): Promise<{ [date: string]: number }> {
+  const streakData = await getStreakData();
   return streakData.dailyHistory;
+}
+
+export async function getSolvedProblemsForDate(date: string): Promise<SolvedProblem[]> {
+  const streakData = await getStreakData();
+  return streakData.solvedProblems[date] || [];
+}
+
+export async function resetStreak(): Promise<void> {
+  try {
+    await fetch('/pasha/api/reset/', { method: 'POST' });
+  } catch (error) {
+    console.error('Failed to reset data:', error);
+  }
 }
 
 export { MAX_STARS };

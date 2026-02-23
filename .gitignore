@@ -1,1 +1,20 @@
-node_modules/\n.next/\n.DS_Store
+# Dependencies
+node_modules/
+
+# Build output
+.next/
+out/
+
+# OS
+.DS_Store
+
+# Environment
+.env*
+
+# Debug logs
+*.log
+
+# Misc
+*.pem
+.vercel
+*.tsbuildinfo

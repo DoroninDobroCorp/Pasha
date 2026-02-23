@@ -23,9 +23,9 @@ const LEVEL_NAMES = {
 
 const LEVEL_REQUIREMENTS = {
   1: "0 stars",
-  2: "23 stars",
-  3: "46 stars",
-  4: "69 stars",
+  2: "30 stars",
+  3: "60 stars",
+  4: "90 stars",
 };
 
 export default function HeroModal({ currentLevel, onClose }: HeroModalProps) {
@@ -151,15 +151,15 @@ export default function HeroModal({ currentLevel, onClose }: HeroModalProps) {
             </div>
             <div className="bg-purple-500/10 border border-purple-500/30 rounded p-2">
               <div className="text-purple-400 font-bold mb-1">Level 2</div>
-              <div className="text-yellow-300 font-bold text-base">⭐ 23</div>
+              <div className="text-yellow-300 font-bold text-base">⭐ 30</div>
             </div>
             <div className="bg-orange-500/10 border border-orange-500/30 rounded p-2">
               <div className="text-orange-400 font-bold mb-1">Level 3</div>
-              <div className="text-yellow-300 font-bold text-base">⭐ 46</div>
+              <div className="text-yellow-300 font-bold text-base">⭐ 60</div>
             </div>
             <div className="bg-red-500/10 border border-red-500/30 rounded p-2">
               <div className="text-red-400 font-bold mb-1">Level 4</div>
-              <div className="text-yellow-300 font-bold text-base">⭐ 69</div>
+              <div className="text-yellow-300 font-bold text-base">⭐ 90</div>
             </div>
           </div>
         </div>
