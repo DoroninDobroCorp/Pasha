@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback, use } from "react";
+import { useEffect, useState, useCallback, use, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -33,6 +33,21 @@ const achievementTexts: AchievementTexts = {
 };
 
 export default function AchievementPage({ params }: { params: Promise<{ id: string }> }) {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin text-6xl mb-4">⏳</div>
+          <p className="text-gray-400 text-lg">Загрузка...</p>
+        </div>
+      </div>
+    }>
+      <AchievementContent params={params} />
+    </Suspense>
+  );
+}
+
+function AchievementContent({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const searchParams = useSearchParams();
   const [status, setStatus] = useState<"loading" | "granted" | "denied">("loading");
@@ -142,7 +157,7 @@ export default function AchievementPage({ params }: { params: Promise<{ id: stri
           <p className="text-6xl mb-4">🔒</p>
           <h1 className="text-2xl font-bold text-gray-400">Достижение не найдено</h1>
           <Link
-            href="/pasha/"
+            href="/"
             className="mt-6 inline-block px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg transition-colors"
           >
             ← На главную
@@ -174,7 +189,7 @@ export default function AchievementPage({ params }: { params: Promise<{ id: stri
             Необходим стрик: <span className="text-orange-400 font-bold">{milestone.requiredStreak} дней</span>
           </p>
           <Link
-            href="/pasha/"
+            href="/"
             className="inline-block px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg transition-colors"
           >
             ← На главную
@@ -229,7 +244,7 @@ export default function AchievementPage({ params }: { params: Promise<{ id: stri
 
         {/* Back button */}
         <Link
-          href="/pasha/"
+          href="/"
           className="inline-block px-8 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold rounded-lg transition-all shadow-lg hover:shadow-cyan-500/25"
         >
           ← Вернуться к задачам

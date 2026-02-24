@@ -1,6 +1,6 @@
 {
-  "currentStreak": 22,
-  "lastPracticeDate": "2026-02-15",
+  "currentStreak": 30,
+  "lastPracticeDate": "2026-02-23",
   "problemsToday": 1,
   "dailyHistory": {
     "2026-01-25": 1,
@@ -24,7 +24,15 @@
     "2026-02-12": 1,
     "2026-02-13": 1,
     "2026-02-14": 2,
-    "2026-02-15": 1
+    "2026-02-15": 1,
+    "2026-02-16": 1,
+    "2026-02-17": 1,
+    "2026-02-18": 1,
+    "2026-02-19": 1,
+    "2026-02-20": 1,
+    "2026-02-21": 1,
+    "2026-02-22": 1,
+    "2026-02-23": 1
   },
   "solvedProblems": {
     "2026-01-25": [
@@ -207,6 +215,70 @@
         "question": "Find LCM(12, 18).",
         "subtopic": "Greatest Common Divisor and Least Common Multiple",
         "solvedAt": "2026-02-15T16:12:27.355Z"
+      }
+    ],
+    "2026-02-16": [
+      {
+        "id": "gcdlcm-3",
+        "question": "If GCD(a, b) = 5 and LCM(a, b) = 60, find a × b.",
+        "subtopic": "Greatest Common Divisor and Least Common Multiple",
+        "solvedAt": "2026-02-16T19:15:00.000Z"
+      }
+    ],
+    "2026-02-17": [
+      {
+        "id": "gcdlcm-1",
+        "question": "Find GCD(48, 36).",
+        "subtopic": "Greatest Common Divisor and Least Common Multiple",
+        "solvedAt": "2026-02-17T21:01:00.004Z"
+      }
+    ],
+    "2026-02-18": [
+      {
+        "id": "gcdlcm-7",
+        "question": "If LCM(a, 12) = 60 and GCD(a, 12) = 4, find a.",
+        "subtopic": "Greatest Common Divisor and Least Common Multiple",
+        "solvedAt": "2026-02-18T21:02:00.266Z"
+      }
+    ],
+    "2026-02-19": [
+      {
+        "id": "gcdlcm-4",
+        "question": "Find GCD(2023, 2024).",
+        "subtopic": "Greatest Common Divisor and Least Common Multiple",
+        "solvedAt": "2026-02-19T18:29:15.582Z"
+      }
+    ],
+    "2026-02-20": [
+      {
+        "id": "gcdlcm-7",
+        "question": "If LCM(a, 12) = 60 and GCD(a, 12) = 4, find a.",
+        "subtopic": "Greatest Common Divisor and Least Common Multiple",
+        "solvedAt": "2026-02-20T21:00:54.710Z"
+      }
+    ],
+    "2026-02-21": [
+      {
+        "id": "pct-2",
+        "question": "A shirt originally costs $40. It is on sale for 30% off. What is the sale price?",
+        "subtopic": "Percents",
+        "solvedAt": "2026-02-21T21:01:13.771Z"
+      }
+    ],
+    "2026-02-22": [
+      {
+        "id": "pct-8",
+        "question": "A number is increased by 50%, then decreased by 40%. The result is 18. What was the original number?",
+        "subtopic": "Percents",
+        "solvedAt": "2026-02-22T21:03:05.947Z"
+      }
+    ],
+    "2026-02-23": [
+      {
+        "id": "pct-4",
+        "question": "A price increases by 20%, then decreases by 20%. What is the net percent change?",
+        "subtopic": "Percents",
+        "solvedAt": "2026-02-23T21:01:25.372Z"
       }
     ]
   }
