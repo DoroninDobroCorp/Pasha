@@ -1,6 +1,6 @@
 "use client";
 
-import { getDailyHistory, getStreakData, getSolvedProblemsForDate, resetStreak } from "@/lib/progress";
+import { getDailyHistory, getStreakData, getSolvedProblemsForDate, resetStreak, TIMEZONE } from "@/lib/progress";
 import { useEffect, useState } from "react";
 
 interface SolvedProblem {
@@ -45,13 +45,13 @@ export default function StreakModal({ onClose }: StreakModalProps) {
     for (let i = 29; i >= 0; i--) {
       const date = new Date(today);
       date.setDate(date.getDate() - i);
-      const dateString = date.toISOString().split('T')[0];
+      const dateString = date.toLocaleDateString('en-CA', { timeZone: TIMEZONE });
       const problems = streakData.dailyHistory[dateString] || 0;
       
       days.push({
         date: dateString,
-        dayOfMonth: date.getDate(),
-        dayName: date.toLocaleDateString('en-US', { weekday: 'short' }),
+        dayOfMonth: parseInt(dateString.split('-')[2], 10),
+        dayName: date.toLocaleDateString('en-US', { weekday: 'short', timeZone: TIMEZONE }),
         problems,
         isToday: i === 0,
       });
@@ -235,7 +235,8 @@ export default function StreakModal({ onClose }: StreakModalProps) {
                       <span className="text-gray-500 text-xs ml-2">
                         {new Date(problem.solvedAt).toLocaleTimeString('en-US', { 
                           hour: '2-digit', 
-                          minute: '2-digit' 
+                          minute: '2-digit',
+                          timeZone: TIMEZONE
                         })}
                       </span>
                     </div>

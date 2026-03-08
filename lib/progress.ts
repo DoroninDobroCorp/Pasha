@@ -201,15 +201,17 @@ async function saveStreakData(data: StreakData): Promise<void> {
   }
 }
 
+// Montenegro timezone — handles CET/CEST (UTC+1 winter, UTC+2 summer) automatically
+export const TIMEZONE = 'Europe/Podgorica';
+
 function getTodayDateString(): string {
-  const today = new Date();
-  return today.toISOString().split('T')[0]; // YYYY-MM-DD
+  return new Date().toLocaleDateString('en-CA', { timeZone: TIMEZONE }); // YYYY-MM-DD
 }
 
 function getYesterdayDateString(): string {
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
-  return yesterday.toISOString().split('T')[0];
+  return yesterday.toLocaleDateString('en-CA', { timeZone: TIMEZONE });
 }
 
 export interface MilestoneResult {

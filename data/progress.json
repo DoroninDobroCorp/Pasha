@@ -4,7 +4,7 @@
     "subtopicProgress": [
       {
         "name": "Divisibility and its properties",
-        "stars": 1
+        "stars": 2
       },
       {
         "name": "Divisibility tests for 3, 4, 8, 9, 11",
@@ -15,7 +15,7 @@
         "stars": 1
       }
     ],
-    "lastAccessed": "2026-01-23T12:00:00.000Z"
+    "lastAccessed": "2026-03-08T12:00:00.000Z"
   },
   {
     "topicId": "nt-2",
@@ -30,7 +30,7 @@
       },
       {
         "name": "Greatest Common Divisor and Least Common Multiple",
-        "stars": 1
+        "stars": 2
       }
     ],
     "lastAccessed": "2026-01-23T12:00:00.000Z"
@@ -82,7 +82,7 @@
     "subtopicProgress": [
       {
         "name": "Absolute value and its properties. Triangle inequality",
-        "stars": 1
+        "stars": 2
       },
       {
         "name": "Rational numbers. Infinite periodic decimals",
@@ -154,7 +154,7 @@
     "subtopicProgress": [
       {
         "name": "Congruent triangles. Criteria for congruence",
-        "stars": 2
+        "stars": 1
       },
       {
         "name": "Angles between parallel lines and a transversal",
