@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getPlayerStats, starsForNextLevel } from "@/lib/progress";
 import { PlayerStats } from "@/types";
-import { streakMilestones } from "@/data/achievements";
+import { achievements, streakMilestones } from "@/data/achievements";
 import Image from "next/image";
 import HeroModal from "./HeroModal";
 import StreakModal from "./StreakModal";
@@ -30,6 +30,7 @@ export default function PlayerHUD() {
   const [showHeroModal, setShowHeroModal] = useState(false);
   const [showStreakModal, setShowStreakModal] = useState(false);
   const [showAchievementsModal, setShowAchievementsModal] = useState(false);
+  const [unlockedCount, setUnlockedCount] = useState<number | null>(null);
 
   useEffect(() => {
     getPlayerStats().then(setStats);
@@ -44,6 +45,7 @@ export default function PlayerHUD() {
           fetch("/pasha/api/streak/"),
         ]);
         const unlocked = await achievementsRes.json();
+        setUnlockedCount(unlocked.length);
         const streakData = await streakRes.json();
 
         for (const milestone of streakMilestones) {
@@ -127,6 +129,9 @@ export default function PlayerHUD() {
           <div className="flex items-center justify-center gap-2">
             <span className="text-2xl">🏆</span>
             <span className="text-yellow-400 font-bold">Достижения</span>
+            {unlockedCount !== null && (
+              <span className="text-yellow-400/80 font-bold text-sm">({unlockedCount}/{achievements.length})</span>
+            )}
           </div>
         </button>
 
