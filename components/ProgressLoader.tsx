@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import {
-  loadStudentProgress,
   resetProgress,
   isProgressLoaded,
   getProgressSummary,
@@ -25,13 +24,6 @@ export default function ProgressLoader() {
     };
     checkProgress();
   }, []);
-
-  const handleLoadProgress = async () => {
-    await loadStudentProgress();
-    setIsLoaded(true);
-    setSummary(getProgressSummary());
-    window.location.reload();
-  };
 
   const handleReset = async () => {
     if (
@@ -88,13 +80,6 @@ export default function ProgressLoader() {
 
           <div className="space-y-2">
             <button
-              onClick={handleLoadProgress}
-              className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors"
-            >
-              Reload Student Progress (61⭐)
-            </button>
-
-            <button
               onClick={handleReset}
               className="w-full py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition-colors"
             >
@@ -111,9 +96,8 @@ export default function ProgressLoader() {
 
           <div className="mt-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
             <p className="text-xs text-green-300">
-              <strong>✓ Auto-saved:</strong> Student progress (61⭐) is loaded
-              automatically and persists between sessions. Grades: 5→3⭐, 4→2⭐,
-              3→1⭐, &lt;3→0⭐
+              <strong>✓ Auto-saved:</strong> Progress persists between sessions
+              automatically.
             </p>
           </div>
         </div>
