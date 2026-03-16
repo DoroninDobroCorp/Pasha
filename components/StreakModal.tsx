@@ -1,6 +1,6 @@
 "use client";
 
-import { getDailyHistory, getStreakData, getSolvedProblemsForDate, resetStreak, TIMEZONE } from "@/lib/progress";
+import { getDailyHistory, getStreakData, getSolvedProblemsForDate, TIMEZONE } from "@/lib/progress";
 import { useEffect, useState } from "react";
 
 interface SolvedProblem {
@@ -81,13 +81,6 @@ export default function StreakModal({ onClose }: StreakModalProps) {
     }
   };
 
-  const handleReset = async () => {
-    if (confirm("Are you sure you want to reset all streak data?")) {
-      await resetStreak();
-      onClose();
-      window.location.reload();
-    }
-  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
@@ -277,15 +270,7 @@ export default function StreakModal({ onClose }: StreakModalProps) {
           )}
         </div>
 
-        {/* Reset Button */}
-        <div className="mt-6 pt-4 border-t border-gray-700">
-          <button
-            onClick={handleReset}
-            className="text-red-400 hover:text-red-300 text-sm transition-colors"
-          >
-            🗑️ Reset all streak data
-          </button>
-        </div>
+
       </div>
     </div>
   );
