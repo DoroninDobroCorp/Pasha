@@ -23,6 +23,20 @@ export const achievements: Achievement[] = [
     hint: "Освой тему НОД и НОК",
   },
   {
+    id: "divisibility_master",
+    title: "Мастер делимости",
+    description: "Освоил делимость и её свойства — числа подчиняются твоей воле!",
+    icon: "/pasha/images/achievements/divisibility_master.png",
+    hint: "Освой тему делимости и её свойств",
+  },
+  {
+    id: "linear_equations_master",
+    title: "Покоритель уравнений",
+    description: "Освоил линейные уравнения и неравенства — алгебра теперь твой верный союзник!",
+    icon: "/pasha/images/achievements/linear_equations_master.png",
+    hint: "Освой тему линейных уравнений и неравенств",
+  },
+  {
     id: "streak_21",
     title: "Блекджек",
     description: "21 день подряд решал задачи. Это не удача — это система!",
