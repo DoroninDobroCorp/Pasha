@@ -1,6 +1,6 @@
 "use client";
 
-import { getDailyHistory, getStreakData, getSolvedProblemsForDate, TIMEZONE } from "@/lib/progress";
+import { formatDateInTimeZone, getStreakData, getSolvedProblemsForDate, TIMEZONE } from "@/lib/progress";
 import { useEffect, useState } from "react";
 
 interface SolvedProblem {
@@ -45,7 +45,7 @@ export default function StreakModal({ onClose }: StreakModalProps) {
     for (let i = 29; i >= 0; i--) {
       const date = new Date(today);
       date.setDate(date.getDate() - i);
-      const dateString = date.toLocaleDateString('en-CA', { timeZone: TIMEZONE });
+      const dateString = formatDateInTimeZone(date);
       const problems = streakData.dailyHistory[dateString] || 0;
       
       days.push({
@@ -62,8 +62,6 @@ export default function StreakModal({ onClose }: StreakModalProps) {
 
   const last30Days = getLast30Days();
   const totalProblems = Object.values(streakData.dailyHistory).reduce((sum, count) => sum + count, 0);
-  const daysActive = Object.keys(streakData.dailyHistory).length;
-
   // Get intensity color based on problems solved
   const getIntensityColor = (problems: number) => {
     if (problems === 0) return "bg-gray-800/50";
