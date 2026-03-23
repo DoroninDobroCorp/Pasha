@@ -216,30 +216,64 @@ async function saveStreakData(data: StreakData): Promise<void> {
 // Montenegro timezone — handles CET/CEST (UTC+1 winter, UTC+2 summer) automatically
 export const TIMEZONE = 'Europe/Podgorica';
 
+export function formatDateInTimeZone(date: Date): string {
+  const formatter = new Intl.DateTimeFormat('en-US', {
+    timeZone: TIMEZONE,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
+  const parts = formatter.formatToParts(date);
+  const year = parts.find((part) => part.type === 'year')?.value;
+  const month = parts.find((part) => part.type === 'month')?.value;
+  const day = parts.find((part) => part.type === 'day')?.value;
+
+  if (!year || !month || !day) {
+    throw new Error('Failed to format date in target timezone');
+  }
+
+  return `${year}-${month}-${day}`;
+}
+
+function isIsoDateString(value: string): boolean {
+  return /^\d{4}-\d{2}-\d{2}$/.test(value);
+}
+
+function getPreviousIsoDate(dateString: string): string | null {
+  if (!isIsoDateString(dateString)) {
+    return null;
+  }
+
+  const date = new Date(`${dateString}T12:00:00.000Z`);
+  if (Number.isNaN(date.getTime())) {
+    return null;
+  }
+
+  date.setUTCDate(date.getUTCDate() - 1);
+  return date.toISOString().slice(0, 10);
+}
+
 function getTodayDateString(): string {
-  return new Date().toLocaleDateString('en-CA', { timeZone: TIMEZONE }); // YYYY-MM-DD
+  return formatDateInTimeZone(new Date());
 }
 
 function getYesterdayDateString(): string {
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  return yesterday.toLocaleDateString('en-CA', { timeZone: TIMEZONE });
+  return formatDateInTimeZone(new Date(Date.now() - 24 * 60 * 60 * 1000));
 }
 
 // Recalculate streak by counting consecutive days backward from `fromDate` in dailyHistory.
 // This is resilient to corruption — dailyHistory is the source of truth.
 function calculateStreakFromHistory(dailyHistory: { [date: string]: number }, fromDate: string): number {
-  let streak = 0;
-  const current = new Date(fromDate + 'T12:00:00Z');
+  if (!isIsoDateString(fromDate)) {
+    return 0;
+  }
 
-  while (true) {
-    const dateStr = current.toISOString().split('T')[0];
-    if (dailyHistory[dateStr] && dailyHistory[dateStr] > 0) {
-      streak++;
-      current.setDate(current.getDate() - 1);
-    } else {
-      break;
-    }
+  let streak = 0;
+  let currentDate: string | null = fromDate;
+
+  while (currentDate && dailyHistory[currentDate] && dailyHistory[currentDate] > 0) {
+    streak++;
+    currentDate = getPreviousIsoDate(currentDate);
   }
 
   return streak;
