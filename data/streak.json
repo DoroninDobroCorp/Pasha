@@ -1,479 +1,98 @@
 {
-  "currentStreak": 51,
-  "lastPracticeDate": "2026-03-16",
-  "problemsToday": 1,
+  "currentStreak": 58,
+  "lastPracticeDate": "2026-03-23",
+  "problemsToday": 5,
   "dailyHistory": {
-    "2026-01-25": 1,
-    "2026-01-26": 1,
-    "2026-01-27": 1,
-    "2026-01-28": 1,
-    "2026-01-29": 1,
-    "2026-01-30": 1,
-    "2026-01-31": 1,
-    "2026-02-01": 1,
-    "2026-02-02": 1,
-    "2026-02-03": 1,
-    "2026-02-04": 1,
-    "2026-02-05": 1,
-    "2026-02-06": 1,
-    "2026-02-07": 1,
-    "2026-02-08": 1,
-    "2026-02-09": 1,
-    "2026-02-10": 1,
-    "2026-02-11": 1,
-    "2026-02-12": 1,
-    "2026-02-13": 1,
-    "2026-02-14": 2,
-    "2026-02-15": 1,
-    "2026-02-16": 1,
-    "2026-02-17": 1,
-    "2026-02-18": 1,
-    "2026-02-19": 1,
-    "2026-02-20": 1,
-    "2026-02-21": 1,
-    "2026-02-22": 1,
-    "2026-02-23": 1,
-    "2026-02-24": 1,
-    "2026-02-25": 1,
-    "2026-02-26": 1,
-    "2026-02-27": 1,
-    "2026-02-28": 1,
-    "2026-03-01": 1,
-    "2026-03-02": 1,
-    "2026-03-03": 1,
-    "2026-03-04": 1,
-    "2026-03-05": 1,
-    "2026-03-06": 1,
-    "2026-03-07": 2,
-    "2026-03-08": 1,
-    "2026-03-09": 1,
-    "2026-03-10": 1,
-    "2026-03-11": 1,
-    "2026-03-12": 1,
-    "2026-03-13": 1,
-    "2026-03-14": 1,
-    "2026-03-15": 1,
-    "2026-03-16": 1
+    "2026-01-25": 5,
+    "2026-01-26": 5,
+    "2026-01-27": 5,
+    "2026-01-28": 5,
+    "2026-01-29": 5,
+    "2026-01-30": 5,
+    "2026-01-31": 5,
+    "2026-02-01": 5,
+    "2026-02-02": 5,
+    "2026-02-03": 5,
+    "2026-02-04": 5,
+    "2026-02-05": 5,
+    "2026-02-06": 5,
+    "2026-02-07": 5,
+    "2026-02-08": 5,
+    "2026-02-09": 5,
+    "2026-02-10": 5,
+    "2026-02-11": 5,
+    "2026-02-12": 5,
+    "2026-02-13": 5,
+    "2026-02-14": 5,
+    "2026-02-15": 5,
+    "2026-02-16": 5,
+    "2026-02-17": 5,
+    "2026-02-18": 5,
+    "2026-02-19": 5,
+    "2026-02-20": 5,
+    "2026-02-21": 5,
+    "2026-02-22": 5,
+    "2026-02-23": 5,
+    "2026-02-24": 5,
+    "2026-02-25": 5,
+    "2026-02-26": 5,
+    "2026-02-27": 5,
+    "2026-02-28": 5,
+    "2026-03-01": 5,
+    "2026-03-02": 5,
+    "2026-03-03": 5,
+    "2026-03-04": 5,
+    "2026-03-05": 5,
+    "2026-03-06": 5,
+    "2026-03-07": 5,
+    "2026-03-08": 5,
+    "2026-03-09": 5,
+    "2026-03-10": 5,
+    "2026-03-11": 5,
+    "2026-03-12": 5,
+    "2026-03-13": 5,
+    "2026-03-14": 5,
+    "2026-03-15": 5,
+    "2026-03-16": 5,
+    "2026-03-17": 5,
+    "2026-03-18": 5,
+    "2026-03-19": 5,
+    "2026-03-20": 5,
+    "2026-03-21": 5,
+    "2026-03-22": 5,
+    "2026-03-23": 5
   },
   "solvedProblems": {
-    "2026-01-25": [
-      {
-        "id": "ineq-3",
-        "question": "Solve: -2x > 10",
-        "subtopic": "Inequalities and operations with them",
-        "solvedAt": "2026-01-25T18:28:28.307Z"
-      }
-    ],
-    "2026-01-26": [
-      {
-        "id": "pct-1",
-        "question": "What is 25% of 80?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-01-26T18:39:37.674Z"
-      }
-    ],
-    "2026-01-27": [
+    "2026-03-22": [
       {
         "id": "pct-3",
         "question": "If 15 is 20% of a number, what is the number?",
         "subtopic": "Percents",
-        "solvedAt": "2026-01-27T20:01:18.338Z"
-      }
-    ],
-    "2026-01-28": [
-      {
-        "id": "pct-10",
-        "question": "A mixture is 30% alcohol. How much water must be added to 20 liters of mixture to reduce concentration to 24%?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-01-28T20:51:27.987Z"
-      }
-    ],
-    "2026-01-29": [
-      {
-        "id": "pct-12",
-        "question": "A bank offers 5% annual interest compounded annually. After 2 years, an account has $1102.50. What was the initial deposit?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-01-29T18:41:24.483Z"
-      }
-    ],
-    "2026-01-30": [
-      {
-        "id": "pct-11",
-        "question": "A store offers 20% off, then takes an additional 25% off the sale price. What single discount is equivalent?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-01-30T21:36:11.154Z"
-      }
-    ],
-    "2026-01-31": [
-      {
-        "id": "pct-6",
-        "question": "The population of a town increased from 25,000 to 30,000. What is the percent increase?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-01-31T18:55:42.339Z"
-      }
-    ],
-    "2026-02-01": [
-      {
-        "id": "abs-1",
-        "question": "Solve: |x - 3| = 5",
-        "subtopic": "Absolute value and its properties",
-        "solvedAt": "2026-02-01T19:30:00.000Z"
-      }
-    ],
-    "2026-02-02": [
-      {
-        "id": "pct-1",
-        "question": "What is 25% of 80?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-02-02T15:57:30.889Z"
-      }
-    ],
-    "2026-02-03": [
-      {
-        "id": "pct-8",
-        "question": "A number is increased by 50%, then decreased by 40%. The result is 18. What was the original number?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-02-03T19:56:16.622Z"
-      }
-    ],
-    "2026-02-04": [
-      {
-        "id": "pct-3",
-        "question": "If 15 is 20% of a number, what is the number?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-02-04T20:37:15.292Z"
-      }
-    ],
-    "2026-02-05": [
-      {
-        "id": "pct-1",
-        "question": "What is 25% of 80?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-02-05T18:44:37.261Z"
-      }
-    ],
-    "2026-02-06": [
-      {
-        "id": "pct-4",
-        "question": "A price increases by 20%, then decreases by 20%. What is the net percent change?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-02-06T21:56:36.322Z"
-      }
-    ],
-    "2026-02-07": [
-      {
-        "id": "pct-3",
-        "question": "If 15 is 20% of a number, what is the number?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-02-07T20:47:24.984Z"
-      }
-    ],
-    "2026-02-08": [
-      {
-        "id": "pct-1",
-        "question": "What is 25% of 80?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-02-08T11:46:49.731Z"
-      }
-    ],
-    "2026-02-09": [
-      {
-        "id": "pct-1",
-        "question": "What is 25% of 80?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-02-09T19:43:12.228Z"
-      }
-    ],
-    "2026-02-10": [
-      {
-        "id": "pct-4",
-        "question": "A price increases by 20%, then decreases by 20%. What is the net percent change?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-02-10T18:20:33.774Z"
-      }
-    ],
-    "2026-02-11": [
-      {
-        "id": "gcdlcm-3",
-        "question": "If GCD(a, b) = 5 and LCM(a, b) = 60, find a × b.",
-        "subtopic": "Greatest Common Divisor and Least Common Multiple",
-        "solvedAt": "2026-02-11T19:50:08.799Z"
-      }
-    ],
-    "2026-02-12": [
-      {
-        "id": "fta-3",
-        "question": "If n = 2^3 × 5^2, what is the value of n?",
-        "subtopic": "Fundamental theorem of arithmetic",
-        "solvedAt": "2026-02-12T18:12:59.732Z"
-      }
-    ],
-    "2026-02-13": [
-      {
-        "id": "prime-2",
-        "question": "What is the smallest prime number greater than 50?",
-        "subtopic": "Prime and composite numbers",
-        "solvedAt": "2026-02-13T21:09:10.660Z"
-      }
-    ],
-    "2026-02-14": [
-      {
-        "id": "gcdlcm-1",
-        "question": "Find GCD(48, 36).",
-        "subtopic": "Greatest Common Divisor and Least Common Multiple",
-        "solvedAt": "2026-02-14T15:51:58.529Z"
+        "solvedAt": "2026-03-22T21:00:54.773Z"
       },
       {
-        "id": "gcdlcm-1",
-        "question": "Find GCD(48, 36).",
-        "subtopic": "Greatest Common Divisor and Least Common Multiple",
-        "solvedAt": "2026-02-14T15:52:11.769Z"
-      }
-    ],
-    "2026-02-15": [
-      {
-        "id": "gcdlcm-2",
-        "question": "Find LCM(12, 18).",
-        "subtopic": "Greatest Common Divisor and Least Common Multiple",
-        "solvedAt": "2026-02-15T16:12:27.355Z"
-      }
-    ],
-    "2026-02-16": [
-      {
-        "id": "gcdlcm-3",
-        "question": "If GCD(a, b) = 5 and LCM(a, b) = 60, find a × b.",
-        "subtopic": "Greatest Common Divisor and Least Common Multiple",
-        "solvedAt": "2026-02-16T19:15:00.000Z"
-      }
-    ],
-    "2026-02-17": [
-      {
-        "id": "gcdlcm-1",
-        "question": "Find GCD(48, 36).",
-        "subtopic": "Greatest Common Divisor and Least Common Multiple",
-        "solvedAt": "2026-02-17T21:01:00.004Z"
-      }
-    ],
-    "2026-02-18": [
-      {
-        "id": "gcdlcm-7",
-        "question": "If LCM(a, 12) = 60 and GCD(a, 12) = 4, find a.",
-        "subtopic": "Greatest Common Divisor and Least Common Multiple",
-        "solvedAt": "2026-02-18T21:02:00.266Z"
-      }
-    ],
-    "2026-02-19": [
-      {
-        "id": "gcdlcm-4",
-        "question": "Find GCD(2023, 2024).",
-        "subtopic": "Greatest Common Divisor and Least Common Multiple",
-        "solvedAt": "2026-02-19T18:29:15.582Z"
-      }
-    ],
-    "2026-02-20": [
-      {
-        "id": "gcdlcm-7",
-        "question": "If LCM(a, 12) = 60 and GCD(a, 12) = 4, find a.",
-        "subtopic": "Greatest Common Divisor and Least Common Multiple",
-        "solvedAt": "2026-02-20T21:00:54.710Z"
-      }
-    ],
-    "2026-02-21": [
-      {
-        "id": "pct-2",
-        "question": "A shirt originally costs $40. It is on sale for 30% off. What is the sale price?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-02-21T21:01:13.771Z"
-      }
-    ],
-    "2026-02-22": [
-      {
-        "id": "pct-8",
-        "question": "A number is increased by 50%, then decreased by 40%. The result is 18. What was the original number?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-02-22T21:03:05.947Z"
-      }
-    ],
-    "2026-02-23": [
-      {
-        "id": "pct-4",
-        "question": "A price increases by 20%, then decreases by 20%. What is the net percent change?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-02-23T21:01:25.372Z"
-      }
-    ],
-    "2026-02-24": [
-      {
-        "id": "pct-8",
-        "question": "A number is increased by 50%, then decreased by 40%. The result is 18. What was the original number?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-02-24T21:00:40.075Z"
-      }
-    ],
-    "2026-02-25": [
-      {
-        "id": "pct-9",
-        "question": "In an election, candidate A got 60% of votes. Candidate A won by 800 votes. How many total votes were cast?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-02-25T21:05:05.220Z"
-      }
-    ],
-    "2026-02-26": [
-      {
-        "id": "pct-5",
-        "question": "40 is what percent of 160?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-02-26T20:59:24.540Z"
-      }
-    ],
-    "2026-02-27": [
-      {
-        "id": "pct-11",
-        "question": "A store offers 20% off, then takes an additional 25% off the sale price. What single discount is equivalent?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-02-27T21:00:41.568Z"
-      }
-    ],
-    "2026-02-28": [
-      {
-        "id": "pct-6",
-        "question": "The population of a town increased from 25,000 to 30,000. What is the percent increase?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-02-28T21:00:15.000Z"
-      }
-    ],
-    "2026-03-01": [
-      {
-        "id": "pct-7",
-        "question": "After a 15% discount, a TV costs $425. What was the original price?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-03-01T21:00:30.972Z"
-      }
-    ],
-    "2026-03-02": [
-      {
-        "id": "gcdlcm-1",
-        "question": "Find GCD(48, 36).",
-        "subtopic": "Greatest Common Divisor and Least Common Multiple",
-        "solvedAt": "2026-03-02T19:51:53.646Z"
-      }
-    ],
-    "2026-03-03": [
-      {
-        "id": "pct-7",
-        "question": "After a 15% discount, a TV costs $425. What was the original price?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-03-03T21:00:24.636Z"
-      }
-    ],
-    "2026-03-04": [
-      {
         "id": "pct-3",
         "question": "If 15 is 20% of a number, what is the number?",
         "subtopic": "Percents",
-        "solvedAt": "2026-03-04T20:21:57.530Z"
-      }
-    ],
-    "2026-03-05": [
-      {
-        "id": "pct-2",
-        "question": "A shirt originally costs $40. It is on sale for 30% off. What is the sale price?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-03-05T21:00:42.022Z"
-      }
-    ],
-    "2026-03-06": [
-      {
-        "id": "pct-12",
-        "question": "A bank offers 5% annual interest compounded annually. After 2 years, an account has $1102.50. What was the initial deposit?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-03-06T23:11:28.730Z"
-      }
-    ],
-    "2026-03-07": [
-      {
-        "id": "pct-12",
-        "question": "A bank offers 5% annual interest compounded annually. After 2 years, an account has $1102.50. What was the initial deposit?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-03-07T00:11:28.730Z"
+        "solvedAt": "2026-03-22T21:01:26.064Z"
       },
       {
-        "id": "pct-8",
-        "question": "A number is increased by 50%, then decreased by 40%. The result is 18. What was the original number?",
+        "id": "pct-3",
+        "question": "If 15 is 20% of a number, what is the number?",
         "subtopic": "Percents",
-        "solvedAt": "2026-03-07T21:00:46.893Z"
-      }
-    ],
-    "2026-03-08": [
-      {
-        "id": "pct-4",
-        "question": "A price increases by 20%, then decreases by 20%. What is the net percent change?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-03-08T21:00:49.367Z"
-      }
-    ],
-    "2026-03-09": [
-      {
-        "id": "pct-6",
-        "question": "The population of a town increased from 25,000 to 30,000. What is the percent increase?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-03-09T21:01:24.528Z"
-      }
-    ],
-    "2026-03-10": [
-      {
-        "id": "pct-5",
-        "question": "40 is what percent of 160?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-03-10T21:00:16.389Z"
-      }
-    ],
-    "2026-03-11": [
-      {
-        "id": "pct-2",
-        "question": "A shirt originally costs $40. It is on sale for 30% off. What is the sale price?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-03-11T21:00:50.132Z"
-      }
-    ],
-    "2026-03-12": [
-      {
-        "id": "gcdlcm-3",
-        "question": "If GCD(a, b) = 5 and LCM(a, b) = 60, find a × b.",
-        "subtopic": "Greatest Common Divisor and Least Common Multiple",
-        "solvedAt": "2026-03-12T21:00:51.299Z"
-      }
-    ],
-    "2026-03-13": [
-      {
-        "id": "pct-2",
-        "question": "A shirt originally costs $40. It is on sale for 30% off. What is the sale price?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-03-13T21:00:35.536Z"
-      }
-    ],
-    "2026-03-14": [
+        "solvedAt": "2026-03-22T21:01:27.432Z"
+      },
       {
         "id": "pct-3",
         "question": "If 15 is 20% of a number, what is the number?",
         "subtopic": "Percents",
-        "solvedAt": "2026-03-14T21:00:50.892Z"
-      }
-    ],
-    "2026-03-15": [
+        "solvedAt": "2026-03-22T21:01:27.754Z"
+      },
       {
-        "id": "pct-8",
-        "question": "A number is increased by 50%, then decreased by 40%. The result is 18. What was the original number?",
+        "id": "pct-3",
+        "question": "If 15 is 20% of a number, what is the number?",
         "subtopic": "Percents",
-        "solvedAt": "2026-03-15T21:00:18.746Z"
-      }
-    ],
-    "2026-03-16": [
-      {
-        "id": "pct-8",
-        "question": "A number is increased by 50%, then decreased by 40%. The result is 18. What was the original number?",
-        "subtopic": "Percents",
-        "solvedAt": "2026-03-16T21:01:11.723Z"
+        "solvedAt": "2026-03-22T21:01:28.735Z"
       }
     ]
   }

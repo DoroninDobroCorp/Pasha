@@ -176,6 +176,18 @@ export async function getStreakData(): Promise<StreakData> {
     if (!data.solvedProblems) {
       data.solvedProblems = {};
     }
+    // Validate streak from history on every read
+    if (data.dailyHistory && data.lastPracticeDate) {
+      const today = getTodayDateString();
+      const yesterday = getYesterdayDateString();
+      // Only recalculate if last practice is today or yesterday (streak still active)
+      if (data.lastPracticeDate === today || data.lastPracticeDate === yesterday) {
+        data.currentStreak = calculateStreakFromHistory(data.dailyHistory, data.lastPracticeDate);
+      } else {
+        // Streak is broken — last practice was more than 1 day ago
+        data.currentStreak = 0;
+      }
+    }
     return data;
   } catch (error) {
     console.error('Failed to load streak data:', error);
@@ -214,6 +226,25 @@ function getYesterdayDateString(): string {
   return yesterday.toLocaleDateString('en-CA', { timeZone: TIMEZONE });
 }
 
+// Recalculate streak by counting consecutive days backward from `fromDate` in dailyHistory.
+// This is resilient to corruption — dailyHistory is the source of truth.
+function calculateStreakFromHistory(dailyHistory: { [date: string]: number }, fromDate: string): number {
+  let streak = 0;
+  const current = new Date(fromDate + 'T12:00:00Z');
+
+  while (true) {
+    const dateStr = current.toISOString().split('T')[0];
+    if (dailyHistory[dateStr] && dailyHistory[dateStr] > 0) {
+      streak++;
+      current.setDate(current.getDate() - 1);
+    } else {
+      break;
+    }
+  }
+
+  return streak;
+}
+
 export interface MilestoneResult {
   achievementId: string | null;
 }
@@ -223,19 +254,10 @@ const STREAK_MILESTONES = [21, 42, 100];
 export async function recordProblemSolved(problemInfo?: { id: string; question: string; subtopic: string }): Promise<MilestoneResult> {
   const streakData = await getStreakData();
   const today = getTodayDateString();
-  const yesterday = getYesterdayDateString();
   
   const previousStreak = streakData.currentStreak;
   
   if (streakData.lastPracticeDate !== today) {
-    if (streakData.lastPracticeDate === yesterday) {
-      streakData.currentStreak += 1;
-    } else if (streakData.lastPracticeDate === "") {
-      streakData.currentStreak = 1;
-    } else {
-      streakData.currentStreak = 1;
-    }
-    
     streakData.problemsToday = 1;
     streakData.lastPracticeDate = today;
   } else {
@@ -243,6 +265,9 @@ export async function recordProblemSolved(problemInfo?: { id: string; question: 
   }
   
   streakData.dailyHistory[today] = streakData.problemsToday;
+  
+  // Recalculate streak from dailyHistory — self-healing, immune to corruption
+  streakData.currentStreak = calculateStreakFromHistory(streakData.dailyHistory, today);
   
   if (problemInfo) {
     if (!streakData.solvedProblems[today]) {
