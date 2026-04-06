@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Алгоритмическое программирование — 10 задач (8–9 класс)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            line-height: 1.7;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #e8edf5 0%, #d0dce8 100%);
+            padding: 24px 16px;
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 12px 48px rgba(0,0,0,0.10);
+            overflow: hidden;
+        }
+
+        /* ── Hero header ── */
+        .header {
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 40%, #2c5364 100%);
+            color: #fff;
+            padding: 44px 36px 36px;
+            text-align: center;
+            position: relative;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px; left: 0; right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #00c9ff, #92fe9d, #00c9ff);
+        }
+        .header .eyebrow {
+            display: inline-block;
+            font-size: 0.78em;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 20px;
+            padding: 4px 18px;
+            margin-bottom: 16px;
+            color: #92fe9d;
+        }
+        .header h1 {
+            font-size: 2.1em;
+            font-weight: 700;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+        .header .subtitle {
+            font-size: 1.05em;
+            opacity: 0.88;
+            max-width: 620px;
+            margin: 0 auto;
+        }
+
+        /* ── Content area ── */
+        .content { padding: 36px 32px 44px; }
+
+        /* ── Intro box ── */
+        .intro-box {
+            background: #f0faf8;
+            border-left: 4px solid #2c5364;
+            padding: 18px 22px;
+            margin-bottom: 32px;
+            border-radius: 6px;
+            font-size: 0.97em;
+            color: #34495e;
+        }
+        .intro-box strong { color: #1a3c4d; }
+
+        /* ── Meta line ── */
+        .meta-line {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 24px;
+            margin-bottom: 30px;
+        }
+        .meta-line .chip {
+            font-size: 0.82em;
+            padding: 4px 14px;
+            border-radius: 16px;
+            font-weight: 600;
+        }
+        .chip-grade  { background: #e3f2fd; color: #1565c0; }
+        .chip-count  { background: #e8f5e9; color: #2e7d32; }
+        .chip-time   { background: #fff3e0; color: #e65100; }
+        .chip-format { background: #f3e5f5; color: #7b1fa2; }
+
+        /* ── Task cards ── */
+        .task-card {
+            border: 1px solid #dce4ea;
+            border-radius: 10px;
+            padding: 20px 22px;
+            margin-bottom: 18px;
+            background: #fff;
+            page-break-inside: avoid;
+            break-inside: avoid;
+            transition: box-shadow 0.2s;
+        }
+        .task-card:hover { box-shadow: 0 4px 18px rgba(44,83,100,0.10); }
+
+        .task-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .task-head-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .task-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px; height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2c5364, #203a43);
+            color: #92fe9d;
+            font-weight: 700;
+            font-size: 0.95em;
+            flex-shrink: 0;
+        }
+        .task-title {
+            font-size: 1.08em;
+            font-weight: 700;
+            color: #1a3c4d;
+        }
+        .task-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .tag {
+            font-size: 0.72em;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .tag-topic  { background: #e3f2fd; color: #1565c0; }
+        .tag-easy   { background: #e8f5e9; color: #388e3c; }
+        .tag-medium { background: #fff8e1; color: #f57f17; }
+        .tag-hard   { background: #fce4ec; color: #c62828; }
+
+        .task-body {
+            font-size: 0.96em;
+            color: #374a58;
+            padding-left: 46px;
+        }
+        .task-body p { margin: 0.3em 0; }
+        .task-body code {
+            background: #eef3f7;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.93em;
+            color: #c0392b;
+        }
+
+        /* ── Footer ── */
+        .footer {
+            text-align: center;
+            padding: 18px 20px;
+            font-size: 0.82em;
+            color: #7f8c8d;
+            border-top: 1px solid #ecf0f1;
+        }
+
+        /* ── Grid table (Task 7) ── */
+        .grid-table {
+            border-collapse: collapse;
+            margin-top: 6px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.93em;
+        }
+        .grid-table td {
+            border: 1px solid #bdc3c7;
+            text-align: center;
+            width: 36px; height: 32px;
+            padding: 4px 8px;
+            color: #2c3e50;
+            background: #f9fbfc;
+        }
+
+        /* ── Print tweaks ── */
+        @media print {
+            body { background: #fff; padding: 0; }
+            .container { box-shadow: none; border-radius: 0; }
+            .header {
+                background: #fff !important;
+                color: #1a3c4d !important;
+            }
+            .header .eyebrow {
+                background: #eee;
+                border-color: #999;
+                color: #1a3c4d;
+            }
+            .header .subtitle { color: #444; }
+            .header::after { display: none; }
+            .task-num {
+                background: #1a3c4d !important;
+                -webkit-print-color-adjust: exact;
+                color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .tag, .chip {
+                -webkit-print-color-adjust: exact;
+                color-adjust: exact;
+                print-color-adjust: exact;
+                border: 1px solid #ccc;
+            }
+            .grid-table td {
+                border: 1px solid #333;
+                -webkit-print-color-adjust: exact;
+                color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .task-card:hover { box-shadow: none; }
+            .footer { page-break-before: avoid; }
+        }
+
+        @page {
+            size: A4;
+            margin: 1.5cm;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- ═══════════ HEADER ═══════════ -->
+    <div class="header">
+        <div class="eyebrow">TLF · 8–9 класс</div>
+        <h1>Алгоритмическое<br>программирование</h1>
+        <div class="subtitle">10 задач на бумаге: алгоритмы, логика, рассуждения — без компьютера</div>
+    </div>
+
+    <div class="content">
+
+        <!-- ═══════════ INTRO ═══════════ -->
+        <div class="intro-box">
+            <p><strong>Инструкция.</strong> Перед тобой 10 задач на алгоритмическое мышление. Решай в тетради: записывай ход рассуждений, промежуточные значения, ответ. Конкретный язык программирования не важен — важна <strong>логика алгоритма</strong>. На каждую задачу отводится примерно 5–12 минут.</p>
+        </div>
+
+        <div class="meta-line">
+            <span class="chip chip-grade">📚 8–9 класс</span>
+            <span class="chip chip-count">📝 10 задач</span>
+            <span class="chip chip-time">⏱ ~80–100 мин</span>
+            <span class="chip chip-format">✏️ решение на бумаге</span>
+        </div>
+
+        <!-- ═══════════ ЗАДАЧА 1 ═══════════ -->
+        <div class="task-card">
+            <div class="task-head">
+                <div class="task-head-left">
+                    <div class="task-num">1</div>
+                    <div class="task-title">Ханойская башня</div>
+                </div>
+                <div class="task-tags">
+                    <span class="tag tag-topic">рекурсия</span>
+                    <span class="tag tag-medium">★★ средняя</span>
+                </div>
+            </div>
+            <div class="task-body">
+                <p>Есть три стержня и <code>n</code> дисков разного размера на первом стержне (меньший лежит на большем). Нужно переместить все диски на третий стержень, двигая по одному диску за ход и никогда не кладя больший диск на меньший.</p>
+                <p>Опиши <strong>рекурсивный</strong> алгоритм решения. Выведи формулу для минимального числа ходов при <code>n</code> дисках. Выполни трассировку для <code>n = 3</code>.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════ ЗАДАЧА 2 ═══════════ -->
+        <div class="task-card">
+            <div class="task-head">
+                <div class="task-head-left">
+                    <div class="task-num">2</div>
+                    <div class="task-title">Лестница монетами</div>
+                </div>
+                <div class="task-tags">
+                    <span class="tag tag-topic">арифметика · неравенства</span>
+                    <span class="tag tag-medium">★★ средняя</span>
+                </div>
+            </div>
+            <div class="task-body">
+                <p>У тебя <code>n</code> монет. Ты строишь лестницу: 1-я ступенька — 1 монета, 2-я — 2 монеты, 3-я — 3 и т.д. Какое максимальное число <strong>полных</strong> ступенек можно построить?</p>
+                <p>Опиши алгоритм и найди ответ для <code>n = 31</code>.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════ ЗАДАЧА 3 ═══════════ -->
+        <div class="task-card">
+            <div class="task-head">
+                <div class="task-head-left">
+                    <div class="task-num">3</div>
+                    <div class="task-title">Скобочная проверка</div>
+                </div>
+                <div class="task-tags">
+                    <span class="tag tag-topic">строки · стек</span>
+                    <span class="tag tag-medium">★★ средняя</span>
+                </div>
+            </div>
+            <div class="task-body">
+                <p>Дана строка, содержащая только символы <code>(</code> и <code>)</code>. Опиши алгоритм, который определяет, правильная ли скобочная последовательность (каждой открывающей соответствует закрывающая и нет «лишних»).</p>
+                <p>Проверь вручную строки: <code>(()())</code> и <code>())(</code>.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════ ЗАДАЧА 4 ═══════════ -->
+        <div class="task-card">
+            <div class="task-head">
+                <div class="task-head-left">
+                    <div class="task-num">4</div>
+                    <div class="task-title">Шахматная ладья</div>
+                </div>
+                <div class="task-tags">
+                    <span class="tag tag-topic">координаты · подсчёт</span>
+                    <span class="tag tag-easy">★ лёгкая</span>
+                </div>
+            </div>
+            <div class="task-body">
+                <p>Ладья стоит на клетке <code>(r, c)</code> доски <code>8×8</code> (строки и столбцы нумеруются от 1 до 8). На доске расставлены <code>k</code> пешек. Ладья бьёт по горизонтали и вертикали до первой преграды.</p>
+                <p>Опиши алгоритм, который по координатам ладьи и списку пешек подсчитывает, сколько клеток ладья может атаковать. Покажи работу для ладьи на <code>(4, 4)</code> и пешек <code>[(4, 2), (6, 4)]</code>.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════ ЗАДАЧА 5 ═══════════ -->
+        <div class="task-card">
+            <div class="task-head">
+                <div class="task-head-left">
+                    <div class="task-num">5</div>
+                    <div class="task-title">Палиндром за одно удаление</div>
+                </div>
+                <div class="task-tags">
+                    <span class="tag tag-topic">строки · два указателя</span>
+                    <span class="tag tag-medium">★★ средняя</span>
+                </div>
+            </div>
+            <div class="task-body">
+                <p>Строка — палиндром, если читается одинаково слева направо и справа налево. Дана строка <code>s</code> из строчных латинских букв. Можно ли удалить из неё <strong>не более одной</strong> буквы так, чтобы получился палиндром?</p>
+                <p>Опиши алгоритм (не перебор всех вариантов!) и проверь на <code>s = "abcca"</code> и <code>s = "abcda"</code>.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════ ЗАДАЧА 6 ═══════════ -->
+        <div class="task-card">
+            <div class="task-head">
+                <div class="task-head-left">
+                    <div class="task-num">6</div>
+                    <div class="task-title">Максимум без сортировки</div>
+                </div>
+                <div class="task-tags">
+                    <span class="tag tag-topic">массивы · однопроходность</span>
+                    <span class="tag tag-easy">★ лёгкая</span>
+                </div>
+            </div>
+            <div class="task-body">
+                <p>Дан массив из <code>n</code> целых чисел (могут быть отрицательные). За один проход по массиву найди <strong>два наибольших элемента с различными значениями</strong> (т.е. первый и второй максимум).</p>
+                <p>Запиши алгоритм и покажи трассировку для массива <code>[3, 1, 7, 7, 5, 2]</code>.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════ ЗАДАЧА 7 ═══════════ -->
+        <div class="task-card">
+            <div class="task-head">
+                <div class="task-head-left">
+                    <div class="task-num">7</div>
+                    <div class="task-title">Робот-собиратель</div>
+                </div>
+                <div class="task-tags">
+                    <span class="tag tag-topic">ДП · сетка</span>
+                    <span class="tag tag-hard">★★★ сложная</span>
+                </div>
+            </div>
+            <div class="task-body">
+                <p>Робот стоит в левом верхнем углу поля <code>3×4</code>. Он может двигаться только <strong>вправо</strong> или <strong>вниз</strong>. В каждой клетке лежит число монет (см. таблицу). Робот собирает монеты, по которым проходит.</p>
+                <p>Найди путь, дающий <strong>максимальную сумму</strong>, и объясни, как ты его нашёл.</p>
+                <table class="grid-table" style="margin-top:6px;">
+                    <tr><td>1</td><td>3</td><td>1</td><td>2</td></tr>
+                    <tr><td>2</td><td>1</td><td>4</td><td>1</td></tr>
+                    <tr><td>1</td><td>5</td><td>2</td><td>3</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- ═══════════ ЗАДАЧА 8 ═══════════ -->
+        <div class="task-card">
+            <div class="task-head">
+                <div class="task-head-left">
+                    <div class="task-num">8</div>
+                    <div class="task-title">Двоичный поиск ответа</div>
+                </div>
+                <div class="task-tags">
+                    <span class="tag tag-topic">бинарный поиск</span>
+                    <span class="tag tag-medium">★★ средняя</span>
+                </div>
+            </div>
+            <div class="task-body">
+                <p>Загадано целое число от <code>1</code> до <code>1000</code>. Ты можешь задавать вопросы «число ≤ X?» (ответ: да/нет). Какое <strong>минимальное</strong> число вопросов гарантирует нахождение числа?</p>
+                <p>Опиши стратегию и покажи пример поиска числа <code>613</code>.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════ ЗАДАЧА 9 ═══════════ -->
+        <div class="task-card">
+            <div class="task-head">
+                <div class="task-head-left">
+                    <div class="task-num">9</div>
+                    <div class="task-title">Инвариант чётности</div>
+                </div>
+                <div class="task-tags">
+                    <span class="tag tag-topic">инварианты · чётность</span>
+                    <span class="tag tag-hard">★★★ сложная</span>
+                </div>
+            </div>
+            <div class="task-body">
+                <p>На доске написаны числа <code>1, 2, 3, …, 20</code>. За один ход разрешается стереть любые два числа <code>a</code> и <code>b</code> и записать вместо них <code>|a − b|</code>. Повторяем, пока не останется одно число.</p>
+                <p>Может ли последнее число оказаться равным <code>0</code>? А равным <code>1</code>? Обоснуй ответ, используя понятие инварианта.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════ ЗАДАЧА 10 ═══════════ -->
+        <div class="task-card">
+            <div class="task-head">
+                <div class="task-head-left">
+                    <div class="task-num">10</div>
+                    <div class="task-title">Кодирование длин серий</div>
+                </div>
+                <div class="task-tags">
+                    <span class="tag tag-topic">строки · сжатие</span>
+                    <span class="tag tag-medium">★★ средняя</span>
+                </div>
+            </div>
+            <div class="task-body">
+                <p>RLE-кодирование заменяет повторяющиеся символы на пару «символ + количество». Например: <code>"aaabbcdddd" → "a3b2c1d4"</code>.</p>
+                <p>Опиши алгоритм RLE-кодирования для произвольной строки. Закодируй строку <code>"xxxyyzzzzzxa"</code> и определи, в каких случаях RLE увеличивает длину строки.</p>
+            </div>
+        </div>
+
+    </div><!-- /content -->
+
+    <div class="footer">
+        Алгоритмическое программирование · TLF 8–9 класс · Решение на бумаге
+    </div>
+
+</div><!-- /container -->
+</body>
+</html>
