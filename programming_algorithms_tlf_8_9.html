@@ -154,6 +154,7 @@
         .tag-easy   { background: #e8f5e9; color: #388e3c; }
         .tag-medium { background: #fff8e1; color: #f57f17; }
         .tag-hard   { background: #fce4ec; color: #c62828; }
+        .tag-pts    { background: #ede7f6; color: #4527a0; }
 
         .task-body {
             font-size: 0.96em;
@@ -229,6 +230,8 @@
                 print-color-adjust: exact;
             }
             .task-card:hover { box-shadow: none; }
+            .task-card { margin-bottom: 12px; }
+            body { line-height: 1.55; }
             .footer { page-break-before: avoid; }
         }
 
@@ -252,80 +255,29 @@
 
         <!-- ═══════════ INTRO ═══════════ -->
         <div class="intro-box">
-            <p><strong>Инструкция.</strong> Перед тобой 10 задач на алгоритмическое мышление. Решай в тетради: записывай ход рассуждений, промежуточные значения, ответ. Конкретный язык программирования не важен — важна <strong>логика алгоритма</strong>. Записывай алгоритмы в виде пошагового описания или псевдокода. На каждую задачу отводится примерно 6–10 минут.</p>
+            <p><strong>Инструкция.</strong> Перед тобой 10 задач на алгоритмическое мышление. Решай в тетради: записывай ход рассуждений, промежуточные значения, ответ. Конкретный язык программирования не важен — важна <strong>логика алгоритма</strong>. Записывай алгоритмы в виде пошагового описания или псевдокода. На каждую задачу отводится примерно 8–12 минут.</p>
         </div>
 
         <div class="meta-line">
             <span class="chip chip-grade">📚 8–9 класс</span>
             <span class="chip chip-count">📝 10 задач</span>
-            <span class="chip chip-time">⏱ ~60–100 мин</span>
+            <span class="chip chip-time">⏱ ~80–120 мин</span>
             <span class="chip chip-format">✏️ решение на бумаге</span>
         </div>
+
+        <p style="font-size:0.88em; color:#607d8b; margin-bottom:24px; font-style:italic;">Задачи расположены от простых к сложным: ★ → ★★ → ★★★. Всего 100 баллов (★ = 6, ★★ = 10, ★★★ = 12).</p>
 
         <!-- ═══════════ ЗАДАЧА 1 ═══════════ -->
         <div class="task-card">
             <div class="task-head">
                 <div class="task-head-left">
                     <div class="task-num">1</div>
-                    <div class="task-title">Генерация перестановок</div>
-                </div>
-                <div class="task-tags">
-                    <span class="tag tag-topic">рекурсия · перебор</span>
-                    <span class="tag tag-medium">★★ средняя</span>
-                </div>
-            </div>
-            <div class="task-body">
-                <p>Дано множество из <code>n</code> различных элементов, например <code>{1, 2, 3}</code>. Перестановка — это расположение всех элементов в определённом порядке (например, <code>[2, 3, 1]</code>).</p>
-                <p>Опиши <strong>рекурсивный</strong> алгоритм, который генерирует <strong>все</strong> перестановки множества. Нарисуй <strong>дерево рекурсии</strong> для <code>{1, 2, 3}</code> и выпиши все получившиеся перестановки. Сколько перестановок будет для множества из <code>n</code> элементов? Обоснуй.</p>
-            </div>
-        </div>
-
-        <!-- ═══════════ ЗАДАЧА 2 ═══════════ -->
-        <div class="task-card">
-            <div class="task-head">
-                <div class="task-head-left">
-                    <div class="task-num">2</div>
-                    <div class="task-title">Кратчайший путь в графе</div>
-                </div>
-                <div class="task-tags">
-                    <span class="tag tag-topic">графы · BFS</span>
-                    <span class="tag tag-medium">★★ средняя</span>
-                </div>
-            </div>
-            <div class="task-body">
-                <p>Дан неориентированный граф из 6 вершин, заданный списком рёбер: <code>(1,2), (1,3), (2,4), (3,4), (3,5), (4,6), (5,6)</code>.</p>
-                <p>Опиши алгоритм <strong>поиска в ширину</strong> (BFS) и найди кратчайший путь из вершины <code>1</code> в вершину <code>6</code>. Покажи трассировку: на каждом шаге выписывай содержимое очереди и множество посещённых вершин.</p>
-            </div>
-        </div>
-
-        <!-- ═══════════ ЗАДАЧА 3 ═══════════ -->
-        <div class="task-card">
-            <div class="task-head">
-                <div class="task-head-left">
-                    <div class="task-num">3</div>
-                    <div class="task-title">Скобочная проверка</div>
-                </div>
-                <div class="task-tags">
-                    <span class="tag tag-topic">строки · стек</span>
-                    <span class="tag tag-medium">★★ средняя</span>
-                </div>
-            </div>
-            <div class="task-body">
-                <p>Дана строка, содержащая только символы <code>(</code> и <code>)</code>. Опиши алгоритм, который определяет, правильная ли скобочная последовательность (каждой открывающей соответствует закрывающая и нет «лишних»).</p>
-                <p>Проверь вручную строки: <code>(()())</code> и <code>())(</code>.</p>
-            </div>
-        </div>
-
-        <!-- ═══════════ ЗАДАЧА 4 ═══════════ -->
-        <div class="task-card">
-            <div class="task-head">
-                <div class="task-head-left">
-                    <div class="task-num">4</div>
                     <div class="task-title">Шахматная ладья</div>
                 </div>
                 <div class="task-tags">
                     <span class="tag tag-topic">координаты · подсчёт</span>
                     <span class="tag tag-easy">★ лёгкая</span>
+                    <span class="tag tag-pts">6 б.</span>
                 </div>
             </div>
             <div class="task-body">
@@ -334,21 +286,79 @@
             </div>
         </div>
 
+        <!-- ═══════════ ЗАДАЧА 2 ═══════════ -->
+        <div class="task-card">
+            <div class="task-head">
+                <div class="task-head-left">
+                    <div class="task-num">2</div>
+                    <div class="task-title">Кодирование длин серий</div>
+                </div>
+                <div class="task-tags">
+                    <span class="tag tag-topic">строки · сжатие</span>
+                    <span class="tag tag-easy">★ лёгкая</span>
+                    <span class="tag tag-pts">6 б.</span>
+                </div>
+            </div>
+            <div class="task-body">
+                <p>RLE-кодирование заменяет повторяющиеся символы на пару «символ + количество». Например: <code>"aaabbcdddd" → "a3b2c1d4"</code>.</p>
+                <p>Опиши алгоритм RLE-кодирования для произвольной строки. Закодируй строку <code>"xxxyyzzzzzxa"</code> и определи, в каких случаях RLE увеличивает длину строки.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════ ЗАДАЧА 3 ═══════════ -->
+        <div class="task-card">
+            <div class="task-head">
+                <div class="task-head-left">
+                    <div class="task-num">3</div>
+                    <div class="task-title">Генерация перестановок</div>
+                </div>
+                <div class="task-tags">
+                    <span class="tag tag-topic">рекурсия · перебор</span>
+                    <span class="tag tag-hard">★★★ сложная</span>
+                    <span class="tag tag-pts">12 б.</span>
+                </div>
+            </div>
+            <div class="task-body">
+                <p>Дано множество из <code>n</code> различных элементов, например <code>{1, 2, 3}</code>. Перестановка — это расположение всех элементов в определённом порядке (например, <code>[2, 3, 1]</code>).</p>
+                <p>Опиши <strong>рекурсивный</strong> алгоритм, который генерирует <strong>все</strong> перестановки множества. Нарисуй <strong>дерево рекурсии</strong> для <code>{1, 2, 3}</code> и выпиши все получившиеся перестановки. Сколько перестановок будет для множества из <code>n</code> элементов? Обоснуй.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════ ЗАДАЧА 4 ═══════════ -->
+        <div class="task-card">
+            <div class="task-head">
+                <div class="task-head-left">
+                    <div class="task-num">4</div>
+                    <div class="task-title">Скобочная проверка</div>
+                </div>
+                <div class="task-tags">
+                    <span class="tag tag-topic">строки · стек</span>
+                    <span class="tag tag-medium">★★ средняя</span>
+                    <span class="tag tag-pts">10 б.</span>
+                </div>
+            </div>
+            <div class="task-body">
+                <p>Дана строка, содержащая только символы <code>(</code>, <code>)</code>, <code>[</code>, <code>]</code>, <code>{</code>, <code>}</code>. Скобочная последовательность <strong>правильная</strong>, если каждой открывающей скобке соответствует закрывающая того же типа, и скобки корректно вложены друг в друга.</p>
+                <p>Опиши алгоритм проверки с использованием <strong>стека</strong>. Проверь вручную строки: <code>{[()()]}</code> и <code>{[(])}</code>. Объясни, почему простого счётчика здесь недостаточно.</p>
+            </div>
+        </div>
+
         <!-- ═══════════ ЗАДАЧА 5 ═══════════ -->
         <div class="task-card">
             <div class="task-head">
                 <div class="task-head-left">
                     <div class="task-num">5</div>
-                    <div class="task-title">Палиндром за одно удаление</div>
+                    <div class="task-title">Кратчайший путь в графе</div>
                 </div>
                 <div class="task-tags">
-                    <span class="tag tag-topic">строки · два указателя</span>
+                    <span class="tag tag-topic">графы · BFS</span>
                     <span class="tag tag-medium">★★ средняя</span>
+                    <span class="tag tag-pts">10 б.</span>
                 </div>
             </div>
             <div class="task-body">
-                <p>Строка — палиндром, если читается одинаково слева направо и справа налево. Дана строка <code>s</code> из строчных латинских букв. Можно ли удалить из неё <strong>не более одной</strong> буквы так, чтобы получился палиндром?</p>
-                <p>Опиши алгоритм (не перебор всех вариантов!) и проверь на <code>s = "abcca"</code> и <code>s = "abcda"</code>.</p>
+                <p>Дан неориентированный граф из 6 вершин, заданный списком рёбер: <code>(1,2), (1,3), (2,4), (3,4), (3,5), (4,6), (5,6)</code>.</p>
+                <p>Опиши алгоритм <strong>поиска в ширину</strong> (BFS) и найди кратчайший путь из вершины <code>1</code> в вершину <code>6</code>. Покажи трассировку: на каждом шаге выписывай содержимое очереди и множество посещённых вершин.</p>
             </div>
         </div>
 
@@ -357,17 +367,17 @@
             <div class="task-head">
                 <div class="task-head-left">
                     <div class="task-num">6</div>
-                    <div class="task-title">Максимальный подотрезок</div>
+                    <div class="task-title">Палиндром за одно удаление</div>
                 </div>
                 <div class="task-tags">
-                    <span class="tag tag-topic">массивы · однопроходность</span>
-                    <span class="tag tag-hard">★★★ сложная</span>
+                    <span class="tag tag-topic">строки · два указателя</span>
+                    <span class="tag tag-medium">★★ средняя</span>
+                    <span class="tag tag-pts">10 б.</span>
                 </div>
             </div>
             <div class="task-body">
-                <p>Дан массив целых чисел (могут быть отрицательные). Найди <strong>непрерывный подотрезок</strong> (подряд идущие элементы) с наибольшей суммой. Алгоритм должен работать за <strong>один проход</strong> по массиву.</p>
-                <p><em>Подсказка:</em> на каждом шаге решай — выгоднее продолжить текущий подотрезок или начать новый с текущего элемента.</p>
-                <p>Запиши алгоритм и покажи трассировку для массива <code>[2, -3, 4, -1, 2, 1, -5, 4]</code>.</p>
+                <p>Строка — палиндром, если читается одинаково слева направо и справа налево. Дана строка <code>s</code> из строчных латинских букв. Можно ли удалить из неё <strong>не более одной</strong> буквы так, чтобы получился палиндром?</p>
+                <p>Опиши алгоритм (не перебор всех вариантов!) и проверь на <code>s = "abcca"</code> и <code>s = "abcda"</code>.</p>
             </div>
         </div>
 
@@ -376,11 +386,51 @@
             <div class="task-head">
                 <div class="task-head-left">
                     <div class="task-num">7</div>
+                    <div class="task-title">Расписание без конфликтов</div>
+                </div>
+                <div class="task-tags">
+                    <span class="tag tag-topic">жадный алгоритм</span>
+                    <span class="tag tag-medium">★★ средняя</span>
+                    <span class="tag tag-pts">10 б.</span>
+                </div>
+            </div>
+            <div class="task-body">
+                <p>Дан список из 7 мероприятий, каждое задано парой <code>(начало, конец)</code>: <code>(1,4), (2,5), (3,6), (4,7), (6,8), (5,9), (8,10)</code>. Два мероприятия <strong>совместимы</strong>, если их интервалы не пересекаются (одно может начаться ровно тогда, когда другое кончилось).</p>
+                <p>Опиши <strong>жадный алгоритм</strong>, который выбирает наибольшее количество совместимых мероприятий. Объясни, по какому критерию жадный выбор оптимален. Покажи работу алгоритма на данном примере.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════ ЗАДАЧА 8 ═══════════ -->
+        <div class="task-card">
+            <div class="task-head">
+                <div class="task-head-left">
+                    <div class="task-num">8</div>
+                    <div class="task-title">Максимальный подотрезок</div>
+                </div>
+                <div class="task-tags">
+                    <span class="tag tag-topic">массивы · однопроходность</span>
+                    <span class="tag tag-hard">★★★ сложная</span>
+                    <span class="tag tag-pts">12 б.</span>
+                </div>
+            </div>
+            <div class="task-body">
+                <p>Дан массив целых чисел (могут быть отрицательные). Найди <strong>непрерывный подотрезок</strong> (подряд идущие элементы) с наибольшей суммой. Алгоритм должен работать за <strong>один проход</strong> по массиву.</p>
+                <p><em>Подсказка:</em> попробуй отслеживать промежуточную сумму. Когда накопленное становится невыгодным?</p>
+                <p>Запиши алгоритм и покажи трассировку для массива <code>[2, -3, 4, -1, 2, 1, -5, 4]</code>.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════ ЗАДАЧА 9 ═══════════ -->
+        <div class="task-card">
+            <div class="task-head">
+                <div class="task-head-left">
+                    <div class="task-num">9</div>
                     <div class="task-title">Робот-собиратель</div>
                 </div>
                 <div class="task-tags">
                     <span class="tag tag-topic">ДП · сетка</span>
                     <span class="tag tag-hard">★★★ сложная</span>
+                    <span class="tag tag-pts">12 б.</span>
                 </div>
             </div>
             <div class="task-body">
@@ -394,57 +444,22 @@
             </div>
         </div>
 
-        <!-- ═══════════ ЗАДАЧА 8 ═══════════ -->
-        <div class="task-card">
-            <div class="task-head">
-                <div class="task-head-left">
-                    <div class="task-num">8</div>
-                    <div class="task-title">Двоичный поиск ответа: разрезание верёвок</div>
-                </div>
-                <div class="task-tags">
-                    <span class="tag tag-topic">бинарный поиск · моделирование</span>
-                    <span class="tag tag-hard">★★★ сложная</span>
-                </div>
-            </div>
-            <div class="task-body">
-                <p>Есть 4 верёвки длиной <code>10, 8, 6, 4</code> метров. Нужно нарезать из них ровно <code>K = 7</code> кусков одинаковой целой длины <code>d</code> (остатки выбрасываются). Из верёвки длины <code>L</code> получается <code>⌊L/d⌋</code> кусков.</p>
-                <p>Какова <strong>максимальная</strong> длина <code>d</code>? Объясни, почему для решения подходит <strong>двоичный поиск по ответу</strong>: что является ответом, как проверить допустимость, почему выполняется свойство монотонности. Покажи трассировку поиска.</p>
-            </div>
-        </div>
-
-        <!-- ═══════════ ЗАДАЧА 9 ═══════════ -->
-        <div class="task-card">
-            <div class="task-head">
-                <div class="task-head-left">
-                    <div class="task-num">9</div>
-                    <div class="task-title">Расписание без конфликтов</div>
-                </div>
-                <div class="task-tags">
-                    <span class="tag tag-topic">жадный алгоритм</span>
-                    <span class="tag tag-hard">★★★ сложная</span>
-                </div>
-            </div>
-            <div class="task-body">
-                <p>Дан список из 7 мероприятий, каждое задано парой <code>(начало, конец)</code>: <code>(1,4), (2,5), (3,6), (4,7), (6,8), (5,9), (8,10)</code>. Два мероприятия <strong>совместимы</strong>, если их интервалы не пересекаются (одно может начаться ровно тогда, когда другое кончилось).</p>
-                <p>Опиши <strong>жадный алгоритм</strong>, который выбирает наибольшее количество совместимых мероприятий. Объясни, по какому критерию жадный выбор оптимален. Покажи работу алгоритма на данном примере.</p>
-            </div>
-        </div>
-
         <!-- ═══════════ ЗАДАЧА 10 ═══════════ -->
         <div class="task-card">
             <div class="task-head">
                 <div class="task-head-left">
                     <div class="task-num">10</div>
-                    <div class="task-title">Кодирование длин серий</div>
+                    <div class="task-title">Двоичный поиск ответа: разрезание верёвок</div>
                 </div>
                 <div class="task-tags">
-                    <span class="tag tag-topic">строки · сжатие</span>
-                    <span class="tag tag-medium">★★ средняя</span>
+                    <span class="tag tag-topic">бинарный поиск · моделирование</span>
+                    <span class="tag tag-hard">★★★ сложная</span>
+                    <span class="tag tag-pts">12 б.</span>
                 </div>
             </div>
             <div class="task-body">
-                <p>RLE-кодирование заменяет повторяющиеся символы на пару «символ + количество». Например: <code>"aaabbcdddd" → "a3b2c1d4"</code>.</p>
-                <p>Опиши алгоритм RLE-кодирования для произвольной строки. Закодируй строку <code>"xxxyyzzzzzxa"</code> и определи, в каких случаях RLE увеличивает длину строки.</p>
+                <p>Есть 4 верёвки длиной <code>10, 8, 6, 4</code> метров. Нужно нарезать из них ровно <code>K = 7</code> кусков одинаковой целой длины <code>d</code> (остатки выбрасываются). Из верёвки длины <code>L</code> получается <code>⌊L/d⌋</code> кусков.</p>
+                <p>Какова <strong>максимальная</strong> длина <code>d</code>? Объясни, почему для решения подходит <strong>двоичный поиск по ответу</strong>: что является ответом, как проверить допустимость, почему выполняется свойство монотонности. Покажи трассировку поиска.</p>
             </div>
         </div>
 
