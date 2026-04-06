@@ -195,6 +195,16 @@
             color: #2c3e50;
             background: #f9fbfc;
         }
+        .grid-table th {
+            border: 1px solid #bdc3c7;
+            text-align: center;
+            width: 36px; height: 28px;
+            padding: 3px 8px;
+            font-size: 0.82em;
+            font-weight: 600;
+            color: #607d8b;
+            background: #ecf0f1;
+        }
 
         /* ── Print tweaks ── */
         @media print {
@@ -224,6 +234,12 @@
                 border: 1px solid #ccc;
             }
             .grid-table td {
+                border: 1px solid #333;
+                -webkit-print-color-adjust: exact;
+                color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .grid-table th {
                 border: 1px solid #333;
                 -webkit-print-color-adjust: exact;
                 color-adjust: exact;
@@ -259,10 +275,10 @@
         </div>
 
         <div class="meta-line">
-            <span class="chip chip-grade">📚 8–9 класс</span>
-            <span class="chip chip-count">📝 10 задач</span>
-            <span class="chip chip-time">⏱ ~80–120 мин</span>
-            <span class="chip chip-format">✏️ решение на бумаге</span>
+            <span class="chip chip-grade">Класс: 8–9</span>
+            <span class="chip chip-count">Задач: 10</span>
+            <span class="chip chip-time">Время: ~80–120 мин</span>
+            <span class="chip chip-format">Формат: решение на бумаге</span>
         </div>
 
         <p style="font-size:0.88em; color:#607d8b; margin-bottom:24px; font-style:italic;">Задачи расположены от простых к сложным: ★ → ★★ → ★★★. Всего 100 баллов: 2&nbsp;× ★ по 6&nbsp;б., 4&nbsp;× ★★ по 10&nbsp;б., 4&nbsp;× ★★★ по 12&nbsp;б.</p>
@@ -301,7 +317,7 @@
             </div>
             <div class="task-body">
                 <p>RLE-кодирование заменяет повторяющиеся символы на пару «символ + количество». Например: <code>"aaabbcdddd" → "a3b2c1d4"</code>.</p>
-                <p>Опиши алгоритм RLE-кодирования для произвольной строки. Закодируй строку <code>"xxxyyzzzzzxa"</code> и определи, в каких случаях RLE увеличивает длину строки.</p>
+                <p>Опиши алгоритм RLE-кодирования для произвольной строки. Закодируй строку <code>"xxxyyzzzzzxa"</code>. Затем приведи пример строки, для которой RLE-код <strong>длиннее</strong> оригинала, и сформулируй точное условие на строку, при котором это происходит.</p>
             </div>
         </div>
 
@@ -405,18 +421,19 @@
             <div class="task-head">
                 <div class="task-head-left">
                     <div class="task-num">8</div>
-                    <div class="task-title">Максимальный подотрезок</div>
+                    <div class="task-title">Мажоритарный элемент</div>
                 </div>
                 <div class="task-tags">
-                    <span class="tag tag-topic">массивы · однопроходность</span>
+                    <span class="tag tag-topic">массивы · инвариант</span>
                     <span class="tag tag-hard">★★★ сложная</span>
                     <span class="tag tag-pts">12 б.</span>
                 </div>
             </div>
             <div class="task-body">
-                <p>Дан массив целых чисел (могут быть отрицательные). Найди <strong>непрерывный подотрезок</strong> (подряд идущие элементы) с наибольшей суммой. Алгоритм должен работать за <strong>один проход</strong> по массиву.</p>
-                <p><em>Подсказка:</em> подумай, что делать, если промежуточный результат стал отрицательным.</p>
-                <p>Запиши алгоритм и покажи трассировку для массива <code>[2, -3, 4, -1, 2, 1, -5, 4]</code>.</p>
+                <p>В массиве из <code>n</code> чисел <strong>мажоритарный элемент</strong> — это значение, которое встречается строго больше <code>n/2</code> раз (если оно существует).</p>
+                <p>Опиши алгоритм, который находит <strong>кандидата</strong> в мажоритарный элемент за один проход, используя только две переменные (без дополнительного массива или хеш-таблицы). Объясни, почему кандидат может не быть настоящим мажоритарным элементом, и как это проверить вторым проходом.</p>
+                <p><em>Подсказка:</em> представь «голосование» — что произойдёт, если отменять пары различных элементов?</p>
+                <p>Покажи трассировку для массива <code>[3, 3, 4, 2, 3, 3, 2, 3, 3]</code>.</p>
             </div>
         </div>
 
@@ -434,12 +451,13 @@
                 </div>
             </div>
             <div class="task-body">
-                <p>Робот стоит в левом верхнем углу поля <code>3×4</code>. Он может двигаться только <strong>вправо</strong> или <strong>вниз</strong>. В каждой клетке лежит число монет (см. таблицу). Робот собирает монеты, по которым проходит.</p>
+                <p>Робот стоит в левом верхнем углу поля <code>3×4</code> (3 строки, 4 столбца; нумерация с 0). Он может двигаться только <strong>вправо</strong> или <strong>вниз</strong>. В каждой клетке лежит число монет (см. таблицу). Робот собирает монеты, по которым проходит.</p>
                 <p>Найди путь, дающий <strong>максимальную сумму</strong>, и объясни, как ты его нашёл.</p>
                 <table class="grid-table" style="margin-top:6px;">
-                    <tr><td>1</td><td>3</td><td>1</td><td>2</td></tr>
-                    <tr><td>2</td><td>1</td><td>4</td><td>1</td></tr>
-                    <tr><td>1</td><td>5</td><td>2</td><td>3</td></tr>
+                    <tr><th></th><th>j=0</th><th>j=1</th><th>j=2</th><th>j=3</th></tr>
+                    <tr><th>i=0</th><td>1</td><td>3</td><td>1</td><td>2</td></tr>
+                    <tr><th>i=1</th><td>2</td><td>1</td><td>4</td><td>1</td></tr>
+                    <tr><th>i=2</th><td>1</td><td>5</td><td>2</td><td>3</td></tr>
                 </table>
             </div>
         </div>
