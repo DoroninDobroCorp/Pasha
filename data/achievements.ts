@@ -37,6 +37,13 @@ export const achievements: Achievement[] = [
     hint: "Освой тему линейных уравнений и неравенств",
   },
   {
+    id: "congruent_triangles_master",
+    title: "Равенство треугольников",
+    description: "Освоил тему равенства треугольников — теперь признаки равенства превращаются в безупречные доказательства!",
+    icon: "/pasha/images/achievements/congruent_triangles_master.png",
+    hint: "Освой тему равенства треугольников",
+  },
+  {
     id: "streak_21",
     title: "Блекджек",
     description: "21 день подряд решал задачи. Это не удача — это система!",
