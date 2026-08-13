@@ -80,6 +80,7 @@ The app auto-deploys to **GitHub Pages** on every push to `main` via a GitHub Ac
 |---|---|
 | `1 этап - пример заданий.pdf` | Stage 1 — sample tasks |
 | `2 этап - пример заданий.pdf` | Stage 2 — sample tasks |
+| `TLF_этап_1_диагностический_практикум.pdf` | Stage 1 — comprehensive diagnostic workbook with scoring fields |
 | `Контрольная_для_печати.pdf` | Printable test/quiz |
 | `План_урока_для_печати.pdf` | Printable lesson plan |
 
@@ -163,5 +164,6 @@ npm run dev
 |---|---|
 | `1 этап - пример заданий.pdf` | 1-й этап — примеры заданий |
 | `2 этап - пример заданий.pdf` | 2-й этап — примеры заданий |
+| `TLF_этап_1_диагностический_практикум.pdf` | 1-й этап — полный диагностический практикум с полями для оценки |
 | `Контрольная_для_печати.pdf` | Контрольная работа для печати |
 | `План_урока_для_печати.pdf` | План урока для печати |

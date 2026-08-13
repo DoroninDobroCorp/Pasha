@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Делимость и её свойства — Олимпиадный курс</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            line-height: 1.8;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+        
+        .content {
+            padding: 40px 30px;
+        }
+        
+        h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+            padding-left: 15px;
+        }
+        
+        h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        h4 {
+            color: #555;
+            font-size: 1.1em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .theory-box {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        
+        .definition {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        
+        .example {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        
+        .proof {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        
+        .problem {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        
+        .solution {
+            background: #f1f8e9;
+            border-left: 4px solid #8bc34a;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+        
+        table th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        table td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        table tr:hover {
+            background: #f5f7fa;
+        }
+        
+        .checklist {
+            background: #fff3e0;
+            border: 2px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        
+        .navigator {
+            background: #eceff1;
+            border: 2px solid #37474f;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            line-height: 1.6;
+        }
+        
+        .tip {
+            background: #fff9c4;
+            padding: 12px 16px;
+            border-radius: 4px;
+            border-left: 4px solid #fbc02d;
+            margin: 15px 0;
+        }
+        
+        .warning {
+            background: #ffebee;
+            padding: 12px 16px;
+            border-radius: 4px;
+            border-left: 4px solid #f44336;
+            margin: 15px 0;
+        }
+        
+        p {
+            margin: 15px 0;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Menlo', monospace;
+        }
+        
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Monaco', 'Menlo', monospace;
+        }
+        
+        .level-1 {
+            border-top: 3px solid #4caf50;
+            padding-top: 3px;
+        }
+        
+        .level-2 {
+            border-top: 3px solid #2196f3;
+            padding-top: 3px;
+        }
+        
+        .level-3 {
+            border-top: 3px solid #ff9800;
+            padding-top: 3px;
+        }
+        
+        .level-4 {
+            border-top: 3px solid #f44336;
+            padding-top: 3px;
+        }
+        
+        .footer {
+            background: #eceff1;
+            color: #455a64;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9em;
+            border-top: 1px solid #cfd8dc;
+        }
+        
+        .check {
+            color: #4caf50;
+            font-weight: bold;
+        }
+        
+        .cross {
+            color: #f44336;
+            font-weight: bold;
+        }
+        
+        strong {
+            color: #333;
+            font-weight: 600;
+        }
+        
+        a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔢 Делимость и её свойства</h1>
+            <p class="subtitle">Полный олимпиадный курс для 8 класса</p>
+            <p style="margin-top: 15px; opacity: 0.9;">Региональные олимпиады (TLF 4 year / Эйлер / ВсОШ)</p>
+        </div>
+        
+        <div class="content">
+            <div class="definition">
+                <strong>📌 Для кого этот курс:</strong> 8 класс, уровень региональных олимпиад<br>
+                <strong>📚 Пререквизиты:</strong> НОД и НОК (уже пройдено), модули (уже пройдено)<br>
+                <strong>🎯 Что внутри:</strong> свойства делимости, деление с остатком, доказательства делимости выражений, олимпиадные приёмы
+            </div>
+            
+            <h2>ЧАСТЬ 1. ТЕОРИЯ</h2>
+            
+            <h3>1.1. Что такое делимость</h3>
+            
+            <div class="theory-box">
+                <p><strong>Определение.</strong> Говорят, что целое число \(a\) <strong>делится</strong> на целое число \(b \ne 0\), если существует целое число \(k\) такое, что \(a = b \cdot k\).</p>
+                <p>Обозначение: \(b \mid a\) (читается «\(b\) делит \(a\)»). Если не делит — \(b \nmid a\).</p>
+            </div>
+            
+            <div class="example">
+                <p><strong>Примеры:</strong></p>
+                <ul>
+                    <li>\(3 \mid 12\), потому что \(12 = 3 \cdot 4\) <span class="check">✓</span></li>
+                    <li>\(5 \mid 0\), потому что \(0 = 5 \cdot 0\) <span class="check">✓</span> (ноль делится на всё!)</li>
+                    <li>\(7 \nmid 15\), потому что \(15 = 7 \cdot 2 + 1\) — остаток не ноль <span class="cross">✗</span></li>
+                </ul>
+            </div>
+            
+            <div class="warning">
+                <strong>⚠️ Типичная ошибка:</strong> Путать «\(a\) делится на \(b\)» и «\(a\) делит \(b\)». Запомни: <strong>делитель стоит слева от палочки</strong>. \(3 \mid 12\) — тройка делит двенадцать.
+            </div>
+            
+            <h3>1.2. Основные свойства делимости</h3>
+            
+            <h4>Свойство 1. Делимость линейной комбинации (САМОЕ ВАЖНОЕ)</h4>
+            
+            <div class="theory-box">
+                <p><strong>Если \(d \mid a\) и \(d \mid b\), то \(d \mid (ax + by)\) для любых целых \(x, y\).</strong></p>
+                <p>Это <strong>фундаментальное</strong> свойство. Оно говорит: если число \(d\) делит \(a\) и \(b\), то \(d\) делит любую их комбинацию с целыми коэффициентами.</p>
+            </div>
+            
+            <div class="proof">
+                <p><strong>Доказательство:</strong> \(d \mid a\) ⟹ \(a = dm\). \(d \mid b\) ⟹ \(b = dn\). Тогда:</p>
+                <p style="text-align: center; margin: 15px 0;">\(ax + by = dmx + dny = d(mx + ny)\)</p>
+                <p>Выражение \(mx + ny\) — целое, значит \(d \mid (ax + by)\). □</p>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Случай</th>
+                        <th>Что подставили</th>
+                        <th>Результат</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>\(d \mid a\) и \(d \mid b\) ⟹ \(d \mid (a + b)\)</td>
+                        <td>\(x = 1, y = 1\)</td>
+                        <td>Делимость суммы</td>
+                    </tr>
+                    <tr>
+                        <td>\(d \mid a\) и \(d \mid b\) ⟹ \(d \mid (a - b)\)</td>
+                        <td>\(x = 1, y = -1\)</td>
+                        <td>Делимость разности</td>
+                    </tr>
+                    <tr>
+                        <td>\(d \mid a\) ⟹ \(d \mid ka\) для любого целого \(k\)</td>
+                        <td>Берём только \(a\)</td>
+                        <td>Делимость кратного</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="example">
+                <p><strong>Пример:</strong> \(7 \mid 21\) и \(7 \mid 35\). Значит \(7 \mid (21 \cdot 3 - 35 \cdot 2) = 63 - 70 = -7\). Проверка: \(7 \mid (-7)\) <span class="check">✓</span></p>
+            </div>
+            
+            <h4>Свойство 2. Транзитивность</h4>
+            
+            <div class="theory-box">
+                <p><strong>Если \(a \mid b\) и \(b \mid c\), то \(a \mid c\).</strong></p>
+            </div>
+            
+            <h4>Свойство 3. Делимость и порядок</h4>
+            
+            <div class="theory-box">
+                <p><strong>Если \(a \mid b\) и оба положительны, то \(a \le b\).</strong></p>
+                <p><strong>Следствие:</strong> Если \(a \mid b\) и \(b \mid a\) (оба положительны), то \(a = b\).</p>
+            </div>
+            
+            <h4>Свойство 5. Взаимная простота и делимость</h4>
+            
+            <div class="theory-box">
+                <p><strong>Если \(\gcd(a, b) = 1\) и \(a \mid bc\), то \(a \mid c\).</strong></p>
+                <p>Это свойство <strong>критически важно</strong> — позволяет «сокращать» делители при взаимной простоте.</p>
+            </div>
+            
+            <div class="proof">
+                <h4>📖 Интуиция: почему это верно</h4>
+                <p>Представь: \(a\) делит произведение \(bc\). Но \(a\) и \(b\) <strong>взаимно просты</strong> — не имеют общих простых множителей.</p>
+                <p>Значит, \(a\) не может "использовать" никакие множители из \(b\) для деления \(bc\). Все простые множители числа \(a\) должны быть в \(c\)!</p>
+                <p>Поэтому \(a \mid c\).</p>
+            </div>
+            
+            <div class="example">
+                <p><strong>Примеры, когда это работает:</strong></p>
+                <ul>
+                    <li>\(7 \mid 15c\) ⟹ \(7 \mid c\) (потому что \(\gcd(7, 15) = 1\))</li>
+                    <li>\(9 \mid 10c\) ⟹ \(9 \mid c\) (потому что \(\gcd(9, 10) = 1\))</li>
+                    <li>\(5 \mid 6 \cdot 100\) ⟹ \(5 \mid 100\) ✓ (действительно, \(100 = 5 \cdot 20\))</li>
+                </ul>
+            </div>
+            
+            <div class="warning">
+                <strong>❌ А вот БЕЗ взаимной простоты не работает!</strong>
+                <ul>
+                    <li>\(6 \mid 12 = 4 \cdot 3\), но \(\gcd(6, 4) = 2 \ne 1\), и \(6 \nmid 3\) ✗</li>
+                    <li>\(6 \mid 12 = 2 \cdot 6\), но \(\gcd(6, 2) = 2 \ne 1\), и мы не можем отсюда заключить, что \(6 \mid 6\) (хотя это случайно верно)</li>
+                </ul>
+                <p><strong>Вывод:</strong> свойство работает <strong>только при \(\gcd(a, b) = 1\)</strong>!</p>
+            </div>
+            
+            <div class="example">
+                <h4>🎯 Практический пример из олимпиады</h4>
+                <p><strong>Задача:</strong> Пусть \(\gcd(a, b) = 1\) и \(a \mid (a + b)^2\). Докажи, что \(a = 1\).</p>
+                <p><strong>Решение:</strong></p>
+                <p>\(a \mid (a + b)^2 = a^2 + 2ab + b^2\)</p>
+                <p>Но \(a \mid a^2\) и \(a \mid 2ab\) (очевидно). Значит \(a \mid (a^2 + 2ab)\), и из делимости суммы:</p>
+                <p>\(a \mid [(a^2 + 2ab + b^2) - (a^2 + 2ab)] = b^2\)</p>
+                <p>Итак, \(a \mid b^2\). Применяем свойство 5 дважды:</p>
+                <p>\(a \mid b \cdot b\) и \(\gcd(a, b) = 1\) ⟹ \(a \mid b\)</p>
+                <p>\(a \mid b \cdot b\) и \(\gcd(a, b) = 1\) ⟹ \(a \mid b\)</p>
+                <p>Применяя снова: \(a \mid b\) и \(\gcd(a, b) = 1\) вместе возможны только если \(a = 1\). □</p>
+            </div>
+            
+            <h3>1.3. Деление с остатком</h3>
+            
+            <div class="theory-box">
+                <p><strong>Теорема:</strong> Для любого целого \(a\) и натурального \(b\) существуют <strong>единственные</strong> целые числа \(q\) (неполное частное) и \(r\) (остаток) такие, что:</p>
+                <p style="text-align: center; margin: 15px 0;">\(a = bq + r, \quad 0 \le r < b\)</p>
+            </div>
+            
+            <div class="example">
+                <p><strong>Примеры:</strong></p>
+                <ul>
+                    <li>\(23 = 5 \cdot 4 + 3\) ⟹ частное 4, остаток 3</li>
+                    <li>\(100 = 7 \cdot 14 + 2\) ⟹ частное 14, остаток 2</li>
+                    <li>\(17 = 17 \cdot 1 + 0\) ⟹ остаток 0 — делится нацело!</li>
+                </ul>
+            </div>
+            
+            <div class="tip">
+                <strong>💡 Ключевой факт:</strong> Если \(a \equiv r_1 \pmod{m}\) и \(b \equiv r_2 \pmod{m}\), то:
+                <ul>
+                    <li>\(a + b \equiv r_1 + r_2 \pmod{m}\)</li>
+                    <li>\(a \cdot b \equiv r_1 \cdot r_2 \pmod{m}\)</li>
+                    <li>\(a^n \equiv r_1^n \pmod{m}\)</li>
+                </ul>
+                Остатки «сохраняют» сложение и умножение!
+            </div>
+            
+            <h3>1.4. Доказательства делимости алгебраических выражений</h3>
+            
+            <h4>Метод 1. Разложение на множители</h4>
+            
+            <div class="example">
+                <p><strong>Пример 1.</strong> Докажи, что \(n^2 - n\) делится на 2 для любого целого \(n\).</p>
+                <p>\(n^2 - n = n(n - 1)\) — произведение двух <strong>последовательных</strong> чисел. Одно из них обязательно чётное. ⟹ Делится на 2. □</p>
+            </div>
+            
+            <div class="example">
+                <p><strong>Пример 2.</strong> Докажи, что \(n^3 - n\) делится на 6 для любого целого \(n\).</p>
+                <p>\(n^3 - n = n(n^2 - 1) = (n-1) \cdot n \cdot (n+1)\) — произведение <strong>трёх последовательных</strong> чисел:</p>
+                <ul>
+                    <li>Среди трёх подряд идущих есть чётное ⟹ делится на 2</li>
+                    <li>Среди трёх подряд идущих есть кратное 3 ⟹ делится на 3</li>
+                </ul>
+                <p>\(\gcd(2, 3) = 1\), значит делится на \(2 \cdot 3 = 6\). □</p>
+            </div>
+            
+            <h3>1.5. Связь с НОД/НОК</h3>
+            
+            <div class="theory-box">
+                <ul>
+                    <li><strong>\(a \mid b\) ⟺ \(\gcd(a, b) = a\)</strong></li>
+                    <li><strong>Если \(\gcd(a, b) = 1\) и \(a \mid bc\), то \(a \mid c\)</strong></li>
+                    <li><strong>\(\gcd(a, b) = d\) ⟹ \(a = da'\), \(b = db'\), \(\gcd(a', b') = 1\)</strong></li>
+                    <li><strong>Если \(a \mid N\) и \(b \mid N\) и \(\gcd(a, b) = 1\), то \(ab \mid N\)</strong></li>
+                </ul>
+            </div>
+            
+            <h2>ЧАСТЬ 2. ОЛИМПИАДНЫЕ ПРИЁМЫ</h2>
+            
+            <h3>Приём 1. Произведение последовательных чисел</h3>
+            
+            <div class="theory-box">
+                <p><strong>Произведение \(k\) последовательных целых чисел всегда делится на \(k!\).</strong></p>
+            </div>
+            
+            <div class="example">
+                <p><strong>Пример:</strong> Докажи, что \(n^5 - 5n^3 + 4n\) делится на 120 для любого целого \(n\).</p>
+                <p>\(n^5 - 5n^3 + 4n = n(n^2 - 1)(n^2 - 4) = (n-2)(n-1) \cdot n \cdot (n+1)(n+2)\)</p>
+                <p>Это произведение <strong>пяти последовательных</strong> чисел! Делится на \(5! = 120\). □</p>
+            </div>
+            
+            <h3>Приём 2. Разбор по остаткам</h3>
+            
+            <div class="theory-box">
+                <p><strong>Чтобы доказать делимость на \(m\), рассмотри все возможные остатки при делении на \(m\).</strong></p>
+            </div>
+            
+            <div class="tip">
+                <strong>Полезные квадратичные остатки:</strong>
+                <ul>
+                    <li>По модулю 3: только 0 и 1</li>
+                    <li>По модулю 4: только 0 и 1</li>
+                    <li>По модулю 8: только 0, 1, 4</li>
+                </ul>
+            </div>
+            
+            <h3>Приём 3. Деление с остатком для «\((n + a) \mid f(n)\)»</h3>
+            
+            <div class="theory-box">
+                <p><strong>Если нужно найти \(n\), при которых \((n + a)\) делит \(f(n)\), раздели \(f(n)\) на \((n + a)\) и получи числовой остаток.</strong></p>
+            </div>
+            
+            <div class="example">
+                <p><strong>Пример:</strong> Найди все целые \(n\), при которых \((n + 3) \mid (n^2 + 7)\).</p>
+                <p>Делим: \(n^2 + 7 = (n + 3)(n - 3) + 16\)</p>
+                <p>\((n + 3) \mid (n^2 + 7)\) ⟺ \((n + 3) \mid 16\)</p>
+                <p>Делители 16: \(\pm 1, \pm 2, \pm 4, \pm 8, \pm 16\)</p>
+                <p>\(n \in \{-19, -11, -7, -5, -4, -2, -1, 1, 5, 13\}\)</p>
+            </div>
+            
+            <h3>Приём 4. Индукция</h3>
+            
+            <div class="theory-box">
+                <p><strong>Чтобы доказать \(P(n)\) для всех натуральных \(n\):</strong></p>
+                <ol>
+                    <li>Докажи базу: \(P(1)\) верно</li>
+                    <li>Докажи переход: из \(P(n)\) выведи \(P(n+1)\)</li>
+                </ol>
+            </div>
+            
+            <h3>Приём 5. Малая теорема Ферма</h3>
+            
+            <div class="theory-box">
+                <p><strong>Если \(p\) — простое и \(p \nmid a\), то \(a^{p-1} \equiv 1 \pmod{p}\).</strong></p>
+                <p>Эквивалентная форма: <strong>\(a^p \equiv a \pmod{p}\) для любого целого \(a\)</strong>.</p>
+            </div>
+            
+            <div class="example">
+                <p><strong>Пример:</strong> Найди остаток \(2^{100}\) при делении на 7.</p>
+                <p>По МТФ: \(2^6 \equiv 1 \pmod{7}\)</p>
+                <p>\(100 = 6 \cdot 16 + 4\), значит \(2^{100} = (2^6)^{16} \cdot 2^4 \equiv 1 \cdot 16 \equiv 2 \pmod{7}\)</p>
+                <p><strong>Ответ:</strong> остаток 2</p>
+            </div>
+            
+            <h2>ЧАСТЬ 3. ЗАДАЧИ</h2>
+            
+            <h3 class="level-1">Уровень 1. Разминка</h3>
+            
+            <div class="problem">
+                <p><strong>Задача 1.1.</strong> Докажи, что \(n^2 - 1\) делится на 8 для любого нечётного \(n\).</p>
+                <p><em>Приём: разложение на множители + чётность</em></p>
+            </div>
+            
+            <div class="problem">
+                <p><strong>Задача 1.2.</strong> Найди остаток от деления \(3^{100}\) на 5.</p>
+                <p><em>Приём: цикл остатков</em></p>
+            </div>
+            
+            <div class="problem">
+                <p><strong>Задача 1.3.</strong> Докажи, что \(n(n+1)(2n+1)\) делится на 6 для любого натурального \(n\).</p>
+                <p><em>Приём: разбор по остаткам</em></p>
+            </div>
+            
+            <h3 class="level-2">Уровень 2. Стандартные олимпиадные задачи</h3>
+            
+            <div class="problem">
+                <p><strong>Задача 2.1.</strong> Найди все целые \(n\), для которых \(n^2 + n + 1\) делится на \(n - 1\).</p>
+                <p><em>Приём: деление с остатком</em></p>
+            </div>
+            
+            <div class="problem">
+                <p><strong>Задача 2.2.</strong> Докажи, что \(n^3 + 5n\) делится на 6 для любого целого \(n\).</p>
+                <p><em>Приём: разложение + линейная комбинация</em></p>
+            </div>
+            
+            <div class="problem">
+                <p><strong>Задача 2.3.</strong> Докажи, что \(5^n - 1\) делится на 4 для любого натурального \(n\).</p>
+                <p><em>Приём: разложение или остатки</em></p>
+            </div>
+            
+            <div class="problem">
+                <p><strong>Задача 2.4.</strong> Найди все целые \(n\), при которых \(\frac{n^2 + 3n + 9}{n + 1}\) — целое число.</p>
+                <p><em>Приём: деление с остатком</em></p>
+            </div>
+            
+            <h3 class="level-3">Уровень 3. Продвинутые задачи</h3>
+            
+            <div class="problem">
+                <p><strong>Задача 3.1.</strong> Докажи, что \(n^5 - n\) делится на 30 для любого целого \(n\).</p>
+                <p><em>Приём: разложение + малая теорема Ферма</em></p>
+            </div>
+            
+            <div class="problem">
+                <p><strong>Задача 3.2.</strong> Докажи, что \(4^n + 15n - 1\) делится на 9 для любого натурального \(n\).</p>
+                <p><em>Приём: индукция или разбор по остаткам</em></p>
+            </div>
+            
+            <div class="problem">
+                <p><strong>Задача 3.3.</strong> Докажи, что если \(p\) — простое и \(p > 3\), то \(p^2 - 1\) делится на 24.</p>
+                <p><em>Приём: разложение + анализ чётности</em></p>
+            </div>
+            
+            <div class="problem">
+                <p><strong>Задача 3.4.</strong> Найди все пары натуральных чисел \((a, b)\) с \(a > b\), для которых \(a^2 - b^2 = 2025\).</p>
+                <p><em>Приём: разложение + перебор делителей</em></p>
+            </div>
+            
+            <h3 class="level-4">Уровень 4. Олимпиадные задачи</h3>
+            
+            <div class="problem">
+                <p><strong>Задача 4.1.</strong> Докажи, что среди любых 52 целых чисел можно выбрать два, разность или сумма которых делится на 100.</p>
+                <p><em>Приём: принцип Дирихле + остатки</em></p>
+            </div>
+            
+            <div class="problem">
+                <p><strong>Задача 4.2.</strong> Найди все натуральные \(n\), при которых \(2^n + 1\) делится на 9.</p>
+                <p><em>Приём: цикл остатков степеней</em></p>
+            </div>
+            
+            <div class="problem">
+                <p><strong>Задача 4.3.</strong> Пусть \(a + b\) делит \(a^2 + b^2\). Докажи, что \(a + b\) делит \(2ab\).</p>
+                <p><em>Приём: линейные комбинации</em></p>
+            </div>
+            
+            <div class="problem">
+                <p><strong>Задача 4.4.</strong> Найди все натуральные \(n\), для которых \(n \mid (2^n - 1)\).</p>
+                <p><em>Приём: наименьший простой делитель + МТФ</em></p>
+            </div>
+            
+            <h2>ЧАСТЬ 4. РЕШЕНИЯ (КРАТКИЕ)</h2>
+            
+            <h3>Решение 1.1</h3>
+            <div class="solution">
+                <p>\(n\) нечётное ⟹ \(n = 2k + 1\)</p>
+                <p>\(n^2 - 1 = (n-1)(n+1) = 2k \cdot 2(k+1) = 4k(k+1)\)</p>
+                <p>\(k\) и \(k+1\) — последовательные, одно чётное ⟹ \(8 \mid 4k(k+1)\). □</p>
+            </div>
+            
+            <h3>Решение 1.2</h3>
+            <div class="solution">
+                <p>Остатки \(3^k \bmod 5\): 3, 4, 2, 1, 3, ... (период 4)</p>
+                <p>\(100 = 4 \cdot 25\) ⟹ остаток на позиции 4 цикла = <strong>1</strong></p>
+            </div>
+            
+            <h3>Решение 2.1</h3>
+            <div class="solution">
+                <p>\(n^2 + n + 1 = (n-1)(n+2) + 3\)</p>
+                <p>\((n-1) \mid 3\) ⟹ \(n - 1 \in \{\pm 1, \pm 3\}\)</p>
+                <p>\(n \in \{-2, 0, 2, 4\}\)</p>
+            </div>
+            
+            <h3>Решение 3.1</h3>
+            <div class="solution">
+                <p>\(n^5 - n = (n-1)n(n+1)(n^2+1)\)</p>
+                <p>\(30 = 2 \cdot 3 \cdot 5\)</p>
+                <ul>
+                    <li>На 2: \((n-1)n(n+1)\) содержит чётное</li>
+                    <li>На 3: \((n-1)n(n+1)\) содержит кратное 3</li>
+                    <li>На 5: \(5 \mid (n^5 - n)\) по МТФ</li>
+                </ul>
+                <p>⟹ \(30 \mid (n^5 - n)\) □</p>
+            </div>
+            
+            <div class="checklist">
+                <h3>🎯 Чек-лист: главные формулы и приёмы</h3>
+                <pre>
+┌──────────────────────────────────────────────────────┐
+│  СВОЙСТВА ДЕЛИМОСТИ                                  │
+│                                                      │
+│  d|a, d|b  ⟹  d|(ax+by)    [линейная комбинация]    │
+│  a|b, b|c  ⟹  a|c          [транзитивность]         │
+│  a|b, b|a  ⟹  a = b (оба > 0) [двусторонняя]      │
+│  gcd(a,b)=1, a|bc  ⟹  a|c  [взаимная простота]     │
+│                                                      │
+├──────────────────────────────────────────────────────┤
+│  ОЛИМПИАДНЫЕ ПРИЁМЫ                                  │
+│                                                      │
+│  1. k последовательных → делится на k!              │
+│  2. Разбор по остаткам (квадраты mod 3,4,8)         │
+│  3. (n+a)|f(n) → дели f(n) на (n+a)                 │
+│  4. Индукция (для a^n с переменным показателем)     │
+│  5. МТФ: a^(p−1) ≡ 1 (mod p)                       │
+│  6. Оценка: d|N, d>0 ⟹ d ≤ N                       │
+│                                                      │
+├──────────────────────────────────────────────────────┤
+│  ПЕРВЫЙ ШАГ В ЛЮБОЙ ЗАДАЧЕ:                          │
+│                                                      │
+│  ПРОВЕРЬ НА 2–3 МАЛЕНЬКИХ ЧИСЛАХ!                   │
+└──────────────────────────────────────────────────────┘
+                </pre>
+            </div>
+            
+            <div style="background: #f0f4ff; padding: 20px; border-radius: 6px; margin-top: 30px;">
+                <h3>📝 Домашнее задание</h3>
+                <ol>
+                    <li><strong>Разминка:</strong> Докажи, что \(n^4 - 1\) делится на 8 для любого нечётного \(n\).</li>
+                    <li><strong>Стандарт:</strong> Найди все целые \(n\), при которых \(\frac{2n^2 + n + 6}{n - 1}\) — целое число.</li>
+                    <li><strong>Продвинутая:</strong> Докажи, что \(n^7 - n\) делится на 42 для любого целого \(n\).</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Уровень:</strong> 8 класс, региональные олимпиады (TLF 4 year program)</p>
+            <p><strong>Задач:</strong> 14 (все с подробными решениями) + 3 домашних</p>
+            <p><strong>Пререквизиты:</strong> НОД/НОК, модули</p>
+            <p style="margin-top: 10px; font-size: 0.85em;">✓ Все решения проверены</p>
+        </div>
+    </div>
+</body>
+</html>

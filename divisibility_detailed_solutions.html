@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Делимость: Сверхподробные решения</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
+            line-height: 1.8;
+            color: #2c3e50;
+            background: #f5f7fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.2em; margin-bottom: 10px; }
+        .header p { opacity: 0.9; }
+        .content { padding: 40px 30px; }
+        h2 { color: #667eea; font-size: 1.8em; margin: 40px 0 20px; border-left: 4px solid #667eea; padding-left: 15px; }
+        h3 { color: #764ba2; font-size: 1.4em; margin: 30px 0 15px; }
+        h4 { color: #555; font-size: 1.1em; margin: 20px 0 10px; }
+        .step {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        .step.analysis { border-left-color: #2196f3; background: #e3f2fd; }
+        .step.attempt { border-left-color: #ff9800; background: #fff3e0; }
+        .step.idea { border-left-color: #4caf50; background: #e8f5e9; }
+        .step.solution { border-left-color: #9c27b0; background: #f3e5f5; }
+        .step.check { border-left-color: #f44336; background: #ffebee; }
+        .problem-box {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        .error { 
+            background: #ffebee; 
+            border-left: 4px solid #f44336; 
+            padding: 15px; 
+            margin: 10px 0; 
+            border-radius: 4px;
+        }
+        .success { 
+            background: #e8f5e9; 
+            border-left: 4px solid #4caf50; 
+            padding: 15px; 
+            margin: 10px 0; 
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+        table th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        table td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        table tr:hover { background: #f5f7fa; }
+        .footer {
+            background: #eceff1;
+            color: #455a64;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9em;
+            border-top: 1px solid #cfd8dc;
+        }
+        .level { font-weight: bold; padding: 3px 8px; border-radius: 3px; display: inline-block; margin: 5px 0; }
+        .level-1 { background: #c8e6c9; color: #2e7d32; }
+        .level-2 { background: #bbdefb; color: #1565c0; }
+        .level-3 { background: #ffe0b2; color: #e65100; }
+        .level-4 { background: #ffccbc; color: #bf360c; }
+        code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 Сверхподробные решения</h1>
+            <p>Делимость и её свойства — Урок 3</p>
+            <p style="margin-top: 15px; opacity: 0.9;">С разбором ошибок, альтернативными подходами и проверками</p>
+        </div>
+        
+        <div class="content">
+            <h2>Уровень 1. Разминка</h2>
+            
+            <div class="problem-box">
+                <h3>Задача 1.1</h3>
+                <p>Докажи, что \(n^2 - 1\) делится на 8 для любого нечётного \(n\).</p>
+                <span class="level level-1">Разминка</span>
+            </div>
+            
+            <div class="step analysis">
+                <h4>📋 Анализ задачи</h4>
+                <p><strong>Дано:</strong> \(n\) — нечётное число</p>
+                <p><strong>Доказать:</strong> \(8 \mid (n^2 - 1)\)</p>
+                <p><strong>Стратегия:</strong> Нужно показать, что \(n^2 - 1 = 8k\) для некоторого целого \(k\).</p>
+                <p><strong>Подсказка для размышления:</strong> Нечётные числа имеют специальную форму. Какую?</p>
+            </div>
+            
+            <div class="step attempt">
+                <h4>❌ Первая попытка (неправильная)</h4>
+                <p>Может быть, просто проверим для всех нечётных до 20?</p>
+                <ul>
+                    <li>\(n = 1\): \(1 - 1 = 0\), \(8 \mid 0\) ✓</li>
+                    <li>\(n = 3\): \(9 - 1 = 8\), \(8 \mid 8\) ✓</li>
+                    <li>\(n = 5\): \(25 - 1 = 24\), \(24 / 8 = 3\) ✓</li>
+                </ul>
+                <p class="error">Проблема: это работает только для конкретных чисел, не доказывает для ВСЕХ нечётных!</p>
+            </div>
+            
+            <div class="step idea">
+                <h4>💡 Правильная идея</h4>
+                <p><strong>Ключевой факт:</strong> Нечётное число можно записать как \(n = 2k + 1\) для некоторого целого \(k\).</p>
+                <p>Тогда:</p>
+                <p>\(n^2 - 1 = (2k+1)^2 - 1 = 4k^2 + 4k + 1 - 1 = 4k^2 + 4k = 4k(k+1)\)</p>
+                <p><strong>Наблюдение:</strong> Произведение \(k(k+1)\) — это произведение двух последовательных чисел! Одно из них обязательно чётное.</p>
+                <p><strong>Значит:</strong> \(2 \mid k(k+1)\), поэтому \(4 \cdot 2 = 8 \mid 4k(k+1)\)</p>
+            </div>
+            
+            <div class="step solution">
+                <h4>✓ Полное решение</h4>
+                <p>\(n\) — нечётное ⟹ \(n = 2k + 1\) для некоторого целого \(k\).</p>
+                <p style="margin-top: 10px;">\(n^2 - 1 = (2k+1)^2 - 1\)</p>
+                <p style="margin-top: 10px;">Раскроем скобки:</p>
+                <p style="text-align: center; margin: 10px 0;">\((2k+1)^2 - 1 = 4k^2 + 4k + 1 - 1 = 4k^2 + 4k = 4k(k+1)\)</p>
+                <p style="margin-top: 10px;">Теперь ключевой момент: \(k\) и \(k+1\) — два последовательных целых числа.</p>
+                <p>Хотя бы одно из них чётное, поэтому их произведение делится на 2:</p>
+                <p style="text-align: center; margin: 10px 0;">\(k(k+1) = 2m\) для некоторого целого \(m\)</p>
+                <p style="margin-top: 10px;">Значит:</p>
+                <p style="text-align: center; margin: 10px 0;">\(n^2 - 1 = 4k(k+1) = 4 \cdot 2m = 8m\)</p>
+                <p style="margin-top: 10px;">Поскольку \(n^2 - 1 = 8m\), имеем \(8 \mid (n^2 - 1)\). □</p>
+            </div>
+            
+            <div class="step check">
+                <h4>✓ Проверка</h4>
+                <p>Проверим на конкретных нечётных числах:</p>
+                <table>
+                    <tr>
+                        <th>\(n\)</th>
+                        <th>\(k\) (где \(n = 2k+1\))</th>
+                        <th>\(k(k+1)\)</th>
+                        <th>\(n^2 - 1 = 4k(k+1)\)</th>
+                        <th>Делится на 8?</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>Да (0 = 8·0)</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>1·2 = 2</td>
+                        <td>4·2 = 8</td>
+                        <td>Да (8 = 8·1)</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>2·3 = 6</td>
+                        <td>4·6 = 24</td>
+                        <td>Да (24 = 8·3)</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>3</td>
+                        <td>3·4 = 12</td>
+                        <td>4·12 = 48</td>
+                        <td>Да (48 = 8·6)</td>
+                    </tr>
+                </table>
+                <div class="success">Все проверки прошли! ✓</div>
+            </div>
+            
+            <div class="step">
+                <h4>🎓 Что мы выучили</h4>
+                <ul>
+                    <li><strong>Форма нечётного числа:</strong> \(n = 2k+1\)</li>
+                    <li><strong>Произведение последовательных:</strong> всегда чётное</li>
+                    <li><strong>Приём факторизации:</strong> разложить сложное выражение в произведение простых</li>
+                </ul>
+            </div>
+            
+            <hr style="margin: 30px 0; border: none; border-top: 2px solid #e0e0e0;">
+            
+            <div class="problem-box">
+                <h3>Задача 1.2</h3>
+                <p>Найди остаток от деления \(3^{100}\) на 5.</p>
+                <span class="level level-1">Разминка</span>
+            </div>
+            
+            <div class="step analysis">
+                <h4>📋 Анализ задачи</h4>
+                <p><strong>Дано:</strong> число \(3^{100}\)</p>
+                <p><strong>Найти:</strong> \(3^{100} \bmod 5\)</p>
+                <p><strong>Проблема:</strong> \(3^{100}\) — огромное число, не вычислишь вручную</p>
+                <p><strong>Идея:</strong> Может, остатки степеней 3 повторяются по какой-то схеме?</p>
+            </div>
+            
+            <div class="step attempt">
+                <h4>💡 Найдём цикл остатков</h4>
+                <p>Вычислим \(3^k \bmod 5\) для маленьких \(k\):</p>
+                <table>
+                    <tr>
+                        <th>\(k\)</th>
+                        <th>1</th>
+                        <th>2</th>
+                        <th>3</th>
+                        <th>4</th>
+                        <th>5</th>
+                        <th>6</th>
+                    </tr>
+                    <tr>
+                        <th>\(3^k\)</th>
+                        <td>3</td>
+                        <td>9</td>
+                        <td>27</td>
+                        <td>81</td>
+                        <td>243</td>
+                        <td>729</td>
+                    </tr>
+                    <tr>
+                        <th>\(3^k \bmod 5\)</th>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>3</td>
+                        <td>4</td>
+                    </tr>
+                </table>
+                <p><strong>Открытие:</strong> Остатки повторяются! Цикл: \(3, 4, 2, 1, 3, 4, 2, 1, \ldots\)</p>
+                <p><strong>Период цикла:</strong> 4</p>
+            </div>
+            
+            <div class="step idea">
+                <h4>🔑 Как использовать цикл</h4>
+                <p>Поскольку цикл имеет период 4, остаток \(3^k \bmod 5\) зависит от \(k \bmod 4\).</p>
+                <p style="margin-top: 10px;">Найдём \(100 \bmod 4\):</p>
+                <p style="text-align: center; margin: 10px 0;">\(100 = 4 \cdot 25 + 0\), поэтому \(100 \equiv 0 \pmod{4}\)</p>
+                <p style="margin-top: 10px;">Значит, \(3^{100}\) находится на той же позиции в цикле, что и \(3^4\).</p>
+            </div>
+            
+            <div class="step solution">
+                <h4>✓ Полное решение</h4>
+                <p><strong>Шаг 1:</strong> Найдём цикл остатков \(3^k \bmod 5\):</p>
+                <ul>
+                    <li>\(3^1 \equiv 3 \pmod{5}\)</li>
+                    <li>\(3^2 \equiv 9 \equiv 4 \pmod{5}\)</li>
+                    <li>\(3^3 \equiv 27 \equiv 2 \pmod{5}\)</li>
+                    <li>\(3^4 \equiv 81 \equiv 1 \pmod{5}\)</li>
+                    <li>\(3^5 \equiv 3 \cdot 1 \equiv 3 \pmod{5}\)</li>
+                </ul>
+                <p style="margin-top: 10px;"><strong>Цикл найден:</strong> \((3, 4, 2, 1)\) с периодом 4</p>
+                <p style="margin-top: 10px;"><strong>Шаг 2:</strong> Найдём остаток показателя:</p>
+                <p style="text-align: center; margin: 10px 0;">\(100 = 4 \cdot 25 + 0\)</p>
+                <p style="margin-top: 10px;"><strong>Шаг 3:</strong> \(100 \bmod 4 = 0\) означает, что \(100\) кратно 4.</p>
+                <p style="margin-top: 10px;">Позиция в цикле: \(0 \bmod 4 = 0\) соответствует позиции 4 (полный цикл)</p>
+                <p style="margin-top: 10px;">Из таблицы: \(3^4 \equiv 1 \pmod{5}\)</p>
+                <p style="margin-top: 10px;"><strong>Ответ:</strong> остаток равен <span class="success" style="display: inline; padding: 2px 6px; border-radius: 3px;">1</span></p>
+            </div>
+            
+            <div class="step check">
+                <h4>✓ Альтернативный способ (малая теорема Ферма)</h4>
+                <p>Есть ещё один способ — <strong>малая теорема Ферма</strong>:</p>
+                <p style="margin-top: 10px;">Если \(p\) — простое число и \(p \nmid a\), то \(a^{p-1} \equiv 1 \pmod{p}\)</p>
+                <p style="margin-top: 10px;">В нашем случае: \(p = 5\) (простое), \(a = 3\), \(p - 1 = 4\)</p>
+                <p style="margin-top: 10px;">Значит: \(3^4 \equiv 1 \pmod{5}\)</p>
+                <p style="margin-top: 10px;">Поскольку \(100 = 4 \cdot 25\):</p>
+                <p style="text-align: center; margin: 10px 0;">\(3^{100} = (3^4)^{25} \equiv 1^{25} = 1 \pmod{5}\)</p>
+                <div class="success">Оба способа дают один ответ: 1 ✓</div>
+            </div>
+            
+            <hr style="margin: 30px 0; border: none; border-top: 2px solid #e0e0e0;">
+            
+            <div class="problem-box">
+                <h3>Задача 1.3</h3>
+                <p>Докажи, что \(n(n+1)(2n+1)\) делится на 6 для любого натурального \(n\).</p>
+                <span class="level level-1">Разминка</span>
+            </div>
+            
+            <div class="step analysis">
+                <h4>📋 Анализ задачи</h4>
+                <p><strong>Дано:</strong> выражение \(n(n+1)(2n+1)\)</p>
+                <p><strong>Доказать:</strong> \(6 \mid n(n+1)(2n+1)\) для всех натуральных \(n\)</p>
+                <p><strong>Заметим:</strong> \(6 = 2 \cdot 3\), и \(\gcd(2, 3) = 1\)</p>
+                <p><strong>Стратегия:</strong> Доказать делимость на 2 и на 3 отдельно, затем заключить делимость на 6</p>
+            </div>
+            
+            <div class="step attempt">
+                <h4>Подход 1: Проверим на примерах</h4>
+                <table>
+                    <tr>
+                        <th>\(n\)</th>
+                        <th>\(n(n+1)(2n+1)\)</th>
+                        <th>Делится на 6?</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1·2·3 = 6</td>
+                        <td>\(6 / 6 = 1\) ✓</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>2·3·5 = 30</td>
+                        <td>\(30 / 6 = 5\) ✓</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>3·4·7 = 84</td>
+                        <td>\(84 / 6 = 14\) ✓</td>
+                    </tr>
+                </table>
+                <p class="error">Проблема: Это только примеры, не доказательство!</p>
+            </div>
+            
+            <div class="step solution">
+                <h4>✓ Полное решение</h4>
+                <p><strong>Часть 1: Делимость на 2</strong></p>
+                <p>В произведении \(n(n+1)(2n+1)\) есть два множителя: \(n\) и \(n+1\).</p>
+                <p style="margin-top: 10px;">Это два последовательных целых числа, поэтому <strong>одно из них чётное</strong>.</p>
+                <p style="margin-top: 10px;">Значит: \(2 \mid n(n+1)(2n+1)\) ✓</p>
+                
+                <p style="margin-top: 20px;"><strong>Часть 2: Делимость на 3</strong></p>
+                <p>Рассмотрим остатки \(n\) при делении на 3:</p>
+                
+                <table>
+                    <tr>
+                        <th>\(n \bmod 3\)</th>
+                        <th>\(n\)</th>
+                        <th>\(n+1\)</th>
+                        <th>\(2n+1\)</th>
+                        <th>Кто делится на 3?</th>
+                    </tr>
+                    <tr>
+                        <td>0</td>
+                        <td>делится на 3</td>
+                        <td>не делится</td>
+                        <td>не делится</td>
+                        <td>\(n\)</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>не делится</td>
+                        <td>не делится</td>
+                        <td>\(2 \cdot 1 + 1 = 3 \equiv 0\)</td>
+                        <td>\(2n+1\)</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>не делится</td>
+                        <td>\(2+1=3 \equiv 0\)</td>
+                        <td>не делится</td>
+                        <td>\(n+1\)</td>
+                    </tr>
+                </table>
+                
+                <p style="margin-top: 10px;">В каждом случае <strong>ровно один из трёх множителей</strong> делится на 3!</p>
+                <p style="margin-top: 10px;">Значит: \(3 \mid n(n+1)(2n+1)\) ✓</p>
+                
+                <p style="margin-top: 20px;"><strong>Заключение:</strong></p>
+                <p>\(2 \mid n(n+1)(2n+1)\) и \(3 \mid n(n+1)(2n+1)\)</p>
+                <p>Поскольку \(\gcd(2, 3) = 1\), имеем:</p>
+                <p style="text-align: center; margin: 10px 0;">6 = 2·3 делит \(n(n+1)(2n+1)\) □</p>
+            </div>
+            
+            <div class="step check">
+                <h4>✓ Проверка рассуждения</h4>
+                <p><strong>Проверим для \(n = 5\):</strong></p>
+                <ul>
+                    <li>\(n = 5 \equiv 2 \pmod{3}\)</li>
+                    <li>\(n+1 = 6 \equiv 0 \pmod{3}\) — это делится на 3 ✓</li>
+                    <li>\(n(n+1)(2n+1) = 5 \cdot 6 \cdot 11 = 330\)</li>
+                    <li>\(330 / 6 = 55\) ✓</li>
+                </ul>
+            </div>
+            
+            <h2 style="margin-top: 60px;">Уровень 2. Стандартные олимпиадные задачи</h2>
+            
+            <div class="problem-box">
+                <h3>Задача 2.1</h3>
+                <p>Найди все целые \(n\), для которых \(n^2 + n + 1\) делится на \(n - 1\).</p>
+                <span class="level level-2">Стандарт</span>
+            </div>
+            
+            <div class="step analysis">
+                <h4>📋 Анализ задачи</h4>
+                <p><strong>Дано:</strong> нужно найти целые \(n\) такие, что \((n-1) \mid (n^2 + n + 1)\)</p>
+                <p><strong>Проблема:</strong> \(n\) может быть любым целым, как его перебирать?</p>
+                <p><strong>Идея:</strong> Если \((n-1)\) делит многочлен, то оно должно делить и остаток от деления этого многочлена на \((n-1)\)</p>
+            </div>
+            
+            <div class="step idea">
+                <h4>🔑 Ключевой приём: деление с остатком</h4>
+                <p>Разделим \(n^2 + n + 1\) на \((n - 1)\) по схеме Горнера или обычным делением:</p>
+                <p style="margin-top: 10px;">\(n^2 + n + 1 = (n-1) \cdot q(n) + r\), где \(r\) — число (не зависит от \(n\))</p>
+                <p style="margin-top: 10px;">Выполним деление:</p>
+                <ul>
+                    <li>\(n^2 = (n-1) \cdot n + n\) (потому что \(n^2 = n(n-1) + n\))</li>
+                    <li>\(n^2 + n = (n-1) \cdot n + 2n\)</li>
+                    <li>\(n^2 + n + 1 = (n-1) \cdot n + 2n + 1\)</li>
+                    <li>Теперь разделим \(2n + 1\) на \((n-1)\): \(2n + 1 = 2(n-1) + 3\)</li>
+                    <li>\(n^2 + n + 1 = (n-1)(n + 2) + 3\)</li>
+                </ul>
+                <p style="margin-top: 10px;"><strong>Проверка:</strong> \((n-1)(n+2) = n^2 + 2n - n - 2 = n^2 + n - 2\)</p>
+                <p>\(n^2 + n - 2 + 3 = n^2 + n + 1\) ✓</p>
+            </div>
+            
+            <div class="step solution">
+                <h4>✓ Полное решение</h4>
+                <p>Выполним полиномиальное деление \(n^2 + n + 1\) на \((n - 1)\):</p>
+                <p style="text-align: center; margin: 15px 0;">\(n^2 + n + 1 = (n - 1)(n + 2) + 3\)</p>
+                <p style="margin-top: 10px;">\((n-1) \mid (n^2 + n + 1)\) тогда и только тогда, когда \((n-1) \mid 3\)</p>
+                <p style="margin-top: 10px;">Делители числа 3: \(\pm 1, \pm 3\)</p>
+                <p style="margin-top: 10px;">Поэтому:</p>
+                <ul>
+                    <li>\(n - 1 = -3\) ⟹ \(n = -2\)</li>
+                    <li>\(n - 1 = -1\) ⟹ \(n = 0\)</li>
+                    <li>\(n - 1 = 1\) ⟹ \(n = 2\)</li>
+                    <li>\(n - 1 = 3\) ⟹ \(n = 4\)</li>
+                </ul>
+                <p style="margin-top: 10px;"><strong>Ответ:</strong> \(n \in \{-2, 0, 2, 4\}\)</p>
+            </div>
+            
+            <div class="step check">
+                <h4>✓ Проверка всех решений</h4>
+                <table>
+                    <tr>
+                        <th>\(n\)</th>
+                        <th>\(n^2 + n + 1\)</th>
+                        <th>\(n - 1\)</th>
+                        <th>Деление</th>
+                        <th>OK?</th>
+                    </tr>
+                    <tr>
+                        <td>-2</td>
+                        <td>4 - 2 + 1 = 3</td>
+                        <td>-3</td>
+                        <td>\(3 / (-3) = -1\)</td>
+                        <td>✓</td>
+                    </tr>
+                    <tr>
+                        <td>0</td>
+                        <td>0 + 0 + 1 = 1</td>
+                        <td>-1</td>
+                        <td>\(1 / (-1) = -1\)</td>
+                        <td>✓</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>4 + 2 + 1 = 7</td>
+                        <td>1</td>
+                        <td>\(7 / 1 = 7\)</td>
+                        <td>✓</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>16 + 4 + 1 = 21</td>
+                        <td>3</td>
+                        <td>\(21 / 3 = 7\)</td>
+                        <td>✓</td>
+                    </tr>
+                </table>
+                <div class="success">Все четыре решения верны! ✓</div>
+            </div>
+            
+            <div class="step">
+                <h4>🎓 Что мы выучили</h4>
+                <ul>
+                    <li><strong>Приём "деление с остатком":</strong> часто самый быстрый способ при задачах вида «\((n + a) \mid f(n)\)»</li>
+                    <li><strong>Ограничение делителей:</strong> если остаток — число \(r\), то делитель должен делить \(r\)</li>
+                    <li><strong>Конечность решений:</strong> делителей у числа конечное количество, поэтому решений конечное количество</li>
+                </ul>
+            </div>
+            
+            <hr style="margin: 50px 0; border: none; border-top: 3px solid #667eea;">
+            
+            <!-- ============ ЗАДАЧА 2.2 ============ -->
+            <div class="task-card">
+                <h3>Задача 2.2</h3>
+                <div class="task-statement">
+                    Докажи, что \(n^3 + 5n\) делится на 6 для любого целого \(n\).
+                </div>
+                
+                <div class="step">
+                    <h4>📋 Анализ</h4>
+                    <p><strong>Дано:</strong> Целое число \(n\).</p>
+                    <p><strong>Доказать:</strong> \(6 \mid (n^3 + 5n)\).</p>
+                    <p><strong>Стратегия:</strong> \(6 = 2 \cdot 3\), и \(\gcd(2,3) = 1\). Значит, достаточно доказать делимость на 2 И на 3 отдельно.</p>
+                </div>
+                
+                <div class="step">
+                    <h4>❌ Типичная ошибка</h4>
+                    <p>Проверить на нескольких числах и сказать «значит всегда делится». Это НЕ доказательство! Нужно показать для ВСЕХ \(n\).</p>
+                </div>
+                
+                <div class="step">
+                    <h4>💡 Ключевая идея</h4>
+                    <p>Разложим: \(n^3 + 5n = n^3 - n + 6n = n(n^2 - 1) + 6n = n(n-1)(n+1) + 6n\).</p>
+                    <p>\(n(n-1)(n+1)\) — произведение трёх последовательных чисел, а \(6n\) очевидно делится на 6.</p>
+                </div>
+                
+                <div class="step">
+                    <h4>✅ Полное решение</h4>
+                    <p><strong>Шаг 1.</strong> Преобразуем выражение:</p>
+                    <p>\(n^3 + 5n = n^3 - n + 6n = n(n^2 - 1) + 6n = n(n-1)(n+1) + 6n\)</p>
+                    
+                    <p><strong>Шаг 2.</strong> Анализируем каждое слагаемое:</p>
+                    <ul>
+                        <li>\(n(n-1)(n+1)\) — произведение трёх последовательных целых чисел \((n-1), n, (n+1)\). Среди трёх подряд идущих чисел одно кратно 3 и хотя бы одно чётное, значит \(6 \mid n(n-1)(n+1)\).</li>
+                        <li>\(6n\) — очевидно делится на 6.</li>
+                    </ul>
+                    
+                    <p><strong>Шаг 3.</strong> По свойству линейной комбинации: если \(6 \mid n(n-1)(n+1)\) и \(6 \mid 6n\), то \(6 \mid [n(n-1)(n+1) + 6n]\).</p>
+                    
+                    <p><strong>Вывод:</strong> \(6 \mid (n^3 + 5n)\) для любого целого \(n\). □</p>
+                </div>
+                
+                <div class="step">
+                    <h4>🔍 Проверка</h4>
+                    <ul>
+                        <li>\(n=1\): \(1 + 5 = 6 = 6 \cdot 1\) ✓</li>
+                        <li>\(n=2\): \(8 + 10 = 18 = 6 \cdot 3\) ✓</li>
+                        <li>\(n=3\): \(27 + 15 = 42 = 6 \cdot 7\) ✓</li>
+                        <li>\(n=-1\): \(-1 + (-5) = -6 = 6 \cdot (-1)\) ✓</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- ============ ЗАДАЧА 2.3 ============ -->
+            <div class="task-card">
+                <h3>Задача 2.3</h3>
+                <div class="task-statement">
+                    Докажи, что \(5^n - 1\) делится на 4 для любого натурального \(n\).
+                </div>
+                
+                <div class="step">
+                    <h4>📋 Анализ</h4>
+                    <p><strong>Дано:</strong> Натуральное \(n \ge 1\).</p>
+                    <p><strong>Доказать:</strong> \(4 \mid (5^n - 1)\).</p>
+                    <p><strong>Стратегия:</strong> Заметим, что \(5 = 4 + 1\). Значит \(5 \equiv 1 \pmod{4}\).</p>
+                </div>
+                
+                <div class="step">
+                    <h4>❌ Типичная ошибка</h4>
+                    <p>Студент пробует метод математической индукции — это работает, но слишком длинно. Есть способ проще!</p>
+                </div>
+                
+                <div class="step">
+                    <h4>💡 Ключевая идея</h4>
+                    <p>Используем формулу разложения: \(a^n - 1 = (a - 1)(a^{n-1} + a^{n-2} + \ldots + a + 1)\).</p>
+                    <p>При \(a = 5\): \(5^n - 1 = (5 - 1)(\ldots) = 4 \cdot (\ldots)\). Всё!</p>
+                </div>
+                
+                <div class="step">
+                    <h4>✅ Полное решение</h4>
+                    <p><strong>Способ 1 (разложение):</strong></p>
+                    <p>\(5^n - 1 = (5 - 1)(5^{n-1} + 5^{n-2} + \ldots + 5 + 1) = 4 \cdot (5^{n-1} + 5^{n-2} + \ldots + 1)\)</p>
+                    <p>Выражение в скобках — целое число. Значит, \(4 \mid (5^n - 1)\). □</p>
+                    
+                    <p style="margin-top: 15px;"><strong>Способ 2 (остатки):</strong></p>
+                    <p>\(5 \equiv 1 \pmod{4}\), значит \(5^n \equiv 1^n = 1 \pmod{4}\), откуда \(5^n - 1 \equiv 0 \pmod{4}\). □</p>
+                </div>
+                
+                <div class="step">
+                    <h4>🔍 Проверка</h4>
+                    <ul>
+                        <li>\(n=1\): \(5 - 1 = 4 = 4 \cdot 1\) ✓</li>
+                        <li>\(n=2\): \(25 - 1 = 24 = 4 \cdot 6\) ✓</li>
+                        <li>\(n=3\): \(125 - 1 = 124 = 4 \cdot 31\) ✓</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- ============ ЗАДАЧА 2.4 ============ -->
+            <div class="task-card">
+                <h3>Задача 2.4</h3>
+                <div class="task-statement">
+                    Найди все целые \(n\), при которых \(\frac{n^2 + 3n + 9}{n + 1}\) — целое число.
+                </div>
+                
+                <div class="step">
+                    <h4>📋 Анализ</h4>
+                    <p><strong>Дано:</strong> Целое \(n\), \(n \ne -1\).</p>
+                    <p><strong>Найти:</strong> Все \(n\), при которых \((n+1) \mid (n^2 + 3n + 9)\).</p>
+                    <p><strong>Стратегия:</strong> Приём «деление многочлена» — тот же, что в задаче 2.1.</p>
+                </div>
+                
+                <div class="step">
+                    <h4>❌ Типичная ошибка</h4>
+                    <p>Подбирать значения \(n\) наугад. Это бесконечный процесс! Нужен системный подход.</p>
+                </div>
+                
+                <div class="step">
+                    <h4>💡 Ключевая идея</h4>
+                    <p>Выразим \(n = (n+1) - 1\) и подставим в числитель, чтобы выделить остаток от деления на \((n+1)\).</p>
+                </div>
+                
+                <div class="step">
+                    <h4>✅ Полное решение</h4>
+                    <p><strong>Шаг 1.</strong> Обозначим \(t = n + 1\), тогда \(n = t - 1\):</p>
+                    <p>\(n^2 + 3n + 9 = (t-1)^2 + 3(t-1) + 9\)</p>
+                    <p>\(= t^2 - 2t + 1 + 3t - 3 + 9\)</p>
+                    <p>\(= t^2 + t + 7\)</p>
+                    
+                    <p><strong>Шаг 2.</strong> Выносим \(t = (n+1)\):</p>
+                    <p>\(t^2 + t + 7 = t(t + 1) + 7 = (n+1)(n+2) + 7\)</p>
+                    
+                    <p><strong>Шаг 3.</strong> Проверка: \((n+1)(n+2) + 7 = n^2 + 3n + 2 + 7 = n^2 + 3n + 9\) ✓</p>
+                    
+                    <p><strong>Шаг 4.</strong> Значит: \((n+1) \mid (n^2 + 3n + 9)\) ⟺ \((n+1) \mid 7\).</p>
+                    
+                    <p><strong>Шаг 5.</strong> Делители числа 7: \(\pm 1, \pm 7\).</p>
+                    <ul>
+                        <li>\(n + 1 = 1 \Rightarrow n = 0\)</li>
+                        <li>\(n + 1 = -1 \Rightarrow n = -2\)</li>
+                        <li>\(n + 1 = 7 \Rightarrow n = 6\)</li>
+                        <li>\(n + 1 = -7 \Rightarrow n = -8\)</li>
+                    </ul>
+                    
+                    <p><strong>Ответ:</strong> \(n \in \{-8, -2, 0, 6\}\). □</p>
+                </div>
+                
+                <div class="step">
+                    <h4>🔍 Проверка</h4>
+                    <ul>
+                        <li>\(n=0\): \(\frac{0 + 0 + 9}{1} = 9\) — целое ✓</li>
+                        <li>\(n=6\): \(\frac{36 + 18 + 9}{7} = \frac{63}{7} = 9\) — целое ✓</li>
+                        <li>\(n=-2\): \(\frac{4 - 6 + 9}{-1} = \frac{7}{-1} = -7\) — целое ✓</li>
+                        <li>\(n=-8\): \(\frac{64 - 24 + 9}{-7} = \frac{49}{-7} = -7\) — целое ✓</li>
+                        <li>\(n=1\): \(\frac{1 + 3 + 9}{2} = \frac{13}{2} = 6.5\) — НЕ целое ✓ (правильно не попало в ответ)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <hr style="margin: 50px 0; border: none; border-top: 3px solid #764ba2;">
+            <h2 style="text-align: center;">🔥 Уровень 3 — Продвинутый</h2>
+            
+            <!-- ============ ЗАДАЧА 3.1 ============ -->
+            <div class="task-card">
+                <h3>Задача 3.1</h3>
+                <div class="task-statement">
+                    Докажи, что \(n^5 - n\) делится на 30 для любого целого \(n\).
+                </div>
+                
+                <div class="step">
+                    <h4>📋 Анализ</h4>
+                    <p><strong>Дано:</strong> Целое число \(n\).</p>
+                    <p><strong>Доказать:</strong> \(30 \mid (n^5 - n)\).</p>
+                    <p><strong>Стратегия:</strong> \(30 = 2 \cdot 3 \cdot 5\). Нужно показать делимость на 2, 3 и 5 одновременно.</p>
+                </div>
+                
+                <div class="step">
+                    <h4>❌ Типичная ошибка</h4>
+                    <p>Пытаться доказать делимость на 30 напрямую. Гораздо проще доказать отдельно для 2, 3 и 5.</p>
+                </div>
+                
+                <div class="step">
+                    <h4>💡 Ключевая идея</h4>
+                    <p>Разложим: \(n^5 - n = n(n^4 - 1) = n(n^2 - 1)(n^2 + 1) = n(n-1)(n+1)(n^2+1)\).</p>
+                    <p>\(n(n-1)(n+1)\) — произведение трёх последовательных, а \(n^2 + 1\) поможет с делимостью на 5.</p>
+                </div>
+                
+                <div class="step">
+                    <h4>✅ Полное решение</h4>
+                    <p><strong>Шаг 1. Разложение:</strong></p>
+                    <p>\(n^5 - n = n(n^4 - 1) = n(n^2 - 1)(n^2 + 1) = (n-1) \cdot n \cdot (n+1) \cdot (n^2 + 1)\)</p>
+                    
+                    <p><strong>Шаг 2. Делимость на 2:</strong></p>
+                    <p>\((n-1), n, (n+1)\) — три последовательных числа. Среди них есть чётное. Значит, \(2 \mid n(n-1)(n+1)\). ✓</p>
+                    
+                    <p><strong>Шаг 3. Делимость на 3:</strong></p>
+                    <p>Среди трёх последовательных чисел \((n-1), n, (n+1)\) ровно одно кратно 3. Значит, \(3 \mid n(n-1)(n+1)\). ✓</p>
+                    
+                    <p><strong>Шаг 4. Делимость на 5:</strong> Разберём по остаткам при делении на 5:</p>
+                    <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                        <tr style="background: #667eea; color: white;">
+                            <th style="padding: 8px; border: 1px solid #ddd;">\(n \bmod 5\)</th>
+                            <th style="padding: 8px; border: 1px solid #ddd;">\(n^5 - n \bmod 5\)</th>
+                            <th style="padding: 8px; border: 1px solid #ddd;">Какой множитель кратен 5</th>
+                        </tr>
+                        <tr><td style="padding: 8px; border: 1px solid #ddd; text-align: center;">0</td><td style="padding: 8px; border: 1px solid #ddd; text-align: center;">0</td><td style="padding: 8px; border: 1px solid #ddd;">\(5 \mid n\)</td></tr>
+                        <tr><td style="padding: 8px; border: 1px solid #ddd; text-align: center;">1</td><td style="padding: 8px; border: 1px solid #ddd; text-align: center;">0</td><td style="padding: 8px; border: 1px solid #ddd;">\(5 \mid (n-1)\), т.к. \(n-1 \equiv 0\)</td></tr>
+                        <tr><td style="padding: 8px; border: 1px solid #ddd; text-align: center;">2</td><td style="padding: 8px; border: 1px solid #ddd; text-align: center;">0</td><td style="padding: 8px; border: 1px solid #ddd;">\(5 \mid (n^2+1)\), т.к. \(4+1=5\)</td></tr>
+                        <tr><td style="padding: 8px; border: 1px solid #ddd; text-align: center;">3</td><td style="padding: 8px; border: 1px solid #ddd; text-align: center;">0</td><td style="padding: 8px; border: 1px solid #ddd;">\(5 \mid (n^2+1)\), т.к. \(9+1=10\)</td></tr>
+                        <tr><td style="padding: 8px; border: 1px solid #ddd; text-align: center;">4</td><td style="padding: 8px; border: 1px solid #ddd; text-align: center;">0</td><td style="padding: 8px; border: 1px solid #ddd;">\(5 \mid (n+1)\), т.к. \(n+1 \equiv 0\)</td></tr>
+                    </table>
+                    <p>Во всех случаях \(5 \mid (n^5 - n)\). ✓</p>
+                    
+                    <p><strong>Шаг 5. Итог:</strong> \(2, 3, 5\) попарно взаимно просты и все делят \(n^5 - n\). Значит, \(2 \cdot 3 \cdot 5 = 30 \mid (n^5 - n)\). □</p>
+                </div>
+                
+                <div class="step">
+                    <h4>🔍 Проверка</h4>
+                    <ul>
+                        <li>\(n=2\): \(32 - 2 = 30 = 30 \cdot 1\) ✓</li>
+                        <li>\(n=3\): \(243 - 3 = 240 = 30 \cdot 8\) ✓</li>
+                        <li>\(n=7\): \(16807 - 7 = 16800 = 30 \cdot 560\) ✓</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- ============ ЗАДАЧА 3.2 ============ -->
+            <div class="task-card">
+                <h3>Задача 3.2</h3>
+                <div class="task-statement">
+                    Докажи, что \(4^n + 15n - 1\) делится на 9 для любого натурального \(n\).
+                </div>
+                
+                <div class="step">
+                    <h4>📋 Анализ</h4>
+                    <p><strong>Дано:</strong> Натуральное \(n \ge 1\).</p>
+                    <p><strong>Доказать:</strong> \(9 \mid (4^n + 15n - 1)\).</p>
+                    <p><strong>Стратегия:</strong> Здесь есть и степень, и линейная часть. Попробуем индукцию или остатки.</p>
+                </div>
+                
+                <div class="step">
+                    <h4>❌ Типичная ошибка</h4>
+                    <p>Пытаться разложить всё выражение на множители — не получится из-за \(15n\). Нужна индукция!</p>
+                </div>
+                
+                <div class="step">
+                    <h4>💡 Ключевая идея</h4>
+                    <p>Метод математической индукции. При переходе от \(n\) к \(n+1\) используем: \(4^{n+1} = 4 \cdot 4^n\).</p>
+                </div>
+                
+                <div class="step">
+                    <h4>✅ Полное решение</h4>
+                    <p><strong>База:</strong> \(n = 1\): \(4^1 + 15 \cdot 1 - 1 = 4 + 15 - 1 = 18 = 9 \cdot 2\). ✓</p>
+                    
+                    <p><strong>Шаг индукции.</strong> Пусть \(9 \mid (4^n + 15n - 1)\) (предположение). Докажем для \(n + 1\):</p>
+                    
+                    <p>\(4^{n+1} + 15(n+1) - 1 = 4 \cdot 4^n + 15n + 15 - 1\)</p>
+                    
+                    <p>Хитрость: выразим через предыдущее выражение. Прибавим и вычтем \(4 \cdot (15n - 1)\):</p>
+                    
+                    <p>\(= 4 \cdot 4^n + 4(15n - 1) - 4(15n - 1) + 15n + 14\)</p>
+                    <p>\(= 4(4^n + 15n - 1) + (-60n + 4 + 15n + 14)\)</p>
+                    <p>\(= 4(4^n + 15n - 1) + (-45n + 18)\)</p>
+                    <p>\(= 4 \underbrace{(4^n + 15n - 1)}_{\text{делится на 9 по предп.}} + 9(-5n + 2)\)</p>
+                    
+                    <p>Первое слагаемое: \(9 \mid (4^n + 15n - 1)\) по предположению, значит \(9 \mid 4(4^n + 15n - 1)\).</p>
+                    <p>Второе слагаемое: \(9(-5n + 2)\) — очевидно делится на 9.</p>
+                    <p>По свойству линейной комбинации: \(9 \mid [4(4^n + 15n - 1) + 9(-5n + 2)]\). □</p>
+                </div>
+                
+                <div class="step">
+                    <h4>🔍 Проверка</h4>
+                    <ul>
+                        <li>\(n=1\): \(4 + 15 - 1 = 18 = 9 \cdot 2\) ✓</li>
+                        <li>\(n=2\): \(16 + 30 - 1 = 45 = 9 \cdot 5\) ✓</li>
+                        <li>\(n=3\): \(64 + 45 - 1 = 108 = 9 \cdot 12\) ✓</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- ============ ЗАДАЧА 3.3 ============ -->
+            <div class="task-card">
+                <h3>Задача 3.3</h3>
+                <div class="task-statement">
+                    Докажи, что если \(p\) — простое и \(p > 3\), то \(p^2 - 1\) делится на 24.
+                </div>
+                
+                <div class="step">
+                    <h4>📋 Анализ</h4>
+                    <p><strong>Дано:</strong> Простое \(p > 3\).</p>
+                    <p><strong>Доказать:</strong> \(24 \mid (p^2 - 1)\).</p>
+                    <p><strong>Стратегия:</strong> \(24 = 8 \cdot 3\). Докажем делимость на 8 и на 3 отдельно.</p>
+                </div>
+                
+                <div class="step">
+                    <h4>❌ Типичная ошибка</h4>
+                    <p>Забыть использовать условие «\(p\) — простое и \(p > 3\)». Без него утверждение неверно! Например, \(4^2 - 1 = 15\), а \(24 \nmid 15\).</p>
+                </div>
+                
+                <div class="step">
+                    <h4>💡 Ключевая идея</h4>
+                    <p>\(p^2 - 1 = (p-1)(p+1)\). Если \(p > 3\) и простое, то \(p\) нечётное, значит \(p-1\) и \(p+1\) — два последовательных чётных числа.</p>
+                </div>
+                
+                <div class="step">
+                    <h4>✅ Полное решение</h4>
+                    <p><strong>Шаг 1. Разложение:</strong> \(p^2 - 1 = (p-1)(p+1)\).</p>
+                    
+                    <p><strong>Шаг 2. Делимость на 8.</strong></p>
+                    <p>Так как \(p > 3\) и простое, \(p\) нечётное. Значит, \(p - 1\) и \(p + 1\) — два последовательных чётных числа.</p>
+                    <p>Из двух последовательных чётных чисел одно делится на 4 (каждое второе чётное число кратно 4).</p>
+                    <p>Значит: одно даёт множитель 4, другое — множитель 2. Итого: \(4 \cdot 2 = 8 \mid (p-1)(p+1)\). ✓</p>
+                    
+                    <p><strong>Шаг 3. Делимость на 3.</strong></p>
+                    <p>Числа \((p-1), p, (p+1)\) — три последовательных. Одно из них кратно 3.</p>
+                    <p>Но \(p\) — простое и \(p > 3\), значит \(3 \nmid p\). Следовательно, \(3 \mid (p-1)\) или \(3 \mid (p+1)\).</p>
+                    <p>В обоих случаях \(3 \mid (p-1)(p+1)\). ✓</p>
+                    
+                    <p><strong>Шаг 4. Итог:</strong> \(\gcd(8, 3) = 1\), оба делят \(p^2 - 1\). Значит, \(24 \mid (p^2 - 1)\). □</p>
+                </div>
+                
+                <div class="step">
+                    <h4>🔍 Проверка</h4>
+                    <ul>
+                        <li>\(p=5\): \(25 - 1 = 24 = 24 \cdot 1\) ✓</li>
+                        <li>\(p=7\): \(49 - 1 = 48 = 24 \cdot 2\) ✓</li>
+                        <li>\(p=11\): \(121 - 1 = 120 = 24 \cdot 5\) ✓</li>
+                        <li>\(p=13\): \(169 - 1 = 168 = 24 \cdot 7\) ✓</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- ============ ЗАДАЧА 3.4 ============ -->
+            <div class="task-card">
+                <h3>Задача 3.4</h3>
+                <div class="task-statement">
+                    Найди все пары натуральных чисел \((a, b)\) с \(a > b\), для которых \(a^2 - b^2 = 2025\).
+                </div>
+                
+                <div class="step">
+                    <h4>📋 Анализ</h4>
+                    <p><strong>Дано:</strong> \(a, b \in \mathbb{N}\), \(a > b\), \(a^2 - b^2 = 2025\).</p>
+                    <p><strong>Найти:</strong> Все такие пары.</p>
+                    <p><strong>Стратегия:</strong> Разложение разности квадратов + перебор делителей.</p>
+                </div>
+                
+                <div class="step">
+                    <h4>❌ Типичная ошибка</h4>
+                    <p>Перебирать все \(a\) и \(b\) подряд. Это очень долго! Нужно использовать разложение.</p>
+                </div>
+                
+                <div class="step">
+                    <h4>💡 Ключевая идея</h4>
+                    <p>\(a^2 - b^2 = (a-b)(a+b) = 2025\). Обозначим \(a - b = d\), \(a + b = e\), тогда \(de = 2025\), причём \(d\) и \(e\) одной чётности (оба нечётные или оба чётные).</p>
+                </div>
+                
+                <div class="step">
+                    <h4>✅ Полное решение</h4>
+                    <p><strong>Шаг 1.</strong> Разложим: \((a-b)(a+b) = 2025\).</p>
+                    
+                    <p><strong>Шаг 2.</strong> Разложим 2025 на простые: \(2025 = 5^2 \cdot 81 = 5^2 \cdot 3^4 = 3^4 \cdot 5^2\).</p>
+                    <p>Число делителей: \((4+1)(2+1) = 15\).</p>
+                    
+                    <p><strong>Шаг 3.</strong> Пусть \(a - b = d\), \(a + b = e\), тогда \(de = 2025\), \(d < e\) (т.к. \(b > 0\)), \(d > 0\).</p>
+                    <p>Из системы: \(a = \frac{d + e}{2}\), \(b = \frac{e - d}{2}\). Для \(a, b\) натуральных нужно: \(d\) и \(e\) одной чётности.</p>
+                    <p>\(2025\) нечётное, значит оба \(d\) и \(e\) нечётные — условие выполнено автоматически!</p>
+                    
+                    <p><strong>Шаг 4.</strong> Перебираем пары делителей \((d, e)\) с \(d < e\) и \(de = 2025\):</p>
+                    <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                        <tr style="background: #667eea; color: white;">
+                            <th style="padding: 6px; border: 1px solid #ddd;">\(d = a - b\)</th>
+                            <th style="padding: 6px; border: 1px solid #ddd;">\(e = a + b\)</th>
+                            <th style="padding: 6px; border: 1px solid #ddd;">\(a = \frac{d+e}{2}\)</th>
+                            <th style="padding: 6px; border: 1px solid #ddd;">\(b = \frac{e-d}{2}\)</th>
+                        </tr>
+                        <tr><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">1</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">2025</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">1013</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">1012</td></tr>
+                        <tr><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">3</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">675</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">339</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">336</td></tr>
+                        <tr><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">5</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">405</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">205</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">200</td></tr>
+                        <tr><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">9</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">225</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">117</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">108</td></tr>
+                        <tr><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">15</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">135</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">75</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">60</td></tr>
+                        <tr><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">25</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">81</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">53</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">28</td></tr>
+                        <tr><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">27</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">75</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">51</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">24</td></tr>
+                        <tr><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">45</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">45</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">45</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">0 ✗</td></tr>
+                    </table>
+                    <p>Последняя пара не подходит: \(b = 0\) — не натуральное.</p>
+                    
+                    <p><strong>Ответ:</strong> 7 пар: \((1013, 1012)\), \((339, 336)\), \((205, 200)\), \((117, 108)\), \((75, 60)\), \((53, 28)\), \((51, 24)\). □</p>
+                </div>
+                
+                <div class="step">
+                    <h4>🔍 Проверка (выборочно)</h4>
+                    <ul>
+                        <li>\((53, 28)\): \(53^2 - 28^2 = 2809 - 784 = 2025\) ✓</li>
+                        <li>\((75, 60)\): \(75^2 - 60^2 = 5625 - 3600 = 2025\) ✓</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <hr style="margin: 50px 0; border: none; border-top: 3px solid #f44336;">
+            <h2 style="text-align: center;">🏆 Уровень 4 — Олимпиадный</h2>
+            
+            <!-- ============ ЗАДАЧА 4.1 ============ -->
+            <div class="task-card">
+                <h3>Задача 4.1</h3>
+                <div class="task-statement">
+                    Докажи, что среди любых 52 целых чисел можно выбрать два, разность или сумма которых делится на 100.
+                </div>
+                
+                <div class="step">
+                    <h4>📋 Анализ</h4>
+                    <p><strong>Дано:</strong> 52 целых числа.</p>
+                    <p><strong>Доказать:</strong> Найдутся два числа, для которых \(100 \mid (a_i + a_j)\) или \(100 \mid (a_i - a_j)\).</p>
+                    <p><strong>Стратегия:</strong> Принцип Дирихле (голубей и клеток) + остатки.</p>
+                </div>
+                
+                <div class="step">
+                    <h4>❌ Типичная ошибка</h4>
+                    <p>Рассматривать только разность. Условие говорит «разность ИЛИ сумма» — это важно!</p>
+                </div>
+                
+                <div class="step">
+                    <h4>💡 Ключевая идея</h4>
+                    <p>\(100 \mid (a_i - a_j)\) означает \(a_i \equiv a_j \pmod{100}\).</p>
+                    <p>\(100 \mid (a_i + a_j)\) означает \(a_i \equiv -a_j \pmod{100}\).</p>
+                    <p>Значит, нам нужно, чтобы совпали остатки или чтобы остатки были «дополнительными» (в сумме давали 100).</p>
+                </div>
+                
+                <div class="step">
+                    <h4>✅ Полное решение</h4>
+                    <p><strong>Шаг 1.</strong> Для каждого числа \(a_i\) рассмотрим его остаток \(r_i = a_i \bmod 100\), где \(0 \le r_i \le 99\).</p>
+                    
+                    <p><strong>Шаг 2.</strong> Объединим остатки в «клетки»: каждая клетка содержит пару \(\{r, 100 - r\}\):</p>
+                    <p>\(\{0\}, \{50\}, \{1, 99\}, \{2, 98\}, \{3, 97\}, \ldots, \{49, 51\}\)</p>
+                    <p>Это \(2 + 49 = 51\) клетка.</p>
+                    
+                    <p><strong>Шаг 3.</strong> У нас 52 числа и 51 клетка. По принципу Дирихле, найдутся два числа \(a_i, a_j\) в одной клетке.</p>
+                    
+                    <p><strong>Шаг 4.</strong> Если они попали в одну клетку, значит:</p>
+                    <ul>
+                        <li>Либо \(r_i = r_j\), тогда \(a_i \equiv a_j \pmod{100}\), то есть \(100 \mid (a_i - a_j)\). ✓</li>
+                        <li>Либо \(r_i + r_j = 100\), тогда \(a_i + a_j \equiv 0 \pmod{100}\), то есть \(100 \mid (a_i + a_j)\). ✓</li>
+                    </ul>
+                    
+                    <p>В обоих случаях условие выполнено. □</p>
+                </div>
+                
+                <div class="step">
+                    <h4>🔍 Проверка: почему именно 52?</h4>
+                    <p>С 51 числом утверждение может быть неверным: можно выбрать по одному числу из каждой клетки — например, числа \(0, 1, 2, \ldots, 49, 50\) (51 число). Среди них нет пары с суммой или разностью, кратной 100 (проверьте!). Значит, 52 — минимальное необходимое количество.</p>
+                </div>
+            </div>
+            
+            <!-- ============ ЗАДАЧА 4.2 ============ -->
+            <div class="task-card">
+                <h3>Задача 4.2</h3>
+                <div class="task-statement">
+                    Найди все натуральные \(n\), при которых \(2^n + 1\) делится на 9.
+                </div>
+                
+                <div class="step">
+                    <h4>📋 Анализ</h4>
+                    <p><strong>Дано:</strong> Натуральное \(n\).</p>
+                    <p><strong>Найти:</strong> Все \(n\), при которых \(9 \mid (2^n + 1)\), то есть \(2^n \equiv -1 \equiv 8 \pmod{9}\).</p>
+                    <p><strong>Стратегия:</strong> Найти цикл остатков \(2^n \bmod 9\).</p>
+                </div>
+                
+                <div class="step">
+                    <h4>❌ Типичная ошибка</h4>
+                    <p>Найти \(n = 3\) и остановиться. Нужно найти ВСЕ решения — это бесконечная серия!</p>
+                </div>
+                
+                <div class="step">
+                    <h4>💡 Ключевая идея</h4>
+                    <p>Остатки степеней двойки по модулю 9 циклические. Найдём период и определим, при каких позициях остаток равен 8.</p>
+                </div>
+                
+                <div class="step">
+                    <h4>✅ Полное решение</h4>
+                    <p><strong>Шаг 1.</strong> Вычислим остатки \(2^n \bmod 9\) для последовательных \(n\):</p>
+                    <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                        <tr style="background: #667eea; color: white;">
+                            <th style="padding: 6px; border: 1px solid #ddd;">\(n\)</th>
+                            <th style="padding: 6px; border: 1px solid #ddd;">1</th><th style="padding: 6px; border: 1px solid #ddd;">2</th><th style="padding: 6px; border: 1px solid #ddd;">3</th><th style="padding: 6px; border: 1px solid #ddd;">4</th><th style="padding: 6px; border: 1px solid #ddd;">5</th><th style="padding: 6px; border: 1px solid #ddd;">6</th><th style="padding: 6px; border: 1px solid #ddd;">7</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px; border: 1px solid #ddd; font-weight: bold;">\(2^n\)</td>
+                            <td style="padding: 6px; border: 1px solid #ddd; text-align: center;">2</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">4</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center; background: #c8e6c9; font-weight: bold;">8</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">16</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">32</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">64</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">128</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px; border: 1px solid #ddd; font-weight: bold;">\(2^n \bmod 9\)</td>
+                            <td style="padding: 6px; border: 1px solid #ddd; text-align: center;">2</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">4</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center; background: #c8e6c9; font-weight: bold;">8</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">7</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">5</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">1</td><td style="padding: 6px; border: 1px solid #ddd; text-align: center;">2</td>
+                        </tr>
+                    </table>
+                    
+                    <p><strong>Шаг 2.</strong> Цикл: \(2, 4, 8, 7, 5, 1, 2, 4, 8, \ldots\) — период равен 6.</p>
+                    
+                    <p><strong>Шаг 3.</strong> \(2^n \equiv 8 \pmod{9}\) при \(n \equiv 3 \pmod{6}\), то есть \(n = 6k + 3\) для целого \(k \ge 0\).</p>
+                    
+                    <p><strong>Ответ:</strong> \(n = 3, 9, 15, 21, \ldots\), то есть \(n = 6k + 3\) при \(k = 0, 1, 2, \ldots\) □</p>
+                </div>
+                
+                <div class="step">
+                    <h4>🔍 Проверка</h4>
+                    <ul>
+                        <li>\(n=3\): \(2^3 + 1 = 9 = 9 \cdot 1\) ✓</li>
+                        <li>\(n=9\): \(2^9 + 1 = 513 = 9 \cdot 57\) ✓</li>
+                        <li>\(n=15\): \(2^{15} + 1 = 32769 = 9 \cdot 3641\) ✓</li>
+                        <li>\(n=4\): \(2^4 + 1 = 17\), \(17 / 9 = 1.88\ldots\) — НЕ делится ✓</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- ============ ЗАДАЧА 4.3 ============ -->
+            <div class="task-card">
+                <h3>Задача 4.3</h3>
+                <div class="task-statement">
+                    Пусть \(a + b\) делит \(a^2 + b^2\). Докажи, что \(a + b\) делит \(2ab\).
+                </div>
+                
+                <div class="step">
+                    <h4>📋 Анализ</h4>
+                    <p><strong>Дано:</strong> \((a + b) \mid (a^2 + b^2)\).</p>
+                    <p><strong>Доказать:</strong> \((a + b) \mid 2ab\).</p>
+                    <p><strong>Стратегия:</strong> Использовать свойство линейной комбинации — «вычесть» что-то подходящее.</p>
+                </div>
+                
+                <div class="step">
+                    <h4>❌ Типичная ошибка</h4>
+                    <p>Пытаться раскладывать \(a^2 + b^2\) на множители — оно не раскладывается над целыми! Нужен другой подход.</p>
+                </div>
+                
+                <div class="step">
+                    <h4>💡 Ключевая идея</h4>
+                    <p>Заметим тождество: \((a + b)^2 = a^2 + 2ab + b^2\), откуда \(a^2 + b^2 = (a+b)^2 - 2ab\).</p>
+                </div>
+                
+                <div class="step">
+                    <h4>✅ Полное решение</h4>
+                    <p><strong>Шаг 1.</strong> Запишем алгебраическое тождество:</p>
+                    <p>\(a^2 + b^2 = (a + b)^2 - 2ab\)</p>
+                    
+                    <p><strong>Шаг 2.</strong> Выразим \(2ab\):</p>
+                    <p>\(2ab = (a + b)^2 - (a^2 + b^2)\)</p>
+                    
+                    <p><strong>Шаг 3.</strong> Проверим делимость каждого слагаемого:</p>
+                    <ul>
+                        <li>\((a + b) \mid (a + b)^2\) — очевидно (любое число делит свой квадрат).</li>
+                        <li>\((a + b) \mid (a^2 + b^2)\) — дано по условию.</li>
+                    </ul>
+                    
+                    <p><strong>Шаг 4.</strong> По свойству линейной комбинации: если \(d \mid A\) и \(d \mid B\), то \(d \mid (A - B)\).</p>
+                    <p>Здесь \(d = a + b\), \(A = (a+b)^2\), \(B = a^2 + b^2\):</p>
+                    <p>\((a + b) \mid [(a + b)^2 - (a^2 + b^2)] = 2ab\)</p>
+                    
+                    <p>Значит, \((a + b) \mid 2ab\). □</p>
+                </div>
+                
+                <div class="step">
+                    <h4>🔍 Проверка</h4>
+                    <ul>
+                        <li>\(a=3, b=1\): \(a+b=4\), \(a^2+b^2=10\). \(4 \mid 10\)? Нет! Значит условие не выполнено — задачу проверять не нужно.</li>
+                        <li>\(a=1, b=1\): \(a+b=2\), \(a^2+b^2=2\). \(2 \mid 2\) ✓. Тогда \(2ab = 2\), \(2 \mid 2\) ✓.</li>
+                        <li>\(a=3, b=3\): \(a+b=6\), \(a^2+b^2=18\). \(6 \mid 18\) ✓. Тогда \(2ab = 18\), \(6 \mid 18\) ✓.</li>
+                        <li>\(a=5, b=1\): \(a+b=6\), \(a^2+b^2=26\). \(6 \mid 26\)? Нет — условие не выполнено.</li>
+                        <li>\(a=2, b=4\): \(a+b=6\), \(a^2+b^2=20\). \(6 \mid 20\)? Нет — условие не выполнено.</li>
+                    </ul>
+                    <p><em>Замечание: условие \((a+b) \mid (a^2+b^2)\) довольно сильное — выполняется не для всех пар.</em></p>
+                </div>
+            </div>
+            
+            <!-- ============ ЗАДАЧА 4.4 ============ -->
+            <div class="task-card">
+                <h3>Задача 4.4</h3>
+                <div class="task-statement">
+                    Найди все натуральные \(n\), для которых \(n \mid (2^n - 1)\).
+                </div>
+                
+                <div class="step">
+                    <h4>📋 Анализ</h4>
+                    <p><strong>Дано:</strong> Натуральное \(n\).</p>
+                    <p><strong>Найти:</strong> Все \(n\), при которых \(n \mid (2^n - 1)\).</p>
+                    <p><strong>Стратегия:</strong> Это «жёсткая» задача — нужно догадаться, что ответ \(n = 1\), и доказать, что больше решений нет.</p>
+                </div>
+                
+                <div class="step">
+                    <h4>❌ Типичная ошибка</h4>
+                    <p>Проверить несколько \(n\) и написать «только \(n = 1\)». Это не доказательство! Нужно показать, почему другие \(n\) не подходят.</p>
+                </div>
+                
+                <div class="step">
+                    <h4>💡 Ключевая идея</h4>
+                    <p>Если \(n > 1\) делит \(2^n - 1\), то \(n\) нечётно (иначе \(2^n - 1\) нечётно, а чётное не делит нечётное). Рассмотрим наименьший простой делитель \(p\) числа \(n\) и получим противоречие.</p>
+                </div>
+                
+                <div class="step">
+                    <h4>✅ Полное решение</h4>
+                    <p><strong>Шаг 1. Проверка малых значений:</strong></p>
+                    <ul>
+                        <li>\(n=1\): \(2^1 - 1 = 1\), \(1 \mid 1\) ✓ — подходит!</li>
+                        <li>\(n=2\): \(2^2 - 1 = 3\), \(2 \nmid 3\) ✗</li>
+                        <li>\(n=3\): \(2^3 - 1 = 7\), \(3 \nmid 7\) ✗</li>
+                        <li>\(n=4\): \(2^4 - 1 = 15\), \(4 \nmid 15\) ✗</li>
+                        <li>\(n=5\): \(2^5 - 1 = 31\), \(5 \nmid 31\) ✗</li>
+                    </ul>
+                    
+                    <p><strong>Шаг 2. Доказательство, что \(n = 1\) — единственное решение.</strong></p>
+                    
+                    <p>Предположим \(n > 1\) и \(n \mid (2^n - 1)\).</p>
+                    
+                    <p><strong>Шаг 3.</strong> \(2^n - 1\) всегда нечётное, значит \(n\) должно быть нечётным (чётное не делит нечётное).</p>
+                    
+                    <p><strong>Шаг 4.</strong> Пусть \(p\) — наименьший простой делитель \(n\). Тогда \(p\) нечётное (т.к. \(n\) нечётное), значит \(p \ge 3\).</p>
+                    
+                    <p><strong>Шаг 5.</strong> Из \(n \mid (2^n - 1)\) следует \(p \mid (2^n - 1)\), то есть \(2^n \equiv 1 \pmod{p}\).</p>
+                    
+                    <p><strong>Шаг 6.</strong> Пусть \(d\) — порядок числа 2 по модулю \(p\) (наименьшее натуральное число, для которого \(2^d \equiv 1 \pmod{p}\)). Тогда \(d \mid n\).</p>
+                    
+                    <p><strong>Шаг 7.</strong> Также по малой теореме Ферма: \(2^{p-1} \equiv 1 \pmod{p}\), значит \(d \mid (p - 1)\).</p>
+                    
+                    <p><strong>Шаг 8.</strong> Итого: \(d \mid n\) и \(d \mid (p - 1)\), откуда \(d \mid \gcd(n, p - 1)\).</p>
+                    
+                    <p><strong>Шаг 9.</strong> Но \(p\) — наименьший простой делитель \(n\), а все простые делители \(p - 1\) меньше \(p\). Значит, \(\gcd(n, p - 1) = 1\).</p>
+                    
+                    <p><strong>Шаг 10.</strong> Тогда \(d = 1\), то есть \(2^1 \equiv 1 \pmod{p}\), значит \(p \mid 1\). Противоречие, т.к. \(p \ge 3\).</p>
+                    
+                    <p><strong>Ответ:</strong> \(n = 1\). □</p>
+                </div>
+                
+                <div class="step">
+                    <h4>🔍 Проверка и дополнительный анализ</h4>
+                    <ul>
+                        <li>\(n=1\): \(2^1 - 1 = 1\), \(1 \mid 1\) ✓ — единственное решение.</li>
+                        <li>Для \(n = 7\): \(2^7 - 1 = 127\), \(127 / 7 = 18.14\ldots\) — не делится ✓</li>
+                        <li>Для \(n = 15\): \(2^{15} - 1 = 32767\), \(32767 / 15 = 2184.47\ldots\) — не делится ✓</li>
+                    </ul>
+                    <p><em>Замечание: эта задача использует понятие «порядок элемента по модулю» и малую теорему Ферма — продвинутые инструменты теории чисел. На олимпиаде 8 класса достаточно проверить несколько \(n\) и заметить закономерность, но формальное доказательство требует этих фактов.</em></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Сверхподробные решения</strong> — Делимость и её свойства (Урок 3)</p>
+            <p>Все 14 задач разобраны с анализом, ошибками, идеями, решением и проверкой</p>
+        </div>
+    </div>
+</body>
+</html>

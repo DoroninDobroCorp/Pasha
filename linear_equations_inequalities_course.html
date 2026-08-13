@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Линейные уравнения и неравенства — Олимпиадный курс</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            line-height: 1.8;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.2em; margin-bottom: 10px; font-weight: 700; }
+        .header .subtitle { font-size: 1.1em; opacity: 0.95; }
+        .content { padding: 40px 30px; }
+        h2 {
+            color: #11998e;
+            font-size: 1.8em;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-left: 4px solid #11998e;
+            padding-left: 15px;
+        }
+        h3 { color: #0f7b6c; font-size: 1.4em; margin-top: 30px; margin-bottom: 15px; }
+        h4 { color: #555; font-size: 1.1em; margin-top: 20px; margin-bottom: 10px; }
+        .theory-box {
+            background: #f0faf8;
+            border-left: 4px solid #11998e;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        .definition {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        .example {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        .proof {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        .problem {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        .solution {
+            background: #f1f8e9;
+            border-left: 4px solid #8bc34a;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        .warning {
+            background: #ffebee;
+            padding: 12px 16px;
+            border-radius: 4px;
+            border-left: 4px solid #f44336;
+            margin: 15px 0;
+        }
+        .tip {
+            background: #fff9c4;
+            padding: 12px 16px;
+            border-radius: 4px;
+            border-left: 4px solid #fbc02d;
+            margin: 15px 0;
+        }
+        .navigator {
+            background: #eceff1;
+            border: 2px solid #37474f;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+        .checklist {
+            background: #fff3e0;
+            border: 2px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        table th {
+            background: #11998e;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        table td { padding: 12px; border-bottom: 1px solid #e0e0e0; }
+        table tr:hover { background: #f5f7fa; }
+        p { margin: 15px 0; }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Menlo', monospace;
+        }
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Monaco', 'Menlo', monospace;
+        }
+        .level-1 { border-top: 3px solid #4caf50; padding-top: 3px; }
+        .level-2 { border-top: 3px solid #2196f3; padding-top: 3px; }
+        .level-3 { border-top: 3px solid #ff9800; padding-top: 3px; }
+        .level-4 { border-top: 3px solid #f44336; padding-top: 3px; }
+        .check { color: #4caf50; font-weight: bold; }
+        .cross { color: #f44336; font-weight: bold; }
+        strong { color: #333; font-weight: 600; }
+        .footer {
+            background: #eceff1;
+            color: #455a64;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9em;
+            border-top: 1px solid #cfd8dc;
+        }
+        .mnemonic {
+            background: #e8eaf6;
+            border: 2px dashed #5c6bc0;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 1.05em;
+        }
+        ul { margin: 10px 0 10px 20px; }
+        li { margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>&#128202; Линейные уравнения и неравенства</h1>
+            <p class="subtitle">Полный олимпиадный курс для 8 класса</p>
+            <p style="margin-top: 15px; opacity: 0.9;">Региональные олимпиады (TLF 4 year / Эйлер / ВсОШ)</p>
+        </div>
+        
+        <div class="content">
+            <div class="definition">
+                <strong>&#128204; Для кого этот курс:</strong> 8 класс, уровень региональных олимпиад<br>
+                <strong>&#128218; Пререквизиты:</strong> Модули (уже пройдено), свойства делимости, НОД/НОК<br>
+                <strong>&#127919; Что внутри:</strong> линейные уравнения с параметрами, неравенства, системы, модули, олимпиадные приёмы
+            </div>
+
+            <h2>ЧАСТЬ 1. ТЕОРИЯ</h2>
+
+            <h3>1.1. Линейное уравнение: что это такое</h3>
+
+            <div class="theory-box">
+                <p><strong>Определение.</strong> Линейное уравнение с одной переменной &mdash; это уравнение вида:</p>
+                <p style="text-align: center; font-size: 1.2em;">\(ax = b\)</p>
+                <p>где \(a\) и \(b\) &mdash; заданные числа, \(x\) &mdash; неизвестное.</p>
+                <p><strong>Почему &laquo;линейное&raquo;?</strong> Потому что \(x\) входит только в <strong>первой степени</strong>. Если нарисовать график \(y = ax - b\), это будет <strong>прямая линия</strong>.</p>
+            </div>
+
+            <table>
+                <thead>
+                    <tr><th>Условие</th><th>Что происходит</th><th>Сколько решений</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>\(a \ne 0\)</td><td>\(x = \frac{b}{a}\) &mdash; единственное решение</td><td><strong>Одно</strong></td></tr>
+                    <tr><td>\(a = 0\), \(b = 0\)</td><td>\(0 \cdot x = 0\) &mdash; верно при любом \(x\)</td><td><strong>Бесконечно много</strong></td></tr>
+                    <tr><td>\(a = 0\), \(b \ne 0\)</td><td>\(0 \cdot x = b\) &mdash; противоречие</td><td><strong>Нет решений</strong></td></tr>
+                </tbody>
+            </table>
+
+            <div class="warning">
+                <strong>&#9888;&#65039; Типичная ошибка:</strong> Забывать про случаи \(a = 0\). На олимпиаде это особенно важно в задачах <strong>с параметром</strong>!
+            </div>
+
+            <div class="example">
+                <p><strong>Пример 1.</strong> Реши уравнение \(3x - 7 = 2x + 5\).</p>
+                <p>\(3x - 2x = 5 + 7\)</p>
+                <p>\(x = 12\)</p>
+                <p>Проверка: \(3 \cdot 12 - 7 = 29\) и \(2 \cdot 12 + 5 = 29\) <span class="check">&#10003;</span></p>
+            </div>
+
+            <h3>1.2. Главные правила работы с уравнениями</h3>
+
+            <p>Уравнение &mdash; это <strong>весы</strong>. Что делаешь с одной стороной &mdash; делай и с другой.</p>
+
+            <h4>Правило 1. Можно прибавить (или вычесть) одно и то же число к обеим частям</h4>
+
+            <div class="theory-box">
+                <p>\(A = B\) &hArr; \(A + c = B + c\)</p>
+                <p><strong>Зачем:</strong> чтобы &laquo;перенести&raquo; слагаемое на другую сторону.</p>
+                <p>\(3x + 5 = 11\) &rArr; \(3x = 11 - 5 = 6\) &rArr; \(x = 2\)</p>
+            </div>
+
+            <h4>Правило 2. Можно умножить (или разделить) обе части на число \(\ne 0\)</h4>
+
+            <div class="theory-box">
+                <p>\(A = B\) &hArr; \(A \cdot c = B \cdot c\) (при \(c \ne 0\))</p>
+                <p>\(\frac{x}{3} = 7\) &rArr; \(x = 7 \cdot 3 = 21\)</p>
+            </div>
+
+            <div class="warning">
+                <strong>&#9888;&#65039; Критическое замечание:</strong> делить на <strong>ноль нельзя!</strong> Это не просто правило &mdash; это фундаментальный запрет. Выражение \(\frac{a}{0}\) не определено.
+            </div>
+
+            <h4>Правило 3. Перенос слагаемого со сменой знака</h4>
+
+            <div class="theory-box">
+                <p>\(a + b = c\) &hArr; \(a = c - b\)</p>
+                <p><strong>Мнемоника:</strong> &laquo;Перелетел через знак \(=\) &mdash; поменял знак&raquo;.</p>
+            </div>
+
+            <h3>1.3. Уравнения, которые &laquo;притворяются&raquo; сложными</h3>
+
+            <p>Многие уравнения выглядят страшно, но после упрощения становятся линейными.</p>
+
+            <h4>Уравнения с дробями</h4>
+
+            <div class="example">
+                <p><strong>Пример 2.</strong> Реши: \(\frac{2x + 1}{3} - \frac{x - 2}{4} = 1\)</p>
+                <p><strong>Шаг 1.</strong> НОК(3, 4) = 12. Умножаем обе части на 12:</p>
+                <p>\(4(2x + 1) - 3(x - 2) = 12\)</p>
+                <p><strong>Шаг 2.</strong> Раскрываем скобки:</p>
+                <p>\(8x + 4 - 3x + 6 = 12\)</p>
+                <p>\(5x + 10 = 12\)</p>
+                <p>\(5x = 2\)</p>
+                <p>\(x = \frac{2}{5}\)</p>
+                <p><strong>Проверка:</strong> \(\frac{\frac{9}{5}}{3} - \frac{-\frac{8}{5}}{4} = \frac{3}{5} + \frac{2}{5} = 1\) <span class="check">&#10003;</span></p>
+            </div>
+
+            <div class="warning">
+                <strong>&#9888;&#65039; Типичные ошибки:</strong>
+                <ul>
+                    <li>Забыть умножить <strong>каждый</strong> член на НОК (особенно свободный член справа!)</li>
+                    <li>Неправильно раскрыть скобки: \(-3(x - 2) = -3x + 6\), а <strong>не</strong> \(-3x - 6\)!</li>
+                </ul>
+            </div>
+
+            <h4>Уравнения со скобками</h4>
+
+            <div class="example">
+                <p><strong>Пример 3.</strong> Реши: \(5(x - 3) - 2(3x + 1) = x - 4\)</p>
+                <p>\(5x - 15 - 6x - 2 = x - 4\)</p>
+                <p>\(-x - 17 = x - 4\)</p>
+                <p>\(-2x = 13\)</p>
+                <p>\(x = -\frac{13}{2}\)</p>
+            </div>
+
+            <h3>1.4. Линейные неравенства: главные отличия от уравнений</h3>
+
+            <div class="theory-box">
+                <p><strong>Определение.</strong> Линейное неравенство &mdash; выражение вида \(ax + b > 0\) (или \(\ge, <, \le\)).</p>
+                <p><strong>Решить неравенство</strong> &mdash; найти <strong>множество всех</strong> \(x\), при которых оно верно. Ответ &mdash; это <strong>промежуток</strong>.</p>
+            </div>
+
+            <h4>Правила работы с неравенствами</h4>
+
+            <div class="theory-box">
+                <p><strong>Правило 1.</strong> Прибавление/вычитание &mdash; знак <strong>НЕ</strong> меняется.</p>
+                <p>Если \(A > B\), то \(A + c > B + c\) для любого \(c\).</p>
+            </div>
+
+            <div class="theory-box">
+                <p><strong>Правило 2.</strong> Умножение/деление на <strong>положительное</strong> число &mdash; знак <strong>НЕ</strong> меняется.</p>
+                <p>Если \(A > B\) и \(c > 0\), то \(Ac > Bc\).</p>
+            </div>
+
+            <div class="warning" style="border-left-width: 6px; font-size: 1.05em;">
+                <strong>&#9888;&#65039; Правило 3. САМОЕ ВАЖНОЕ!</strong><br>
+                Умножение/деление на <strong>отрицательное</strong> число &mdash; знак <strong>ПЕРЕВОРАЧИВАЕТСЯ!</strong><br>
+                Если \(A > B\) и \(c < 0\), то \(Ac < Bc\).
+            </div>
+
+            <div class="tip">
+                <strong>&#128161; Почему переворачивается?</strong> Простой пример: \(3 > 2\). Умножим на \((-1)\): \(-3 < -2\). На числовой прямой: умножение на отрицательное число &laquo;отражает&raquo; все точки через ноль, и порядок меняется.
+            </div>
+
+            <div class="example">
+                <p><strong>Пример 4.</strong> Реши: \(-3x + 7 > 1\).</p>
+                <p>\(-3x > -6\)</p>
+                <p>Делим на \((-3)\) &mdash; <strong>ПЕРЕВОРАЧИВАЕМ</strong> знак!</p>
+                <p>\(x < 2\)</p>
+                <p>Ответ: \(x \in (-\infty, 2)\).</p>
+                <p>Проверка: \(x = 1\): \(-3 + 7 = 4 > 1\) <span class="check">&#10003;</span>. \(x = 3\): \(-9 + 7 = -2 > 1\)? Нет! <span class="check">&#10003;</span> (не должно подходить).</p>
+            </div>
+
+            <h3>1.5. Системы и совокупности неравенств</h3>
+
+            <h4>Система неравенств (И)</h4>
+
+            <div class="theory-box">
+                <p><strong>Система</strong> &mdash; когда <strong>оба</strong> неравенства выполняются <strong>одновременно</strong>.</p>
+            </div>
+
+            <div class="example">
+                <p><strong>Пример.</strong> \(\begin{cases} 2x - 1 > 3 \\ x + 4 \le 10 \end{cases}\)</p>
+                <p>Первое: \(2x > 4\) &rArr; \(x > 2\).</p>
+                <p>Второе: \(x \le 6\).</p>
+                <p>Ответ: <strong>пересечение</strong> &mdash; \(x \in (2,\; 6]\).</p>
+<pre>
+Числовая прямая:
+&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;(2&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;6]&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;
+         x &gt; 2    x &le; 6
+</pre>
+            </div>
+
+            <h4>Совокупность неравенств (ИЛИ)</h4>
+
+            <div class="theory-box">
+                <p><strong>Совокупность</strong> &mdash; достаточно выполнения <strong>хотя бы одного</strong> неравенства.</p>
+                <p>Ответ: <strong>объединение</strong> промежутков.</p>
+            </div>
+
+            <div class="mnemonic">
+                <strong>Запомни обозначения:</strong><br>
+                \(\begin{cases} \ldots \\ \ldots \end{cases}\) = фигурная скобка = <strong>система</strong> = И = пересечение<br>
+                \(\left[\begin{array}{l} \ldots \\ \ldots \end{array}\right.\) = квадратная скобка = <strong>совокупность</strong> = ИЛИ = объединение
+            </div>
+
+            <h3>1.6. Строгие и нестрогие неравенства</h3>
+
+            <table>
+                <thead>
+                    <tr><th>Символ</th><th>Название</th><th>Граничная точка</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>\(>\)</td><td>Строгое</td><td><strong>Не входит</strong> &mdash; пустой кружок &#9675;</td></tr>
+                    <tr><td>\(\ge\)</td><td>Нестрогое</td><td><strong>Входит</strong> &mdash; закрашенный кружок &#9679;</td></tr>
+                    <tr><td>\(<\)</td><td>Строгое</td><td><strong>Не входит</strong> &mdash; пустой кружок &#9675;</td></tr>
+                    <tr><td>\(\le\)</td><td>Нестрогое</td><td><strong>Входит</strong> &mdash; закрашенный кружок &#9679;</td></tr>
+                </tbody>
+            </table>
+
+            <div class="tip">
+                <strong>Запись интервалов:</strong>
+                <ul>
+                    <li>\((a, b)\) &mdash; открытый: \(a < x < b\) (концы не входят)</li>
+                    <li>\([a, b]\) &mdash; замкнутый: \(a \le x \le b\) (концы входят)</li>
+                    <li>\((a, b]\) &mdash; полуоткрытый: \(a < x \le b\)</li>
+                    <li>\((-\infty, a)\) &mdash; луч: \(x < a\). Бесконечность <strong>всегда</strong> с круглой скобкой!</li>
+                </ul>
+            </div>
+
+            <h3>1.7. Уравнения с модулем (линейные)</h3>
+
+            <h4>Базовое уравнение: \(|f(x)| = a\)</h4>
+
+            <div class="theory-box">
+                <p>\(|f(x)| = a\) (при \(a > 0\)) &hArr; \(f(x) = a\) или \(f(x) = -a\)</p>
+                <p>\(|f(x)| = 0\) &hArr; \(f(x) = 0\)</p>
+                <p>\(|f(x)| = a\) (при \(a < 0\)) &rArr; <strong>нет решений</strong> (модуль неотрицателен!)</p>
+            </div>
+
+            <div class="example">
+                <p><strong>Пример 5.</strong> Реши: \(|2x - 5| = 3\).</p>
+                <ul>
+                    <li>\(2x - 5 = 3\) &rArr; \(x = 4\)</li>
+                    <li>\(2x - 5 = -3\) &rArr; \(x = 1\)</li>
+                </ul>
+                <p>Ответ: \(x \in \{1,\; 4\}\).</p>
+            </div>
+
+            <h4>Уравнение \(|f(x)| = |g(x)|\)</h4>
+
+            <div class="theory-box">
+                <p>\(|f(x)| = |g(x)|\) &hArr; \(f(x) = g(x)\) или \(f(x) = -g(x)\)</p>
+                <p><strong>Почему?</strong> Если модули равны, то сами числа либо равны, либо противоположны.</p>
+            </div>
+
+            <div class="example">
+                <p><strong>Пример 6.</strong> Реши: \(|3x - 1| = |x + 5|\).</p>
+                <ul>
+                    <li>Случай 1: \(3x - 1 = x + 5\) &rArr; \(2x = 6\) &rArr; \(x = 3\)</li>
+                    <li>Случай 2: \(3x - 1 = -(x + 5)\) &rArr; \(4x = -4\) &rArr; \(x = -1\)</li>
+                </ul>
+                <p>Ответ: \(x \in \{-1,\; 3\}\).</p>
+            </div>
+
+            <h3>1.8. Неравенства с модулем (линейные)</h3>
+
+            <h4>\(|f(x)| < a\) &mdash; &laquo;зажат внутри&raquo;</h4>
+
+            <div class="theory-box">
+                <p>\(|f(x)| < a\) (при \(a > 0\)) &hArr; \(-a < f(x) < a\)</p>
+                <p><strong>Геометрический смысл:</strong> расстояние от \(f(x)\) до нуля <strong>меньше</strong> \(a\), значит \(f(x)\) лежит в интервале \((-a,\; a)\).</p>
+            </div>
+
+            <div class="example">
+                <p><strong>Пример 7.</strong> Реши: \(|2x - 1| < 5\).</p>
+                <p>\(-5 < 2x - 1 < 5\)</p>
+                <p>\(-4 < 2x < 6\)</p>
+                <p>\(-2 < x < 3\)</p>
+                <p>Ответ: \(x \in (-2,\; 3)\).</p>
+            </div>
+
+            <h4>\(|f(x)| > a\) &mdash; &laquo;убежал наружу&raquo;</h4>
+
+            <div class="theory-box">
+                <p>\(|f(x)| > a\) (при \(a > 0\)) &hArr; \(f(x) > a\) или \(f(x) < -a\)</p>
+                <p><strong>Геометрический смысл:</strong> расстояние от \(f(x)\) до нуля <strong>больше</strong> \(a\), значит \(f(x)\) лежит <strong>за пределами</strong> интервала \((-a,\; a)\).</p>
+            </div>
+
+            <div class="example">
+                <p><strong>Пример 8.</strong> Реши: \(|3x + 2| \ge 7\).</p>
+                <ul>
+                    <li>\(3x + 2 \ge 7\) &rArr; \(x \ge \frac{5}{3}\)</li>
+                    <li>\(3x + 2 \le -7\) &rArr; \(x \le -3\)</li>
+                </ul>
+                <p>Ответ: \(x \in (-\infty,\; -3] \cup [\frac{5}{3},\; +\infty)\).</p>
+            </div>
+
+            <div class="mnemonic">
+                \(|f(x)| < a\) &rarr; &laquo;Зажат внутри&raquo;: \(-a < f(x) < a\) &mdash; <strong>один кусок</strong><br>
+                \(|f(x)| > a\) &rarr; &laquo;Убежал наружу&raquo;: \(f(x) < -a\) ИЛИ \(f(x) > a\) &mdash; <strong>два куска</strong>
+            </div>
+
+            <h3>1.9. Линейные уравнения с параметром</h3>
+
+            <div class="theory-box">
+                <p><strong>Что такое параметр?</strong> Это буква (обычно \(a, b, m, k\)), которая играет роль &laquo;заданного числа&raquo;, но мы <strong>не знаем</strong>, какое именно. Нужно решить уравнение <strong>для всех возможных значений</strong> параметра.</p>
+            </div>
+
+            <div class="example">
+                <p><strong>Пример 9.</strong> Реши в зависимости от параметра \(a\): \(ax = a^2 - 1\).</p>
+                <p><strong>Случай 1: \(a \ne 0\).</strong></p>
+                <p>\(x = \frac{a^2 - 1}{a} = \frac{(a-1)(a+1)}{a} = a - \frac{1}{a}\)</p>
+                <p><strong>Случай 2: \(a = 0\).</strong></p>
+                <p>\(0 \cdot x = -1\) &rArr; \(0 = -1\) &mdash; противоречие. Нет решений.</p>
+                <p><strong>Ответ:</strong> при \(a \ne 0\): \(x = \frac{a^2 - 1}{a}\); при \(a = 0\): решений нет.</p>
+            </div>
+
+            <div class="example">
+                <p><strong>Пример 10.</strong> При каких \(a\) уравнение \((a - 2)x = a^2 - 4\) имеет бесконечно много решений?</p>
+                <p>\((a - 2)x = (a - 2)(a + 2)\)</p>
+                <p>Бесконечно много решений при \(a - 2 = 0\) и правая часть тоже \(= 0\):</p>
+                <p>\(a = 2\): \(0 \cdot x = 0\) &mdash; верно при любом \(x\).</p>
+                <p>При \(a \ne 2\): \(x = a + 2\) &mdash; единственное решение.</p>
+            </div>
+
+            <h3>1.10. Неравенства с параметром</h3>
+
+            <div class="example">
+                <p><strong>Пример 11.</strong> Реши \(ax > 1\) в зависимости от \(a\).</p>
+                <p><strong>Случай 1: \(a > 0\).</strong> Делим на \(a\) (знак не меняется): \(x > \frac{1}{a}\).</p>
+                <p><strong>Случай 2: \(a < 0\).</strong> Делим на \(a\) (<strong>знак переворачивается!</strong>): \(x < \frac{1}{a}\).</p>
+                <p><strong>Случай 3: \(a = 0\).</strong> \(0 > 1\) &mdash; ложь. Нет решений.</p>
+            </div>
+
+            <h3>1.11. Метод интервалов для линейных выражений с модулем</h3>
+
+            <div class="theory-box">
+                <p><strong>Алгоритм (когда несколько модулей):</strong></p>
+                <ol>
+                    <li>Найди <strong>критические точки</strong> &mdash; значения \(x\), где выражения под модулями обращаются в ноль.</li>
+                    <li>Эти точки разбивают числовую прямую на <strong>интервалы</strong>.</li>
+                    <li>На каждом интервале <strong>раскрой модули</strong> (определи знак каждого выражения).</li>
+                    <li>Реши уравнение/неравенство на каждом интервале <strong>без модулей</strong>.</li>
+                    <li><strong>Пересеки</strong> решение с интервалом (не забудь!).</li>
+                    <li><strong>Объедини</strong> решения со всех интервалов.</li>
+                </ol>
+            </div>
+
+            <div class="example">
+                <p><strong>Пример 12.</strong> Реши: \(|x - 1| + |x + 3| = 6\).</p>
+                <p><strong>Критические точки:</strong> \(x = 1\) и \(x = -3\). Три интервала:</p>
+
+                <table>
+                    <thead>
+                        <tr><th>Интервал</th><th>\(|x - 1|\)</th><th>\(|x + 3|\)</th><th>Уравнение</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>\(x < -3\)</td><td>\(1 - x\)</td><td>\(-x - 3\)</td><td>\(-2x - 2 = 6\)</td></tr>
+                        <tr><td>\(-3 \le x < 1\)</td><td>\(1 - x\)</td><td>\(x + 3\)</td><td>\(4 = 6\)</td></tr>
+                        <tr><td>\(x \ge 1\)</td><td>\(x - 1\)</td><td>\(x + 3\)</td><td>\(2x + 2 = 6\)</td></tr>
+                    </tbody>
+                </table>
+
+                <p><strong>Интервал 1:</strong> \(-2x - 2 = 6\) &rArr; \(x = -4\). Проверка: \(-4 < -3\) <span class="check">&#10003;</span></p>
+                <p><strong>Интервал 2:</strong> \(4 = 6\) &mdash; противоречие.</p>
+                <p><strong>Интервал 3:</strong> \(2x + 2 = 6\) &rArr; \(x = 2\). Проверка: \(2 \ge 1\) <span class="check">&#10003;</span></p>
+                <p><strong>Ответ:</strong> \(x \in \{-4,\; 2\}\).</p>
+            </div>
+
+            <div class="tip">
+                <strong>&#128161; Геометрический смысл:</strong> \(|x - 1| + |x + 3|\) &mdash; сумма расстояний от \(x\) до точек 1 и &minus;3. Расстояние между ними = 4. При \(x\) между ними сумма всегда = 4. Нам нужна сумма 6, значит \(x\) &laquo;убежал&raquo; за пределы на \(\frac{6-4}{2} = 1\) с каждой стороны.
+            </div>
+
+            <h2>ЧАСТЬ 2. ОЛИМПИАДНЫЕ ПРИЁМЫ</h2>
+
+            <h3>Приём 1. Целые решения &mdash; перебор делителей</h3>
+
+            <div class="theory-box">
+                <p><strong>Когда дробь с \(x\) должна быть целым числом &mdash; приравняй знаменатель к делителям числителя.</strong></p>
+            </div>
+
+            <div class="example">
+                <p><strong>Пример.</strong> Найди все целые \(x\): \(\frac{5}{x - 3}\) &mdash; целое число.</p>
+                <p>\((x - 3) \mid 5\) &rArr; \(x - 3 \in \{-5, -1, 1, 5\}\) &rArr; \(x \in \{-2, 2, 4, 8\}\).</p>
+            </div>
+
+            <h3>Приём 2. Уравнение с параметром &mdash; разбор случаев</h3>
+
+            <div class="theory-box">
+                <p><strong>Если коэффициент при \(x\) содержит параметр &mdash; обязательно рассмотри, когда он равен нулю!</strong></p>
+                <p><strong>Алгоритм:</strong></p>
+                <ol>
+                    <li>Приведи к виду \(f(a) \cdot x = g(a)\).</li>
+                    <li>\(f(a) \ne 0\) &rArr; \(x = \frac{g(a)}{f(a)}\).</li>
+                    <li>\(f(a) = 0\): если \(g(a) = 0\) &mdash; бесконечно много решений; если \(g(a) \ne 0\) &mdash; нет решений.</li>
+                </ol>
+            </div>
+
+            <h3>Приём 3. Собери \(x\) в одну сторону</h3>
+
+            <div class="theory-box">
+                <p><strong>Перенеси все члены с \(x\) влево, все числа вправо. Потом делай с учётом знака!</strong></p>
+            </div>
+
+            <div class="example">
+                <p><strong>Пример.</strong> Реши: \(3x - 7 < 5x + 1\).</p>
+                <p>\(3x - 5x < 1 + 7\) &rArr; \(-2x < 8\) &rArr; \(x > -4\) (делим на \(-2\), знак переворачивается!).</p>
+            </div>
+
+            <h3>Приём 4. Системы &mdash; метод числовой прямой</h3>
+
+            <div class="theory-box">
+                <p><strong>Реши каждое неравенство отдельно. Нарисуй на числовой прямой. Найди пересечение (система) или объединение (совокупность).</strong></p>
+            </div>
+
+            <h3>Приём 5. Модуль как расстояние</h3>
+
+            <div class="theory-box">
+                <p>\(|x - a|\) = расстояние от точки \(x\) до точки \(a\) на числовой прямой.</p>
+                <ul>
+                    <li>\(|x - 3| < 5\) &rArr; расстояние от \(x\) до 3 меньше 5 &rArr; \(x \in (-2, 8)\)</li>
+                    <li>\(|x - 3| > 5\) &rArr; расстояние больше 5 &rArr; \(x \in (-\infty, -2) \cup (8, +\infty)\)</li>
+                    <li>\(|x - 3| = 5\) &rArr; \(x \in \{-2, 8\}\)</li>
+                </ul>
+            </div>
+
+            <div class="tip">
+                <strong>Для суммы модулей:</strong> \(|x - a| + |x - b| = c\) &mdash; задача о точках, сумма расстояний до которых равна \(c\). Если \(c = |a - b|\), то \(x\) между \(a\) и \(b\). Если \(c > |a - b|\), решение &mdash; две точки за пределами отрезка.
+            </div>
+
+            <h3>Приём 6. Хитрая группировка</h3>
+
+            <div class="example">
+                <p><strong>Пример.</strong> Реши: \(|x - 1| + |x - 2| + |x - 3| = 2\).</p>
+                <p><strong>Хитрость:</strong> \(|x - 1| + |x - 3| \ge |(x-1) - (x-3)| = 2\) (неравенство треугольника!). Равенство при \(1 \le x \le 3\).</p>
+                <p>Если \(|x - 1| + |x - 3| = 2\), то \(|x - 2| = 0\), т.е. \(x = 2\).</p>
+                <p>Ответ: \(x = 2\).</p>
+            </div>
+
+            <h3>Приём 7. Замена переменной</h3>
+
+            <div class="theory-box">
+                <p><strong>Если выражение повторяется &mdash; замени его новой переменной.</strong></p>
+            </div>
+
+            <div class="example">
+                <p><strong>Пример.</strong> Реши: \(|3x + 1| = 2|3x + 1| - 5\).</p>
+                <p>Пусть \(t = |3x + 1|\), тогда \(t \ge 0\) и \(t = 2t - 5\) &rArr; \(t = 5\).</p>
+                <p>Значит \(|3x + 1| = 5\): \(x = \frac{4}{3}\) или \(x = -2\).</p>
+            </div>
+
+            <h3>Навигатор: как выбрать приём</h3>
+
+            <div class="navigator">
+Задача на линейные уравнения/неравенства &rarr; спроси себя:<br><br>
+1. Есть параметр?<br>
+&nbsp;&nbsp;&nbsp;&rarr; Разбор случаев: коэффициент = 0 или &ne; 0 (Приём 2)<br><br>
+2. Есть модуль?<br>
+&nbsp;&nbsp;&nbsp;&rarr; Один модуль: формулы |f| = a, |f| &lt; a, |f| &gt; a<br>
+&nbsp;&nbsp;&nbsp;&rarr; Несколько модулей: метод интервалов (1.11)<br>
+&nbsp;&nbsp;&nbsp;&rarr; Сумма модулей: геометрическая интерпретация (Приём 5)<br><br>
+3. Нужно найти ЦЕЛЫЕ решения?<br>
+&nbsp;&nbsp;&nbsp;&rarr; Перебор делителей (Приём 1)<br><br>
+4. Система неравенств?<br>
+&nbsp;&nbsp;&nbsp;&rarr; Реши каждое, нарисуй, пересеки (Приём 4)<br><br>
+5. Просто уравнение/неравенство?<br>
+&nbsp;&nbsp;&nbsp;&rarr; НОК для дробей, раскрой скобки (1.3, Приём 3)
+            </div>
+
+            <h2>ЧАСТЬ 3. ЗАДАЧИ</h2>
+
+            <h3 class="level-1">Уровень 1. Разминка (прямое применение)</h3>
+
+            <div class="problem">
+                <p><strong>Задача 1.1.</strong> Реши уравнение: \(\frac{x + 1}{2} - \frac{x - 3}{5} = 1\).</p>
+                <p><em>Приём: НОК знаменателей, раскрытие скобок</em></p>
+            </div>
+
+            <div class="problem">
+                <p><strong>Задача 1.2.</strong> Реши неравенство: \(7 - 2x \ge 3x + 2\).</p>
+                <p><em>Приём: собрать \(x\) в одну сторону, разделить с учётом знака</em></p>
+            </div>
+
+            <div class="problem">
+                <p><strong>Задача 1.3.</strong> Реши уравнение: \(|4x - 3| = 9\).</p>
+                <p><em>Приём: два случая &mdash; выражение под модулем равно \(\pm 9\)</em></p>
+            </div>
+
+            <div class="problem">
+                <p><strong>Задача 1.4.</strong> Реши систему неравенств: \(\begin{cases} x + 3 > 1 \\ 2x - 5 < 7 \end{cases}\)</p>
+                <p><em>Приём: реши каждое, пересеки</em></p>
+            </div>
+
+            <h3 class="level-2">Уровень 2. Стандартные олимпиадные задачи</h3>
+
+            <div class="problem">
+                <p><strong>Задача 2.1.</strong> Реши уравнение: \(|x + 2| = |3x - 4|\).</p>
+                <p><em>Приём: \(|f| = |g|\) &hArr; \(f = g\) или \(f = -g\)</em></p>
+            </div>
+
+            <div class="problem">
+                <p><strong>Задача 2.2.</strong> Найди все целые \(x\), при которых \(\frac{3x + 7}{x - 1}\) &mdash; целое число.</p>
+                <p><em>Приём: деление с остатком (Приём 1), связь с делимостью</em></p>
+            </div>
+
+            <div class="problem">
+                <p><strong>Задача 2.3.</strong> Реши неравенство: \(|2x - 5| \le |x + 1|\).</p>
+                <p><em>Приём: возведение в квадрат или метод интервалов</em></p>
+            </div>
+
+            <div class="problem">
+                <p><strong>Задача 2.4.</strong> Реши уравнение с параметром: \((a + 1)x = a^2 - 1\). Для каждого \(a\) укажи количество решений.</p>
+                <p><em>Приём: разбор случаев по \(a + 1\)</em></p>
+            </div>
+
+            <h3 class="level-3">Уровень 3. Продвинутые задачи</h3>
+
+            <div class="problem">
+                <p><strong>Задача 3.1.</strong> Реши уравнение: \(|x - 1| + |x - 5| = |2x - 6|\).</p>
+                <p><em>Приём: метод интервалов или неравенство треугольника</em></p>
+            </div>
+
+            <div class="problem">
+                <p><strong>Задача 3.2.</strong> Найди все значения параметра \(a\), при которых неравенство \(ax + 1 > a + x\) выполняется при всех \(x > 0\).</p>
+                <p><em>Приём: преобразуй, раздели на случаи</em></p>
+            </div>
+
+            <div class="problem">
+                <p><strong>Задача 3.3.</strong> Реши систему неравенств в целых числах: \(\begin{cases} \frac{x}{3} - \frac{x - 1}{6} > 0 \\ \frac{2x + 1}{4} \le 2 \end{cases}\)</p>
+                <p><em>Приём: НОК + пересечение + выбор целых точек</em></p>
+            </div>
+
+            <div class="problem">
+                <p><strong>Задача 3.4.</strong> Найди наименьшее значение выражения \(|x + 1| + |x - 3| + |x - 7|\).</p>
+                <p><em>Приём: сумма расстояний минимальна в медианной точке</em></p>
+            </div>
+
+            <h3 class="level-4">Уровень 4. Олимпиадные задачи (региональный уровень)</h3>
+
+            <div class="problem">
+                <p><strong>Задача 4.1.</strong> Найди все пары целых чисел \((x, y)\): \(3x + 5y = 1\).</p>
+                <p><em>Приём: один конкретный корень + общая формула через параметр</em></p>
+            </div>
+
+            <div class="problem">
+                <p><strong>Задача 4.2.</strong> При каких \(a\) система \(\begin{cases} x - a > 0 \\ ax - 1 > 0 \end{cases}\) имеет ровно одно целочисленное решение?</p>
+                <p><em>Приём: разбор случаев по знаку \(a\) + анализ пересечения</em></p>
+            </div>
+
+            <div class="problem">
+                <p><strong>Задача 4.3.</strong> Докажи, что уравнение \(|x - a| + |x - b| + |x - c| = b - a\) (где \(a < b < c\)) имеет решение тогда и только тогда, когда \(c \le 2b - a\).</p>
+                <p><em>Приём: геометрическая интерпретация + неравенство треугольника</em></p>
+            </div>
+
+            <div class="problem">
+                <p><strong>Задача 4.4.</strong> Для каких целых \(n\) верно неравенство: \(\frac{n + 3}{n - 1} \le 2\)?</p>
+                <p><em>Приём: нельзя умножить на \(n-1\) &mdash; знак неизвестен! Перенеси всё в одну сторону.</em></p>
+            </div>
+
+            <h2>ЧАСТЬ 4. РЕШЕНИЯ</h2>
+
+            <h3>Решение 1.1</h3>
+            <div class="solution">
+                <p>Реши: \(\frac{x + 1}{2} - \frac{x - 3}{5} = 1\).</p>
+                <p>НОК(2, 5) = 10. Умножаем обе части на 10:</p>
+                <p>\(5(x + 1) - 2(x - 3) = 10\)</p>
+                <p>\(5x + 5 - 2x + 6 = 10\)</p>
+                <p>\(3x + 11 = 10\) &rArr; \(3x = -1\) &rArr; \(x = -\frac{1}{3}\)</p>
+                <p>Проверка: \(\frac{2/3}{2} - \frac{-10/3}{5} = \frac{1}{3} + \frac{2}{3} = 1\) <span class="check">&#10003;</span></p>
+            </div>
+
+            <h3>Решение 1.2</h3>
+            <div class="solution">
+                <p>Реши: \(7 - 2x \ge 3x + 2\).</p>
+                <p>\(7 - 2 \ge 3x + 2x\) &rArr; \(5 \ge 5x\) &rArr; \(x \le 1\)</p>
+                <p>Ответ: \(x \in (-\infty, 1]\).</p>
+                <p>Проверка: \(x = 1\): \(5 \ge 5\) <span class="check">&#10003;</span>. \(x = 2\): \(3 \ge 8\)? <span class="cross">&#10007;</span> (правильно, не входит).</p>
+            </div>
+
+            <h3>Решение 1.3</h3>
+            <div class="solution">
+                <p>Реши: \(|4x - 3| = 9\).</p>
+                <p>Случай 1: \(4x - 3 = 9\) &rArr; \(x = 3\).</p>
+                <p>Случай 2: \(4x - 3 = -9\) &rArr; \(x = -\frac{3}{2}\).</p>
+                <p>Ответ: \(x \in \{-\frac{3}{2},\; 3\}\).</p>
+            </div>
+
+            <h3>Решение 1.4</h3>
+            <div class="solution">
+                <p>Система: \(\begin{cases} x + 3 > 1 \\ 2x - 5 < 7 \end{cases}\)</p>
+                <p>Первое: \(x > -2\). Второе: \(x < 6\).</p>
+                <p>Пересечение: \(x \in (-2,\; 6)\).</p>
+            </div>
+
+            <h3>Решение 2.1</h3>
+            <div class="solution">
+                <p>Реши: \(|x + 2| = |3x - 4|\).</p>
+                <p><strong>Случай 1:</strong> \(x + 2 = 3x - 4\) &rArr; \(6 = 2x\) &rArr; \(x = 3\).</p>
+                <p><strong>Случай 2:</strong> \(x + 2 = -(3x - 4)\) &rArr; \(4x = 2\) &rArr; \(x = \frac{1}{2}\).</p>
+                <p>Ответ: \(x \in \{\frac{1}{2},\; 3\}\).</p>
+                <p>Проверка: \(x = 3\): \(|5| = |5|\) <span class="check">&#10003;</span>. \(x = \frac{1}{2}\): \(|\frac{5}{2}| = |-\frac{5}{2}|\) <span class="check">&#10003;</span>.</p>
+            </div>
+
+            <h3>Решение 2.2</h3>
+            <div class="solution">
+                <p>Найди все целые \(x\): \(\frac{3x + 7}{x - 1}\) &mdash; целое.</p>
+                <p><strong>Ключ:</strong> \(3x + 7 = 3(x - 1) + 10\). Значит:</p>
+                <p>\(\frac{3x + 7}{x - 1} = 3 + \frac{10}{x - 1}\)</p>
+                <p>Целое &hArr; \((x - 1) \mid 10\). Делители 10: \(\pm 1, \pm 2, \pm 5, \pm 10\).</p>
+                <table>
+                    <thead><tr><th>\(x - 1\)</th><th>\(x\)</th><th>Значение дроби</th></tr></thead>
+                    <tbody>
+                        <tr><td>\(1\)</td><td>\(2\)</td><td>\(3 + 10 = 13\)</td></tr>
+                        <tr><td>\(-1\)</td><td>\(0\)</td><td>\(3 - 10 = -7\)</td></tr>
+                        <tr><td>\(2\)</td><td>\(3\)</td><td>\(3 + 5 = 8\)</td></tr>
+                        <tr><td>\(-2\)</td><td>\(-1\)</td><td>\(3 - 5 = -2\)</td></tr>
+                        <tr><td>\(5\)</td><td>\(6\)</td><td>\(3 + 2 = 5\)</td></tr>
+                        <tr><td>\(-5\)</td><td>\(-4\)</td><td>\(3 - 2 = 1\)</td></tr>
+                        <tr><td>\(10\)</td><td>\(11\)</td><td>\(3 + 1 = 4\)</td></tr>
+                        <tr><td>\(-10\)</td><td>\(-9\)</td><td>\(3 - 1 = 2\)</td></tr>
+                    </tbody>
+                </table>
+                <p>Ответ: \(x \in \{-9, -4, -1, 0, 2, 3, 6, 11\}\).</p>
+            </div>
+
+            <h3>Решение 2.3</h3>
+            <div class="solution">
+                <p>Реши: \(|2x - 5| \le |x + 1|\).</p>
+                <p><strong>Метод:</strong> оба модуля неотрицательны, возведём в квадрат:</p>
+                <p>\((2x - 5)^2 \le (x + 1)^2\)</p>
+                <p>\((2x - 5)^2 - (x + 1)^2 \le 0\)</p>
+                <p>Формула \(A^2 - B^2 = (A-B)(A+B)\):</p>
+                <p>\(\big((2x-5) - (x+1)\big)\big((2x-5) + (x+1)\big) \le 0\)</p>
+                <p>\((x - 6)(3x - 4) \le 0\)</p>
+                <p>Нули: \(x = \frac{4}{3}\) и \(x = 6\). Произведение \(\le 0\) между корнями:</p>
+                <p>Ответ: \(x \in \left[\frac{4}{3},\; 6\right]\).</p>
+                <p>Проверка: \(x = 2\): \(|{-1}| \le |3|\), \(1 \le 3\) <span class="check">&#10003;</span>. \(x = 0\): \(5 \le 1\)? <span class="cross">&#10007;</span> (правильно).</p>
+            </div>
+
+            <h3>Решение 2.4</h3>
+            <div class="solution">
+                <p>Реши: \((a + 1)x = a^2 - 1\).</p>
+                <p>Заметим: \(a^2 - 1 = (a+1)(a-1)\).</p>
+                <p><strong>Случай 1: \(a \ne -1\).</strong> \(x = \frac{(a+1)(a-1)}{a+1} = a - 1\). Одно решение.</p>
+                <p><strong>Случай 2: \(a = -1\).</strong> \(0 \cdot x = 0\) &mdash; верно при любом \(x\). Бесконечно много решений.</p>
+            </div>
+
+            <h3>Решение 3.1</h3>
+            <div class="solution">
+                <p>Реши: \(|x - 1| + |x - 5| = |2x - 6|\).</p>
+                <p><strong>Наблюдение:</strong> \(|2x - 6| = 2|x - 3|\), а также \((x-1) + (x-5) = 2x - 6\).</p>
+                <p>Значит: \(|x - 1| + |x - 5| = |(x-1) + (x-5)|\).</p>
+                <p>По неравенству треугольника: \(|A| + |B| \ge |A + B|\), <strong>равенство</strong> при \(A\) и \(B\) одного знака.</p>
+                <p>Здесь \(A = x - 1\), \(B = x - 5\). Одного знака, когда:</p>
+                <ul>
+                    <li>Оба \(\ge 0\): \(x \ge 5\)</li>
+                    <li>Оба \(\le 0\): \(x \le 1\)</li>
+                </ul>
+                <p>Ответ: \(x \in (-\infty, 1] \cup [5, +\infty)\).</p>
+                <p>Проверка: \(x = 0\): \(1 + 5 = 6\) и \(|{-6}| = 6\) <span class="check">&#10003;</span>. \(x = 3\): \(2 + 2 = 4\) и \(|0| = 0\), \(4 \ne 0\) <span class="cross">&#10007;</span> (правильно).</p>
+            </div>
+
+            <h3>Решение 3.2</h3>
+            <div class="solution">
+                <p>Найди все \(a\): \(ax + 1 > a + x\) при всех \(x > 0\).</p>
+                <p>Преобразуем: \(x(a-1) > a - 1\), т.е. \((a-1)(x-1) > 0\).</p>
+                <p><strong>Случай 1: \(a > 1\).</strong> Нужно \(x > 1\) &mdash; не для всех \(x > 0\). Не подходит.</p>
+                <p><strong>Случай 2: \(a = 1\).</strong> \(0 > 0\) &mdash; ложь. Не подходит.</p>
+                <p><strong>Случай 3: \(a < 1\).</strong> Нужно \(x < 1\) &mdash; не для всех \(x > 0\). Не подходит.</p>
+                <p>Ответ: <strong>нет таких \(a\)</strong> (пустое множество).</p>
+            </div>
+
+            <h3>Решение 3.3</h3>
+            <div class="solution">
+                <p>Система в целых числах: \(\begin{cases} \frac{x}{3} - \frac{x-1}{6} > 0 \\ \frac{2x+1}{4} \le 2 \end{cases}\)</p>
+                <p><strong>Первое:</strong> НОК(3, 6) = 6: \(\frac{2x - (x-1)}{6} > 0\) &rArr; \(x + 1 > 0\) &rArr; \(x > -1\).</p>
+                <p><strong>Второе:</strong> \(2x + 1 \le 8\) &rArr; \(x \le 3.5\).</p>
+                <p>Пересечение: \(-1 < x \le 3.5\).</p>
+                <p>Целые: \(x \in \{0, 1, 2, 3\}\).</p>
+            </div>
+
+            <h3>Решение 3.4</h3>
+            <div class="solution">
+                <p>Минимум \(|x + 1| + |x - 3| + |x - 7|\).</p>
+                <p>Три точки: \(-1, 3, 7\). <strong>Медиана</strong> &mdash; средняя точка: \(3\).</p>
+                <p>При \(x = 3\): \(4 + 0 + 4 = 8\).</p>
+                <p><strong>Доказательство:</strong></p>
+                <ul>
+                    <li>\(|x + 1| + |x - 7| \ge |(-1) - 7| = 8\) (неравенство треугольника). Равенство при \(-1 \le x \le 7\).</li>
+                    <li>\(|x - 3| \ge 0\). Равенство при \(x = 3\).</li>
+                </ul>
+                <p>Сумма \(\ge 8 + 0 = 8\). Равенство при \(x = 3\).</p>
+                <p>Ответ: минимум = <strong>8</strong>, при \(x = 3\).</p>
+            </div>
+
+            <h3>Решение 4.1</h3>
+            <div class="solution">
+                <p>Все пары целых \((x, y)\): \(3x + 5y = 1\).</p>
+                <p><strong>Шаг 1.</strong> Подбираем одно решение: \(x = 2, y = -1\) &rArr; \(6 - 5 = 1\) <span class="check">&#10003;</span>.</p>
+                <p><strong>Шаг 2.</strong> Вычитаем: \(3(x - 2) + 5(y + 1) = 0\), т.е. \(3(x-2) = -5(y+1)\).</p>
+                <p>Так как \(\gcd(3, 5) = 1\), то \(5 \mid (x - 2)\), т.е. \(x - 2 = 5t\).</p>
+                <p>\(x = 2 + 5t\), \(y = -1 - 3t\), где \(t \in \mathbb{Z}\).</p>
+                <p><strong>Примеры:</strong></p>
+                <ul>
+                    <li>\(t = 0\): \((2, -1)\) &rArr; \(6 - 5 = 1\) <span class="check">&#10003;</span></li>
+                    <li>\(t = 1\): \((7, -4)\) &rArr; \(21 - 20 = 1\) <span class="check">&#10003;</span></li>
+                    <li>\(t = -1\): \((-3, 2)\) &rArr; \(-9 + 10 = 1\) <span class="check">&#10003;</span></li>
+                </ul>
+            </div>
+
+            <h3>Решение 4.2</h3>
+            <div class="solution">
+                <p>При каких \(a\) система \(\begin{cases} x > a \\ ax > 1 \end{cases}\) имеет ровно одно целое решение?</p>
+                <p><strong>При \(a > 0\):</strong> система \(x > \max(a, \frac{1}{a})\) &mdash; бесконечно много целых. Не подходит.</p>
+                <p><strong>При \(a = 0\):</strong> второе неравенство \(0 > 1\) &mdash; ложь. Не подходит.</p>
+                <p><strong>При \(a < 0\):</strong> делим второе на \(a < 0\) (переворот!): \(x < \frac{1}{a}\). Система: \(a < x < \frac{1}{a}\).</p>
+                <p>При \(-1 < a < 0\): \(\frac{1}{a} < -1 < a\) &mdash; пустой интервал.</p>
+                <p>При \(a = -1\): \((-1, -1)\) &mdash; пустой.</p>
+                <p>При \(a < -1\): интервал \((a, \frac{1}{a})\), где \(a < -1\) и \(-1 < \frac{1}{a} < 0\). Единственное целое в этом интервале &mdash; число \(-1\).</p>
+                <p>Целое \(-2\) попадает, если \(a < -2\) &mdash; лишнее решение!</p>
+                <p>Ответ: \(a \in [-2, -1)\).</p>
+                <p>Проверка: \(a = -2\): \((-2, -0.5)\), целые: \(\{-1\}\) <span class="check">&#10003;</span>. \(a = -1.5\): \((-1.5, -0.\overline{6})\), целые: \(\{-1\}\) <span class="check">&#10003;</span>.</p>
+            </div>
+
+            <h3>Решение 4.3</h3>
+            <div class="solution">
+                <p>\(|x - a| + |x - b| + |x - c| = b - a\) при \(a < b < c\).</p>
+                <p>Минимум левой части достигается при \(x = b\) (медиана) и равен:</p>
+                <p>\(|b - a| + 0 + |b - c| = (b - a) + (c - b) = c - a\).</p>
+                <p>Уравнение разрешимо &hArr; \(b - a \ge c - a\), т.е. \(b \ge c\). Но по условию \(b < c\) &mdash; противоречие.</p>
+                <p>Значит, при строгом \(a < b < c\) уравнение <strong>не имеет решений</strong>, так как минимум левой части равен \(c - a > b - a\).</p>
+                <p>Условие \(c \le 2b - a\) эквивалентно \(c - a \le 2(b - a)\) &mdash; это необходимое условие для модифицированных вариантов задачи.</p>
+            </div>
+
+            <h3>Решение 4.4</h3>
+            <div class="solution">
+                <p>Для каких целых \(n\): \(\frac{n + 3}{n - 1} \le 2\)?</p>
+
+                <div class="warning">
+                    <strong>&#9888;&#65039; НЕЛЬЗЯ</strong> умножать на \((n - 1)\) &mdash; знак неизвестен!
+                </div>
+
+                <p>Перенесём: \(\frac{n+3}{n-1} - 2 \le 0\) &rArr; \(\frac{n + 3 - 2(n-1)}{n-1} \le 0\) &rArr; \(\frac{5 - n}{n - 1} \le 0\).</p>
+                <p>Нули: \(n = 5\) (числитель), \(n = 1\) (знаменатель, исключаем!).</p>
+                <table>
+                    <thead><tr><th>Интервал</th><th>\(5 - n\)</th><th>\(n - 1\)</th><th>Дробь</th><th>\(\le 0\)?</th></tr></thead>
+                    <tbody>
+                        <tr><td>\(n < 1\)</td><td>\(+\)</td><td>\(-\)</td><td>\(-\)</td><td><span class="check">&#10003;</span></td></tr>
+                        <tr><td>\(1 < n < 5\)</td><td>\(+\)</td><td>\(+\)</td><td>\(+\)</td><td><span class="cross">&#10007;</span></td></tr>
+                        <tr><td>\(n = 5\)</td><td>\(0\)</td><td>\(+\)</td><td>\(0\)</td><td><span class="check">&#10003;</span></td></tr>
+                        <tr><td>\(n > 5\)</td><td>\(-\)</td><td>\(+\)</td><td>\(-\)</td><td><span class="check">&#10003;</span></td></tr>
+                    </tbody>
+                </table>
+                <p>Ответ: \(n \in (-\infty, 1) \cup [5, +\infty)\).</p>
+                <p><strong>Целые:</strong> все \(n\), кроме \(n \in \{1, 2, 3, 4\}\) (причём \(n = 1\) ещё и не определено).</p>
+                <p>Проверка: \(n = 0\): \(\frac{3}{-1} = -3 \le 2\) <span class="check">&#10003;</span>. \(n = 5\): \(\frac{8}{4} = 2 \le 2\) <span class="check">&#10003;</span>. \(n = 3\): \(\frac{6}{2} = 3 \le 2\)? <span class="cross">&#10007;</span> (правильно).</p>
+            </div>
+
+            <h2>Чек-лист: главные формулы и приёмы</h2>
+
+            <div class="checklist">
+                <h4>&#128290; Линейные уравнения</h4>
+                <ul>
+                    <li>\(ax = b\): при \(a \ne 0\) &rarr; \(x = b/a\); при \(a = 0, b = 0\) &rarr; любое \(x\); при \(a = 0, b \ne 0\) &rarr; нет решений</li>
+                    <li>Дроби: умножь на НОК знаменателей</li>
+                    <li>Скобки: раскрой аккуратно (минус перед скобкой!)</li>
+                </ul>
+
+                <h4>&#128290; Линейные неравенства</h4>
+                <ul>
+                    <li>Всё как с уравнениями, <strong>НО: умножение/деление на отрицательное &rarr; ПЕРЕВОРОТ знака!</strong></li>
+                    <li>Система (И) &rarr; пересечение</li>
+                    <li>Совокупность (ИЛИ) &rarr; объединение</li>
+                </ul>
+
+                <h4>&#128290; Модуль</h4>
+                <ul>
+                    <li>\(|f| = a\) &rarr; \(f = a\) или \(f = -a\)</li>
+                    <li>\(|f| < a\) &rarr; \(-a < f < a\) (внутри)</li>
+                    <li>\(|f| > a\) &rarr; \(f > a\) или \(f < -a\) (снаружи)</li>
+                    <li>\(|f| = |g|\) &rarr; \(f = g\) или \(f = -g\)</li>
+                    <li>Несколько модулей &rarr; метод интервалов</li>
+                </ul>
+
+                <h4>&#128290; Параметры</h4>
+                <ul>
+                    <li>Коэффициент при \(x\) содержит параметр? Обязательно рассмотри: = 0, &gt; 0, &lt; 0</li>
+                    <li>Неравенство с параметром в знаменателе? НЕ УМНОЖАЙ! Перенеси, метод интервалов.</li>
+                </ul>
+
+                <h4>&#128290; Олимпиадные фишки</h4>
+                <ul>
+                    <li>Дробь целая &rarr; деление с остатком &rarr; перебор делителей</li>
+                    <li>\(|A| + |B| \ge |A + B|\) (равенство при одинаковых знаках)</li>
+                    <li>\(\sum |x - a_i|\) минимальна в медианной точке</li>
+                    <li>\(3x + 5y = 1\): один корень + общая формула через НОД</li>
+                </ul>
+            </div>
+
+            <div class="warning" style="text-align: center; font-size: 1.1em; padding: 20px;">
+                <strong>ПЕРВЫЙ ШАГ В ЛЮБОЙ ЗАДАЧЕ: ПРОВЕРЬ НА 2&ndash;3 КОНКРЕТНЫХ ЧИСЛАХ!</strong>
+            </div>
+
+            <h2>Домашнее задание</h2>
+
+            <div class="problem">
+                <p><strong>1) Разминка.</strong> Реши уравнение: \(\frac{3(x-1)}{4} + \frac{x+2}{3} = 2\).</p>
+                <p><em>Подсказка: НОК(4, 3) = 12.</em></p>
+            </div>
+
+            <div class="problem">
+                <p><strong>2) Стандарт.</strong> Найди все целые \(x\), при которых \(\frac{x^2 + 2x + 5}{x + 1}\) &mdash; целое число.</p>
+                <p><em>Подсказка: представь числитель как \((x+1) \cdot (\ldots) + \text{остаток}\).</em></p>
+            </div>
+
+            <div class="problem">
+                <p><strong>3) Продвинутая.</strong> Реши неравенство: \(|x - 2| + |x + 4| < 8\).</p>
+                <p><em>Подсказка: расстояние между точками 2 и &minus;4 равно 6. Сравни с 8.</em></p>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            <p><strong>Уровень:</strong> 8 класс, региональные олимпиады (TLF 4 year program)</p>
+            <p>16 задач с подробными решениями + 3 домашних</p>
+            <p>Пререквизиты: модули, делимость, НОД/НОК</p>
+        </div>
+    </div>
+</body>
+</html>

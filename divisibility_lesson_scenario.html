@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сценарий лекции: Делимость и её свойства</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
+            line-height: 1.8;
+            color: #2c3e50;
+            background: #f5f7fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.2em; margin-bottom: 10px; }
+        .header p { opacity: 0.9; }
+        .content { padding: 40px 30px; }
+        h2 { color: #667eea; font-size: 1.8em; margin: 40px 0 20px; border-left: 4px solid #667eea; padding-left: 15px; }
+        h3 { color: #764ba2; font-size: 1.4em; margin: 30px 0 15px; }
+        h4 { color: #555; font-size: 1.1em; margin: 20px 0 10px; font-weight: 600; }
+        
+        .lesson-block {
+            background: #f8f9ff;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .timing {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .script {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-style: italic;
+        }
+        
+        .question {
+            background: #fff9c4;
+            border-left: 4px solid #fbc02d;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        .tip {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        .pause {
+            background: #ffebee;
+            border: 2px dashed #f44336;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .board {
+            background: #263238;
+            color: #aed581;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            line-height: 1.6;
+            border: 1px solid #455a64;
+        }
+        
+        .activity {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        .answer {
+            background: #c8e6c9;
+            border-left: 4px solid #2e7d32;
+            padding: 15px;
+            margin: 10px 0 15px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .footer {
+            background: #eceff1;
+            color: #455a64;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9em;
+            border-top: 1px solid #cfd8dc;
+        }
+        
+        code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        table td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .two-col { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 Сценарий лекции</h1>
+            <p>Делимость и её свойства</p>
+            <p style="margin-top: 15px; opacity: 0.9;">Как рассказывать, где делать паузы, какие вопросы задавать</p>
+        </div>
+        
+        <div class="content">
+            <h2>ВВЕДЕНИЕ (5 минут)</h2>
+            
+            <div class="lesson-block">
+                <h3>Цель урока</h3>
+                <p>Мы научимся <strong>доказывать</strong>, что числа и выражения делятся на что-то. Это не просто проверка — это логика и красивые приёмы, которые все олимпиадники знают.</p>
+            </div>
+            
+            <div class="script">
+                💬 <strong>Что сказать:</strong> «Представьте, что вам на олимпиаде дают задачу: "Докажи, что \(n^5 - n\) делится на 30 для любого \(n\)". Как это доказать, если \(n\) неизвестно? Вы не можете подставить все числа! Нужна система, нужна логика. Сегодня мы научимся такой логике.»
+            </div>
+            
+            <div class="pause">
+                ⏸️ <strong>Пауза:</strong> Дайте ученику 30 секунд подумать: «Может ли он сам придумать, как доказать это?»
+            </div>
+            
+            <h2>ЧАСТЬ 1. ОПРЕДЕЛЕНИЕ И ПЕРВЫЕ СВОЙСТВА (15 минут)</h2>
+            
+            <div class="lesson-block">
+                <div class="timing">⏱️ 0–5 минут: Определение</div>
+                
+                <div class="script">
+                    💬 <strong>Стартовая фраза:</strong> «Делимость — это просто отношение между числами. \(b \mid a\) означает "\(b\) делит \(a\)", то есть найдётся целое число \(k\), такое что \(a = b \cdot k\).»
+                </div>
+                
+                <div class="question">
+                    ❓ <strong>Первый вопрос к ученику:</strong><br>
+                    Верно ли, что \(3 \mid 12\)? Почему? Найди \(k\).
+                </div>
+                
+                <div class="answer">
+                    ✅ <strong>Ответ:</strong> Да, верно! Потому что \(12 = 3 \cdot 4\), то есть \(k = 4\). Число 12 можно поделить на 3 нацело, без остатка.
+                </div>
+                
+                <div class="board">
+ПРИМЕРЫ НА ДОСКЕ:
+3 | 12  ✓  (потому что 12 = 3·4, k=4)
+5 | 0   ✓  (потому что 0 = 5·0, k=0)
+7 | 15  ✗  (потому что 15 = 7·2 + 1, есть остаток)
+                </div>
+                
+                <p style="margin-top: 20px;"><strong>Ключевой момент:</strong> Палочка \(\mid\) — это отношение, не дробь!</p>
+                
+                <div class="pause">
+                    ⏸️ <strong>Пауза:</strong> «Какие числа делят 12? Выпиши их все.»
+                </div>
+                
+                <div class="answer">
+                    ✅ <strong>Ответ:</strong> Делители числа 12: \(1, 2, 3, 4, 6, 12\). Это все числа, на которые 12 делится нацело.
+                </div>
+            </div>
+            
+            <div class="lesson-block">
+                <div class="timing">5–15 минут: Свойство 1 — линейная комбинация</div>
+                
+                <div class="script">
+                    💬 <strong>Объяснение:</strong> «Самое важное свойство — это линейная комбинация. Если \(d\) делит оба числа \(a\) и \(b\), то \(d\) делит ЛЮБУЮ их комбинацию.»
+                </div>
+                
+                <div class="activity">
+                    👥 <strong>Интерактивное упражнение:</strong><br>
+                    Дано: \(7 \mid 21\) и \(7 \mid 35\).<br>
+                    Вопрос: Делит ли 7 число \(21 + 35 = 56\)?<br>
+                    А число \(21 - 35 = -14\)?<br>
+                    А число \(21 \cdot 2 + 35 \cdot 3 = 147\)?
+                </div>
+                
+                <div class="answer">
+                    ✅ <strong>Ответ:</strong><br>
+                    • Да, \(7 \mid 56\), потому что \(56 = 7 \cdot 8\)<br>
+                    • Да, \(7 \mid (-14)\), потому что \(-14 = 7 \cdot (-2)\)<br>
+                    • Да, \(7 \mid 147\), потому что \(147 = 7 \cdot 21\)<br>
+                    <br>
+                    Все работает благодаря свойству линейной комбинации! 7 делит любую комбинацию чисел, которые сами делятся на 7.
+                </div>
+                
+                <div class="board">
+ДОКАЗАТЕЛЬСТВО НА ДОСКЕ:
+Если d | a, то a = d·m
+Если d | b, то b = d·n
+Тогда: ax + by = (d·m)·x + (d·n)·y = d(mx + ny)
+      ↓ это целое число
+Значит d | (ax + by)  ✓
+                </div>
+                
+                <div class="pause">
+                    ⏸️ <strong>Пауза на понимание:</strong> «Может ли быть так, что \(d \mid a\), \(d \mid b\), но \(d \nmid (a+b)\)? Почему нет?»
+                </div>
+                
+                <div class="answer">
+                    ✅ <strong>Ответ:</strong> Нет, не может! Если \(d\) делит и \(a\), и \(b\), то обязательно делит и их сумму. Потому что:
+                    <ul>
+                        <li>\(a = d \cdot m\) (для некоторого целого \(m\))</li>
+                        <li>\(b = d \cdot n\) (для некоторого целого \(n\))</li>
+                        <li>\(a + b = d \cdot m + d \cdot n = d(m + n)\)</li>
+                    </ul>
+                    Значит, \(a + b\) кратно \(d\). Это следует из определения делимости.
+                </div>
+            </div>
+            
+            <h2>ЧАСТЬ 2. РАЗЛОЖЕНИЕ НА МНОЖИТЕЛИ (10 минут)</h2>
+            
+            <div class="lesson-block">
+                <div class="script">
+                    💬 <strong>Переход:</strong> «Теперь учимся доказывать делимость выражений. Первый приём — разложение на множители.»
+                </div>
+                
+                <div class="activity">
+                    👥 <strong>Задача вместе:</strong><br>
+                    Докажи, что \(n(n-1)\) делится на 2 для любого целого \(n\).<br>
+                    <br>
+                    <strong>Подсказка:</strong> Что можно сказать о двух последовательных числах?<br>
+                    <strong>Ответ:</strong> Одно из них чётное!<br>
+                    <strong>Вывод:</strong> Значит произведение делится на 2. □
+                </div>
+                
+                <div class="pause">
+                    ⏸️ <strong>Пауза:</strong> Проверь на примерах: n=3, n=5, n=7. Действительно делится на 2?
+                </div>
+                
+                <div class="answer">
+                    ✅ <strong>Проверка:</strong><br>
+                    • \(n=3\): \(3 \cdot 2 = 6\), делится на 2 ✓<br>
+                    • \(n=5\): \(5 \cdot 4 = 20\), делится на 2 ✓<br>
+                    • \(n=7\): \(7 \cdot 6 = 42\), делится на 2 ✓<br>
+                    Всегда работает, потому что одно из двух последовательных чисел обязательно чётное!
+                </div>
+                
+                <div class="lesson-block">
+                    <h4>Усложнение: произведение трёх последовательных</h4>
+                    
+                    <div class="script">
+                        💬 <strong>Рассказ:</strong> «Если произведение двух последовательных делится на 2, что можно сказать о произведении ТРЁХ последовательных?»
+                    </div>
+                    
+                    <div class="question">
+                        ❓ <strong>Вопрос:</strong> На что должно делиться \(n(n-1)(n-2)\)?<br>
+                        Подсказка: среди трёх подряд идущих чисел...
+                    </div>
+                    
+                    <div class="answer">
+                        ✅ <strong>Ответ:</strong> На 6! Потому что среди трёх последовательных чисел:
+                        <ul>
+                            <li>Минимум одно чётное (на самом деле — одно или два чётных)</li>
+                            <li>Ровно одно кратно 3</li>
+                        </ul>
+                        Значит произведение кратно и 2, и 3. А так как \(\gcd(2,3) = 1\), то произведение кратно \(2 \cdot 3 = 6\).
+                    </div>
+                    
+                    <div class="board">
+РАССУЖДЕНИЕ:
+n, n-1, n-2 — три последовательных числа
+Среди них:
+  • Минимум одно чётное (на самом деле одно или два)
+  • Ровно одно кратно 3
+Значит делится на 2 И на 3, то есть на 6  ✓
+                    </div>
+                </div>
+            </div>
+            
+            <h2>ЧАСТЬ 3. РАЗБОР ПО ОСТАТКАМ (15 минут)</h2>
+            
+            <div class="lesson-block">
+                <div class="script">
+                    💬 <strong>Объяснение новой идеи:</strong> «Иногда разложение не помогает. Тогда используем остатки. Смысл: все числа можно классифицировать по остатку при делении на \(m\).»
+                </div>
+                
+                <div class="activity">
+                    👥 <strong>Пример вместе:</strong><br>
+                    Докажи, что \(n^2 + 1\) НЕ делится на 4 ни при каком целом \(n\).<br>
+                    <br>
+                    <strong>План:</strong> Какие остатки даёт \(n\) при делении на 4? (0, 1, 2, 3)<br>
+                    Для каждого остатка найдём \(n^2 + 1 \pmod{4}\).
+                </div>
+                
+                <div style="margin: 20px 0;">
+                    <p style="font-weight: 600; margin-bottom: 10px;">📊 ТАБЛИЦА НА ДОСКЕ:</p>
+                    <table style="width: 100%; border-collapse: collapse; margin: 10px 0; background: #f8f9ff;">
+                        <tr style="background: #667eea; color: white;">
+                            <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">n mod 4</th>
+                            <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">n² mod 4</th>
+                            <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">(n²+1) mod 4</th>
+                            <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">Делится на 4?</th>
+                        </tr>
+                        <tr style="background: #f0f4ff;">
+                            <td style="padding: 12px; text-align: center; border: 1px solid #ddd; font-weight: 600;">0</td>
+                            <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">0</td>
+                            <td style="padding: 12px; text-align: center; border: 1px solid #ddd; color: #d32f2f; font-weight: 600;">1</td>
+                            <td style="padding: 12px; text-align: center; border: 1px solid #ddd; color: #d32f2f; font-weight: 600;">❌ НЕТ</td>
+                        </tr>
+                        <tr style="background: white;">
+                            <td style="padding: 12px; text-align: center; border: 1px solid #ddd; font-weight: 600;">1</td>
+                            <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">1</td>
+                            <td style="padding: 12px; text-align: center; border: 1px solid #ddd; color: #d32f2f; font-weight: 600;">2</td>
+                            <td style="padding: 12px; text-align: center; border: 1px solid #ddd; color: #d32f2f; font-weight: 600;">❌ НЕТ</td>
+                        </tr>
+                        <tr style="background: #f0f4ff;">
+                            <td style="padding: 12px; text-align: center; border: 1px solid #ddd; font-weight: 600;">2</td>
+                            <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">0</td>
+                            <td style="padding: 12px; text-align: center; border: 1px solid #ddd; color: #d32f2f; font-weight: 600;">1</td>
+                            <td style="padding: 12px; text-align: center; border: 1px solid #ddd; color: #d32f2f; font-weight: 600;">❌ НЕТ</td>
+                        </tr>
+                        <tr style="background: white;">
+                            <td style="padding: 12px; text-align: center; border: 1px solid #ddd; font-weight: 600;">3</td>
+                            <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">1</td>
+                            <td style="padding: 12px; text-align: center; border: 1px solid #ddd; color: #d32f2f; font-weight: 600;">2</td>
+                            <td style="padding: 12px; text-align: center; border: 1px solid #ddd; color: #d32f2f; font-weight: 600;">❌ НЕТ</td>
+                        </tr>
+                    </table>
+                    <p style="margin-top: 15px; padding: 12px; background: #fff3e0; border-left: 4px solid #ff9800; border-radius: 4px; font-weight: 600; color: #e65100;">
+                        ⚠️ <strong>Вывод:</strong> Остаток всегда 1 или 2, но <span style="color: #d32f2f;">НИ КОГДА НЕ 0</span>!
+                    </p>
+                </div>
+                
+                <div class="pause">
+                    ⏸️ <strong>Пауза:</strong> «Почему для \(n=2\) остаток \(n^2\) равен 0, а не 4? Потому что 4 ≡ 0 (mod 4)!»
+                </div>
+                
+                <div class="answer">
+                    ✅ <strong>Ответ/Объяснение:</strong> Когда \(n = 2\), имеем \(n^2 = 4\). А \(4 = 1 \cdot 4 + 0\), поэтому остаток от деления 4 на 4 равен 0 (а не 4). В модульной арифметике: \(4 \bmod 4 = 0\), потому что 4 делится на 4 нацело.
+                </div>
+                
+                <div class="tip">
+                    💡 <strong>Полезный факт:</strong> Квадраты по модулю 4 дают только 0 или 1. Это поможет в других задачах!
+                </div>
+            </div>
+            
+            <h2>ЧАСТЬ 4. ДЕЛЕНИЕ С ОСТАТКОМ — ПРИЁМ ДЛЯ ЗАДАЧ ВИДА "(n+a) | f(n)" (15 минут)</h2>
+            
+            <div class="lesson-block">
+                <div class="script">
+                    💬 <strong>Мотивация:</strong> «Часто задача выглядит так: "Найди все \(n\), при которых \((n-1)\) делит \(n^2 + n + 1\)". Как это решать? Ключ — разделить многочлен! Мы хотим представить многочлен в виде произведения плюс остаток.»
+                </div>
+                
+                <div class="activity">
+                    👥 <strong>Решаем вместе:</strong><br>
+                    Найди все целые \(n\), для которых \((n-1) \mid (n^2 + n + 1)\).
+                </div>
+                
+                <h4 style="margin-top: 25px; color: #764ba2;">🔍 ШАГ 1: Понимаем, что нужно сделать</h4>
+                
+                <div class="script">
+                    💬 <strong>Идея:</strong> Нам нужно представить \(n^2 + n + 1\) в виде:
+                    $$n^2 + n + 1 = (n-1) \cdot (\text{какой-то многочлен}) + \text{остаток}$$
+                    
+                    Если остаток будет число (не содержит \(n\)), то мы сможем сказать: "(n-1) делит \(n^2 + n + 1\)" тогда и только тогда, когда "(n-1) делит этот остаток"!
+                </div>
+                
+                <h4 style="margin-top: 25px; color: #764ba2;">🔍 ШАГ 2: Выражаем степени n через (n-1)</h4>
+                
+                <div class="board" style="background: #e3f2fd; color: #1565c0;">
+<strong>Трюк:</strong> Заметим, что \(n = (n-1) + 1\)
+
+Используем это для выражения степеней:
+  • \(n = (n-1) + 1\)
+  • \(n^2 = [n]^2 = [(n-1) + 1]^2\)
+              \(= (n-1)^2 + 2(n-1) + 1\)
+                </div>
+                
+                <div class="answer">
+                    ✅ <strong>Почему это работает:</strong> Разложили квадрат суммы: \((a+b)^2 = a^2 + 2ab + b^2\), где \(a = (n-1)\), \(b = 1\).
+                </div>
+                
+                <h4 style="margin-top: 25px; color: #764ba2;">🔍 ШАГ 3: Подставляем в исходное выражение</h4>
+                
+                <div class="board" style="background: #f3e5f5; color: #6a1b9a;">
+Теперь заменим \(n\) и \(n^2\) в выражении \(n^2 + n + 1\):
+
+\(n^2 + n + 1 = [(n-1)^2 + 2(n-1) + 1] + [(n-1) + 1] + 1\)
+
+Раскроем скобки:
+\(= (n-1)^2 + 2(n-1) + 1 + (n-1) + 1 + 1\)
+
+Приведём подобные относительно (n-1):
+\(= (n-1)^2 + [2(n-1) + (n-1)] + [1 + 1 + 1]\)
+\(= (n-1)^2 + 3(n-1) + 3\)
+                </div>
+                
+                <div class="answer">
+                    ✅ <strong>Что мы получили:</strong> Все слагаемые либо содержат (n-1), либо это константа. Отлично!
+                </div>
+                
+                <h4 style="margin-top: 25px; color: #764ba2;">🔍 ШАГ 4: Выносим общий множитель (n-1)</h4>
+                
+                <div class="board" style="background: #e8f5e9; color: #1b5e20;">
+У нас есть:
+\((n-1)^2 + 3(n-1) + 3\)
+
+Вынесем (n-1) из первых двух слагаемых:
+\(= (n-1) \cdot (n-1) + 3(n-1) + 3\)
+\(= (n-1) \cdot [(n-1) + 3] + 3\)
+\(= (n-1) \cdot (n + 2) + 3\)
+
+Итоговая формула:
+\(n^2 + n + 1 = (n-1)(n+2) + 3\)
+                </div>
+                
+                <h4 style="margin-top: 25px; color: #764ba2;">✅ ШАГ 5: Проверяем правильность</h4>
+                
+                <div class="script">
+                    💬 <strong>Проверим разложение обратным умножением:</strong>
+                </div>
+                
+                <div class="board" style="background: #fff3e0; color: #e65100;">
+Раскроем скобки в \((n-1)(n+2)\):
+\((n-1)(n+2) = n \cdot n + n \cdot 2 - 1 \cdot n - 1 \cdot 2\)
+            \(= n^2 + 2n - n - 2\)
+            \(= n^2 + n - 2\)
+
+Теперь добавим остаток:
+\(n^2 + n - 2 + 3 = n^2 + n + 1\) ✅
+
+Верно! Разложение правильное.
+                </div>
+                
+                <h4 style="margin-top: 25px; color: #764ba2;">💡 ШАГ 6: Логический вывод</h4>
+                
+                <div class="script">
+                    💬 <strong>Ключевой момент:</strong> 
+                    <br><br>
+                    Мы доказали, что:
+                    $$n^2 + n + 1 = (n-1)(n+2) + 3$$
+                    
+                    Это означает:
+                    <ul>
+                        <li>Если мы делим \(n^2 + n + 1\) на \((n-1)\), то <strong>частное = (n+2)</strong>, а <strong>остаток = 3</strong></li>
+                        <li>\((n-1) \mid (n^2 + n + 1)\) тогда и только тогда, когда <strong>остаток равен 0</strong></li>
+                        <li>Но остаток равен 3, поэтому: \((n-1) \mid (n^2 + n + 1)\) \(\Leftrightarrow\) \((n-1) \mid 3\)</li>
+                    </ul>
+                </div>
+                
+                <div class="question">
+                    ❓ <strong>Вопрос:</strong> Какие делители у числа 3?<br>
+                </div>
+                
+                <div class="answer">
+                    ✅ <strong>Ответ:</strong> \(±1, ±3\). Число 3 простое, поэтому его делители только ±1 и ±3.
+                </div>
+                
+                <h4 style="margin-top: 25px; color: #764ba2;">🎯 ШАГ 7: Находим все решения</h4>
+                
+                <div class="board" style="background: #e3f2fd; color: #1565c0;">
+Нужно найти все целые n, при которых (n-1) ∈ {-3, -1, 1, 3}
+
+Решаем четыре уравнения:
+  • n - 1 = -3  →  n = -2  ✓
+  • n - 1 = -1  →  n = 0   ✓
+  • n - 1 = 1   →  n = 2   ✓
+  • n - 1 = 3   →  n = 4   ✓
+
+Ответ: n ∈ {-2, 0, 2, 4}
+                </div>
+                
+                <div class="pause">
+                    ⏸️ <strong>Пауза для проверки:</strong> Давайте проверим на примере \(n=4\).
+                </div>
+                
+                <div class="answer">
+                    ✅ <strong>Проверка:</strong> 
+                    <ul>
+                        <li>\(n = 4\)</li>
+                        <li>\(n - 1 = 3\)</li>
+                        <li>\(n^2 + n + 1 = 16 + 4 + 1 = 21\)</li>
+                        <li>Делит ли 3 число 21? Да! \(21 = 3 \cdot 7\) ✓</li>
+                        <li>Наша формула: \((n-1)(n+2) + 3 = 3 \cdot 6 + 3 = 18 + 3 = 21\) ✓</li>
+                    </ul>
+                    Всё сходится!
+                </div>
+            </div>
+            
+            <h2>ЧАСТЬ 5. РЕШЕНИЕ ЗАДАЧ (30–40 минут)</h2>
+            
+            <div class="lesson-block">
+                <h3>Задача 1.1 (вместе, 8 минут)</h3>
+                
+                <div class="activity">
+                    👥 <strong>Задача:</strong> Докажи, что \(n^2 - 1\) делится на 8 для любого нечётного \(n\).
+                </div>
+                
+                <div class="script">
+                    💬 <strong>Наводящие вопросы:</strong><br>
+                    1. Как записать нечётное число? (\(n = 2k + 1\))<br>
+                    2. Что тогда \(n^2 - 1\)? (\((2k+1)^2 - 1 = 4k^2 + 4k\))<br>
+                    3. Можем ли вынести 4? (\(4k(k+1)\))<br>
+                    4. Что можно сказать о \(k(k+1)\)? (Одно из них чётное)
+                </div>
+                
+                <div class="board">
+ПОЛНОЕ РЕШЕНИЕ НА ДОСКЕ:
+n = 2k + 1 (нечётное)
+n² - 1 = (2k+1)² - 1
+       = 4k² + 4k + 1 - 1
+       = 4k² + 4k
+       = 4k(k+1)
+
+k и k+1 — последовательные
+⟹ одно чётное
+⟹ 2 | k(k+1)
+⟹ 8 | 4k(k+1)  ✓
+                </div>
+            </div>
+            
+            <div class="lesson-block">
+                <h3>Задача 1.2 (самостоятельно, 5 минут)</h3>
+                
+                <div class="activity">
+                    👥 <strong>Задача:</strong> Найди остаток от деления \(3^{100}\) на 5.<br>
+                    <br>
+                    <strong>Указание:</strong> Найди цикл остатков \(3^k \bmod 5\) для маленьких \(k\).
+                </div>
+                
+                <div class="pause">
+                    ⏸️ <strong>Дайте 3 минуты на решение, потом разберите вместе.</strong>
+                </div>
+                
+                <div class="answer">
+                    ✅ <strong>Ответ:</strong> Остаток равен 1. Вот почему:<br>
+                    \(3^1 \equiv 3 \pmod{5}\)<br>
+                    \(3^2 = 9 \equiv 4 \pmod{5}\)<br>
+                    \(3^3 = 27 \equiv 2 \pmod{5}\)<br>
+                    \(3^4 = 81 \equiv 1 \pmod{5}\)<br>
+                    \(3^5 \equiv 3 \pmod{5}\) — цикл повторяется!<br>
+                    <br>
+                    Период = 4. Значит \(3^{100} = 3^{4 \cdot 25} \equiv 1^{25} \equiv 1 \pmod{5}\).
+                </div>
+            </div>
+            
+            <div class="lesson-block">
+                <h3>Задача 2.1 (самостоятельно, 7 минут)</h3>
+                
+                <div class="activity">
+                    👥 <strong>Задача:</strong> Найди все целые \(n\), для которых \((n-1) \mid (n^2 + n + 1)\).<br>
+                    <br>
+                    <strong>Подсказка:</strong> Разделите многочлен!
+                </div>
+                
+                <div class="pause">
+                    ⏸️ <strong>Дайте 5 минут на решение. Если застряли — подскажите с доски первый шаг.</strong>
+                </div>
+                
+                <div class="answer">
+                    ✅ <strong>Ответ:</strong> \(n \in \{-2, 0, 2, 4\}\). Решение полностью разобрано выше в Части 4 — это точно та же задача! Ученик должен применить метод полиномиального деления и найти, что остаток равен 3, откуда \((n-1) \in \{\pm 1, \pm 3\}\).
+                </div>
+            </div>
+            
+            <h2>ЗАКРЫТИЕ УРОКА (5 минут)</h2>
+            
+            <div class="lesson-block">
+                <div class="script">
+                    💬 <strong>Резюме приёмов:</strong> «Мы выучили четыре главных приёма:
+                    <ol>
+                        <li><strong>Линейная комбинация делителей</strong> — если \(d\) делит оба числа, то делит и их любую комбинацию</li>
+                        <li><strong>Разложение на множители</strong> — используем свойства последовательных чисел (одно чётное, одно кратно 3)</li>
+                        <li><strong>Разбор по остаткам</strong> — рассматриваем все остатки при делении на модуль</li>
+                        <li><strong>Деление с остатком</strong> — представляем многочлен как произведение плюс остаток</li>
+                    </ol>
+                    Каждый из этих приёмов — в твоём арсенале на олимпиаде. Главное — правильно выбрать приём для задачи!»
+                </div>
+            </div>
+            
+            <div class="lesson-block" style="background: #f0f4ff; border: 2px solid #667eea;">
+                <h3 style="color: #667eea; text-align: center;">📚 ОСНОВНЫЕ ЗНАНИЯ, КОТОРЫЕ НУЖНО ЗАПОМНИТЬ</h3>
+                
+                <div style="margin-top: 25px;">
+                    <h4 style="color: #764ba2; margin-bottom: 15px;">🔹 Определения</h4>
+                    
+                    <div style="background: white; border-left: 4px solid #667eea; padding: 15px; margin: 10px 0; border-radius: 4px;">
+                        <p><strong>\(b \mid a\)</strong> (читается "<strong>b делит a</strong>") означает:</p>
+                        <p style="margin: 10px 0; padding: 10px; background: #e3f2fd; border-radius: 4px;">
+                            Существует целое число \(k\), такое что \(a = b \cdot k\)
+                        </p>
+                        <p style="margin-top: 10px; font-style: italic; color: #666;">Примеры: \(3 \mid 12\), \(5 \mid 0\), \(7 \nmid 15\)</p>
+                    </div>
+                    
+                    <div style="background: white; border-left: 4px solid #667eea; padding: 15px; margin: 10px 0; border-radius: 4px;">
+                        <p><strong>\(a \bmod m\)</strong> — остаток от деления \(a\) на \(m\)</p>
+                        <p style="margin: 10px 0; padding: 10px; background: #e3f2fd; border-radius: 4px;">
+                            Всегда \(0 \le a \bmod m < m\)
+                        </p>
+                        <p style="margin-top: 10px; font-style: italic; color: #666;">Примеры: \(7 \bmod 3 = 1\), \(20 \bmod 4 = 0\), \(15 \bmod 6 = 3\)</p>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 25px;">
+                    <h4 style="color: #764ba2; margin-bottom: 15px;">🔹 Основные свойства делимости</h4>
+                    
+                    <div style="background: white; border-left: 4px solid #667eea; padding: 15px; margin: 10px 0; border-radius: 4px;">
+                        <p><strong>Свойство 1 (Линейная комбинация):</strong></p>
+                        <p style="margin: 10px 0;">Если \(d \mid a\) и \(d \mid b\), то \(d \mid (ax + by)\) для любых целых \(x, y\)</p>
+                        <p style="margin-top: 10px; font-style: italic; color: #666;">Следствие: если \(d \mid a\) и \(d \mid b\), то \(d \mid (a+b)\), \(d \mid (a-b)\), \(d \mid (2a+3b)\) и т.д.</p>
+                    </div>
+                    
+                    <div style="background: white; border-left: 4px solid #667eea; padding: 15px; margin: 10px 0; border-radius: 4px;">
+                        <p><strong>Свойство 2 (Произведение последовательных):</strong></p>
+                        <p style="margin: 10px 0;">
+                            • Произведение 2 последовательных чисел делится на \(2\)<br>
+                            • Произведение 3 последовательных чисел делится на \(6\)<br>
+                            • Произведение \(k\) последовательных чисел делится на \(k!\)
+                        </p>
+                        <p style="margin-top: 10px; font-style: italic; color: #666;">Причина: среди \(k\) подряд идущих чисел найдётся по одному делящемуся на 1, 2, 3, ..., k</p>
+                    </div>
+                    
+                    <div style="background: white; border-left: 4px solid #667eea; padding: 15px; margin: 10px 0; border-radius: 4px;">
+                        <p><strong>Свойство 3 (Остатки квадратов):</strong></p>
+                        <p style="margin: 10px 0;">
+                            • Квадраты по модулю 4 дают только \(0\) или \(1\)<br>
+                            • Квадраты по модулю 8 дают только \(0\), \(1\) или \(4\)<br>
+                            • Квадраты по модулю 3 дают только \(0\) или \(1\)
+                        </p>
+                        <p style="margin-top: 10px; font-style: italic; color: #666;">Полезно для доказательства, что что-то НЕ является полным квадратом</p>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 25px;">
+                    <h4 style="color: #764ba2; margin-bottom: 15px;">🔹 Приём: разложение многочленов</h4>
+                    
+                    <div style="background: white; border-left: 4px solid #667eea; padding: 15px; margin: 10px 0; border-radius: 4px;">
+                        <p><strong>Если нужно доказать \((n-a) \mid f(n)\):</strong></p>
+                        <p style="margin: 10px 0; padding: 10px; background: #fff3e0; border-radius: 4px; font-weight: 600;">
+                            Представи \(n = (n-a) + a\) и выполни полиномиальное деление \(f(n) = (n-a) \cdot q + r\)
+                        </p>
+                        <p style="margin-top: 10px;">Тогда: \((n-a) \mid f(n)\) \(\Leftrightarrow\) \((n-a) \mid r\)</p>
+                        <p style="margin-top: 10px; font-style: italic; color: #666;">Если \(r\) — конкретное число, найди его делители и реши уравнения!</p>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 25px;">
+                    <h4 style="color: #764ba2; margin-bottom: 15px;">🔹 Чек-лист перед олимпиадой</h4>
+                    
+                    <div style="background: #fff9c4; border-left: 4px solid #fbc02d; padding: 15px; margin: 10px 0; border-radius: 4px;">
+                        <ul style="margin: 0; padding-left: 20px;">
+                            <li>✅ Помню определение \(b \mid a\)</li>
+                            <li>✅ Умею доказывать делимость через произведение последовательных чисел</li>
+                            <li>✅ Могу разобрать задачу по остаткам (рассмотрю модуль 2, 3, 4, 5 и т.д.)</li>
+                            <li>✅ Знаю приём полиномиального деления для нахождения всех \(n\)</li>
+                            <li>✅ Проверяю ответ на конкретных примерах — не ошибаюсь!</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="activity">
+                👥 <strong>Домашнее задание:</strong><br>
+                Задачи 1.3, 2.2, 2.3. Решай в этом порядке — начиная с лёгких.
+            </div>
+            
+            <h2>СОВЕТЫ ПРЕПОДАВАТЕЛЮ</h2>
+            
+            <div class="tip">
+                <h4>🎯 Как вести урок эффективно</h4>
+                <ul>
+                    <li><strong>Не рассказывайте всё!</strong> Задавайте вопросы, дайте ученику подумать.</li>
+                    <li><strong>Используйте доску.</strong> Видимая логика — это красиво и убеждает.</li>
+                    <li><strong>Проверяйте на числах.</strong> Каждое доказательство — проверьте на 2–3 примерах.</li>
+                    <li><strong>Паузы важны!</strong> После сложной идеи — молчите 10 секунд. Дайте мозгу переварить.</li>
+                    <li><strong>Свяжите с олимпиадами.</strong> «Это задача из ВсОШ 8 класса» — мотивирует.</li>
+                </ul>
+            </div>
+            
+            <div class="tip">
+                <h4>⚠️ Частые ошибки учеников</h4>
+                <ul>
+                    <li><strong>Путают палочку:</strong> Говорят «12 на 3» вместо «3 делит 12»</li>
+                    <li><strong>Забывают проверять:</strong> Доказывают — верно, но не проверяют на примерах</li>
+                    <li><strong>Не видят разложения:</strong> Помогите вспомнить формулы: \(a^2 - 1 = (a-1)(a+1)\) и т.д.</li>
+                    <li><strong>Тупят в делении многочленов:</strong> Потренируйте на примерах вне контекста делимости</li>
+                </ul>
+            </div>
+            
+            <div class="tip">
+                <h4>📊 Время урока (примерный план)</h4>
+                <table>
+                    <tr>
+                        <th>Этап</th>
+                        <th>Время</th>
+                        <th>Что делать</th>
+                    </tr>
+                    <tr>
+                        <td>Введение</td>
+                        <td>5 мин</td>
+                        <td>Мотивация, пример задачи</td>
+                    </tr>
+                    <tr>
+                        <td>Теория (Свойство 1)</td>
+                        <td>10 мин</td>
+                        <td>Определение + линейная комбинация</td>
+                    </tr>
+                    <tr>
+                        <td>Примеры 1–2</td>
+                        <td>10 мин</td>
+                        <td>Разложение на множители вместе</td>
+                    </tr>
+                    <tr>
+                        <td>Остатки (теория)</td>
+                        <td>10 мин</td>
+                        <td>Таблица остатков, пример</td>
+                    </tr>
+                    <tr>
+                        <td>Деление многочленов</td>
+                        <td>10 мин</td>
+                        <td>Техника деления, пример</td>
+                    </tr>
+                    <tr>
+                        <td>Решение задач</td>
+                        <td>20 мин</td>
+                        <td>1–2 вместе, остальные дома</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Всего</strong></td>
+                        <td><strong>65 мин</strong></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Сценарий лекции</strong> — Делимость и её свойства (Урок 3)</p>
+            <p>Используй этот сценарий как гайд, но адаптируй под ученика!</p>
+        </div>
+    </div>
+</body>
+</html>
