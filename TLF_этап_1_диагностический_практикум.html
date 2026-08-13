@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TLF: диагностический практикум</title>
+    <style>
+@page {
+    size: A4;
+    margin: 1.4cm 1.5cm 1.8cm 1.5cm;
+
+    @bottom-center {
+        content: counter(page) " / " counter(pages);
+        font-family: "DejaVu Sans", sans-serif;
+        font-size: 9pt;
+        color: #546e7a;
+    }
+}
+
+body {
+    font-family: "DejaVu Serif", serif;
+    font-size: 10.5pt;
+    line-height: 1.45;
+    color: #1b1f24;
+}
+
+h1, h2, h3 {
+    font-family: "DejaVu Sans", sans-serif;
+    margin: 0;
+}
+
+p {
+    margin: 0.35em 0;
+}
+
+ul, ol {
+    margin: 0.45em 0 0.55em 1.2em;
+}
+
+strong {
+    color: #123a5a;
+}
+
+.page-break {
+    page-break-before: always;
+}
+
+.title-page {
+    border: 2px solid #1f4e79;
+    border-radius: 10px;
+    padding: 22px 24px;
+    background: linear-gradient(180deg, #f6fbff 0%, #ffffff 100%);
+}
+
+.eyebrow {
+    color: #b03a2e;
+    font-size: 11pt;
+    font-weight: bold;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.title-page h1 {
+    font-size: 24pt;
+    line-height: 1.15;
+    color: #123a5a;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-family: "DejaVu Sans", sans-serif;
+    font-size: 12pt;
+    color: #345b73;
+    margin-bottom: 14px;
+}
+
+.meta-grid {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 14px;
+}
+
+.meta-grid td {
+    border: 1px solid #c7d6df;
+    padding: 8px 10px;
+    vertical-align: top;
+}
+
+.note-box {
+    background: #eef6fb;
+    border-left: 5px solid #2f6f9f;
+    padding: 10px 12px;
+    border-radius: 4px;
+    margin: 12px 0;
+}
+
+.warning-box {
+    background: #fff8ea;
+    border-left: 5px solid #c97b17;
+    padding: 10px 12px;
+    border-radius: 4px;
+    margin: 12px 0;
+}
+
+.coverage-table,
+.summary-table,
+.answer-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.coverage-table th,
+.coverage-table td,
+.summary-table th,
+.summary-table td,
+.answer-table th,
+.answer-table td {
+    border: 1px solid #c7d6df;
+    padding: 5px 6px;
+    vertical-align: top;
+}
+
+.coverage-table th,
+.summary-table th,
+.answer-table th {
+    background: #edf4fa;
+    color: #123a5a;
+    font-family: "DejaVu Sans", sans-serif;
+    font-size: 9.5pt;
+}
+
+.coverage-table td,
+.summary-table td,
+.answer-table td {
+    font-size: 8.8pt;
+}
+
+.section {
+    margin-top: 18px;
+}
+
+.section-header {
+    border-bottom: 2px solid #d6e3ec;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    page-break-after: avoid;
+}
+
+.section-code {
+    display: inline-block;
+    min-width: 24px;
+    text-align: center;
+    background: #b03a2e;
+    color: white;
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-weight: bold;
+    font-family: "DejaVu Sans", sans-serif;
+    margin-right: 8px;
+}
+
+.section h2 {
+    font-size: 18pt;
+    color: #123a5a;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.section-focus {
+    color: #32546a;
+    font-size: 10pt;
+    margin-top: 6px;
+}
+
+.task-card {
+    border: 1px solid #d8e2e8;
+    border-radius: 8px;
+    padding: 9px 10px;
+    margin: 0 0 9px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    background: #ffffff;
+}
+
+.task-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.task-id {
+    font-family: "DejaVu Sans", sans-serif;
+    font-size: 9.5pt;
+    font-weight: bold;
+    color: #b03a2e;
+}
+
+.task-tag {
+    font-family: "DejaVu Sans", sans-serif;
+    font-size: 8.6pt;
+    color: #567486;
+}
+
+.task-text {
+    margin-bottom: 8px;
+}
+
+.task-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    font-size: 9.3pt;
+    color: #324a5e;
+}
+
+.answer-line {
+    display: inline-block;
+    min-width: 160px;
+    border-bottom: 1px solid #78909c;
+    height: 0.9em;
+    vertical-align: bottom;
+}
+
+.rating {
+    font-family: "DejaVu Sans", sans-serif;
+}
+
+.section-review {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin-top: 10px;
+    background: #f7fbfd;
+    border: 1px dashed #93aab8;
+    border-radius: 8px;
+    padding: 10px 12px;
+}
+
+.section-review p {
+    margin: 0.25em 0;
+}
+
+.long-line {
+    display: inline-block;
+    min-width: 320px;
+    border-bottom: 1px solid #78909c;
+    height: 0.9em;
+    vertical-align: bottom;
+}
+
+.short-line {
+    display: inline-block;
+    min-width: 110px;
+    border-bottom: 1px solid #78909c;
+    height: 0.9em;
+    vertical-align: bottom;
+}
+
+.small {
+    font-size: 9pt;
+    color: #526b7a;
+}
+
+.answers-page h2,
+.summary-page h2 {
+    font-size: 18pt;
+    color: #123a5a;
+    margin-bottom: 8px;
+}
+</style>
+</head>
+<body>
+    
+    <section class="title-page">
+        <div class="eyebrow">TLF 4-year program · 1 этап</div>
+        <h1>Диагностический практикум<br>перед первым экзаменом</h1>
+        <div class="subtitle">Оригинальный рабочий PDF для поиска пробелов: темы, задачи, самооценка и короткий ключ для тьютора.</div>
+
+        <div class="note-box">
+            <p><strong>Для кого:</strong> ученик 8 класса, который готовится к первому математическому этапу TLF (4-year program).</p>
+            <p><strong>Как использовать:</strong> решай задачи в отдельной тетради, а в этом PDF отмечай ответ и самооценку: <strong>2</strong> — решил уверенно сам, <strong>1</strong> — решил с паузами / ошибкой / подсказкой, <strong>0</strong> — не решил.</p>
+        </div>
+
+        <div class="warning-box">
+            <p><strong>Важно:</strong> задачи в этом файле не копируют официальный материал, а покрывают те же ключевые навыки в похожем формате. Последние страницы — это <strong>краткий ключ</strong> для взрослого / тьютора; если даёшь PDF ученику отдельно, эти страницы лучше закрыть или не печатать.</p>
+        </div>
+
+        <table class="meta-grid">
+            <tr>
+                <td><strong>Всего задач</strong><br>74</td>
+                <td><strong>Максимум баллов</strong><br>148</td>
+                <td><strong>Формат работы</strong><br>первый проход без помощи, потом разбор слабых мест</td>
+            </tr>
+            <tr>
+                <td><strong>Имя ученика</strong><br>______________________</td>
+                <td><strong>Дата</strong><br>______________________</td>
+                <td><strong>Тьютор / проверяющий</strong><br>______________________</td>
+            </tr>
+        </table>
+
+        <div class="note-box">
+            <p><strong>Рекомендуемый цикл:</strong></p>
+            <ol>
+                <li>Пройти один блок целиком без подсказок.</li>
+                <li>Отметить задачи с 0 и 1.</li>
+                <li>Разобрать только проблемные темы.</li>
+                <li>Получить дополнительный мини-набор задач именно по этим темам.</li>
+                <li>Через 2–3 дня перепройти слабый блок заново.</li>
+            </ol>
+        </div>
+
+        <p class="small">Сгенерировано автоматически: 2026-03-17</p>
+    </section>
+    
+    <section class="page-break">
+        <h2 style="font-size: 18pt; color: #123a5a;">Карта покрытия</h2>
+        <p>Эта таблица показывает, какие навыки закрывает практикум. Если ученик набирает по блоку меньше 70% или получает 2+ нуля, тему стоит считать незакрытой.</p>
+        <table class="coverage-table">
+            <thead>
+                <tr>
+                    <th style="width: 8%;">Блок</th>
+                    <th style="width: 27%;">Тема</th>
+                    <th style="width: 10%;">Задач</th>
+                    <th>Что проверяем</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>A</strong></td><td>Арифметика: дроби, знаки, порядок действий</td><td>6</td><td>Проверяем вычислительную устойчивость: дроби, смешанные числа, отрицательные числа, порядок действий, периодические дроби.</td></tr><tr><td><strong>B</strong></td><td>Проценты, отношения, пропорции</td><td>6</td><td>Проверяем умение быстро переходить между процентами, долями и отношениями, а также удерживать общий объём в текстовых задачах.</td></tr><tr><td><strong>C</strong></td><td>Делимость, простые числа, НОД, НОК, остатки</td><td>7</td><td>Проверяем базовую теорию чисел: признаки делимости, разложение на простые множители, деление с остатком, НОД/НОК и простые остатки.</td></tr><tr><td><strong>D</strong></td><td>Алгебраические выражения и тождества</td><td>7</td><td>Проверяем подстановку, упрощение, замечательные формулы, сравнение выражений и базовую работу с модулем.</td></tr><tr><td><strong>E</strong></td><td>Линейные уравнения, неравенства, системы</td><td>6</td><td>Проверяем основной алгебраический каркас первого этапа: линейные уравнения, неравенства, системы и простейший модуль.</td></tr><tr><td><strong>F</strong></td><td>Координаты, прямые, графики линейной функции</td><td>7</td><td>Проверяем понимание наклона прямой, уравнения y = kx + b, параллельности, перпендикулярности и точки пересечения.</td></tr><tr><td><strong>G</strong></td><td>Текстовые задачи: скорость, средняя скорость, совместная работа</td><td>6</td><td>Проверяем умение переводить сюжет в уравнение или формулу, следить за единицами и не путаться в средней скорости.</td></tr><tr><td><strong>H</strong></td><td>Комбинаторика, вероятность, диаграммы Венна, статистика</td><td>6</td><td>Проверяем правила суммы и произведения, простую вероятность, пересечение множеств и базовую статистику.</td></tr><tr><td><strong>I</strong></td><td>Геометрия: углы, треугольники, равнобедренные и равные треугольники</td><td>7</td><td>Проверяем базовую геометрию первого этапа: углы, свойства равнобедренного треугольника, признаки равенства, биссектрисы и параллельные прямые.</td></tr><tr><td><strong>J</strong></td><td>Геометрия: площади, окружность, многоугольники, составные фигуры</td><td>6</td><td>Проверяем площади, составные фигуры, окружность, сумму углов многоугольника и связь массы с площадью при одинаковой толщине.</td></tr><tr><td><strong>K</strong></td><td>Смешанный финальный блок в стиле 1 этапа</td><td>10</td><td>Проверяем, умеет ли ученик переключаться между темами и держать темп на смешанном наборе задач без потери аккуратности.</td></tr>
+            </tbody>
+        </table>
+        <div class="note-box">
+            <p><strong>Короткое правило интерпретации.</strong> Если ученик набрал:</p>
+            <ul>
+                <li><strong>85–100%</strong> — блок уже рабочий, нужны только смешанные повторы;</li>
+                <li><strong>70–84%</strong> — база есть, но нужны точечные доработки;</li>
+                <li><strong>ниже 70%</strong> — тему лучше заново собрать шаг за шагом.</li>
+            </ul>
+        </div>
+    </section>
+    
+    <section class="section">
+        <div class="section-header">
+            <span class="section-code">A</span>
+            <h2>Арифметика: дроби, знаки, порядок действий</h2>
+            <p class="section-focus">Проверяем вычислительную устойчивость: дроби, смешанные числа, отрицательные числа, порядок действий, периодические дроби.</p>
+        </div>
+        
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">A1</div>
+                    <div class="task-tag">разогрев</div>
+                </div>
+                <div class="task-text">Вычисли: (3/4 + 5/6) : 7/12.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">A2</div>
+                    <div class="task-tag">разогрев</div>
+                </div>
+                <div class="task-text">Вычисли: 2 1/3 - 1 5/6 + 3/4.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">A3</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">Преобразуй периодическую десятичную дробь 0.(27) в обыкновенную дробь.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">A4</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">Сравни числа: 0.125 · 16 и 2^3 / 4.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">A5</div>
+                    <div class="task-tag">чуть сложнее</div>
+                </div>
+                <div class="task-text">Вычисли: -3 + 4 · (2 - 5) - (-7).</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">A6</div>
+                    <div class="task-tag">чуть сложнее</div>
+                </div>
+                <div class="task-text">Вычисли: ((1 - 1/2) · (1 - 1/3) · (1 - 1/4)) : (1/4).</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+        <div class="section-review">
+            <p><strong>Мини-итог по блоку.</strong> Если здесь были ошибки, стоит отдельно повторить сокращение дробей, НОК знаменателей и самоконтроль при вычислениях без калькулятора.</p>
+            <p>Сумма за блок: <span class="short-line"></span> / 12</p>
+            <p>Коды задач, где потребовалась подсказка: <span class="long-line"></span></p>
+            <p>Что повторить перед следующим занятием: <span class="long-line"></span></p>
+        </div>
+    </section>
+    
+    <section class="section">
+        <div class="section-header">
+            <span class="section-code">B</span>
+            <h2>Проценты, отношения, пропорции</h2>
+            <p class="section-focus">Проверяем умение быстро переходить между процентами, долями и отношениями, а также удерживать общий объём в текстовых задачах.</p>
+        </div>
+        
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">B1</div>
+                    <div class="task-tag">разогрев</div>
+                </div>
+                <div class="task-text">Цена товара была 800 рублей. Сначала её увеличили на 15%, а потом уменьшили на 15%. Какой стала цена?</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">B2</div>
+                    <div class="task-tag">разогрев</div>
+                </div>
+                <div class="task-text">После увеличения числа на 20% получилось 96. Найди исходное число.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">B3</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">Раздели число 210 в отношении 2 : 3 : 5.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">B4</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">В классе отношение числа мальчиков к числу девочек равно 7 : 8, а всего учеников 45. Сколько мальчиков и сколько девочек в классе?</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">B5</div>
+                    <div class="task-tag">чуть сложнее</div>
+                </div>
+                <div class="task-text">Три отдела выпускают 120, 180 и 300 деталей в день. Первые два отдела уменьшили выпуск на 10%. На сколько процентов надо увеличить выпуск третьего отдела, чтобы общий выпуск не изменился?</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">B6</div>
+                    <div class="task-tag">чуть сложнее</div>
+                </div>
+                <div class="task-text">Есть 500 г раствора, в котором 30% вещества. Сколько граммов воды нужно добавить, чтобы концентрация стала 20%?</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+        <div class="section-review">
+            <p><strong>Мини-итог по блоку.</strong> Если здесь есть 0 или 1, обычно проблема в переводе текста в действие: что именно увеличилось, что уменьшилось и что осталось постоянным.</p>
+            <p>Сумма за блок: <span class="short-line"></span> / 12</p>
+            <p>Коды задач, где потребовалась подсказка: <span class="long-line"></span></p>
+            <p>Что повторить перед следующим занятием: <span class="long-line"></span></p>
+        </div>
+    </section>
+    
+    <section class="section">
+        <div class="section-header">
+            <span class="section-code">C</span>
+            <h2>Делимость, простые числа, НОД, НОК, остатки</h2>
+            <p class="section-focus">Проверяем базовую теорию чисел: признаки делимости, разложение на простые множители, деление с остатком, НОД/НОК и простые остатки.</p>
+        </div>
+        
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">C1</div>
+                    <div class="task-tag">разогрев</div>
+                </div>
+                <div class="task-text">Какие из чисел 462, 735, 918, 1001 делятся на 11?</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">C2</div>
+                    <div class="task-tag">разогрев</div>
+                </div>
+                <div class="task-text">Разложи число 360 на простые множители.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">C3</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">Найди НОД и НОК чисел 84 и 126.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">C4</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">Найди наименьшее натуральное n, при котором число 24n делится на 90.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">C5</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">Найди остаток при делении числа 10^4 + 10^3 + 10^2 + 10 + 1 на 9.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">C6</div>
+                    <div class="task-tag">чуть сложнее</div>
+                </div>
+                <div class="task-text">Один сигнал включается каждые 18 секунд, другой — каждые 24 секунды. Через сколько секунд они снова включатся одновременно?</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">C7</div>
+                    <div class="task-tag">чуть сложнее</div>
+                </div>
+                <div class="task-text">Представь число 347 в виде 12q + r, где 0 ≤ r &lt; 12.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+        <div class="section-review">
+            <p><strong>Мини-итог по блоку.</strong> Если блок идёт тяжело, полезно отдельно повторить признаки делимости на 3, 4, 8, 9, 11 и связь НОД/НОК с разложением на простые множители.</p>
+            <p>Сумма за блок: <span class="short-line"></span> / 14</p>
+            <p>Коды задач, где потребовалась подсказка: <span class="long-line"></span></p>
+            <p>Что повторить перед следующим занятием: <span class="long-line"></span></p>
+        </div>
+    </section>
+    
+    <section class="section">
+        <div class="section-header">
+            <span class="section-code">D</span>
+            <h2>Алгебраические выражения и тождества</h2>
+            <p class="section-focus">Проверяем подстановку, упрощение, замечательные формулы, сравнение выражений и базовую работу с модулем.</p>
+        </div>
+        
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">D1</div>
+                    <div class="task-tag">разогрев</div>
+                </div>
+                <div class="task-text">Упрости выражение: (a + b)^2 - (a - b)^2.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">D2</div>
+                    <div class="task-tag">разогрев</div>
+                </div>
+                <div class="task-text">Вычисли без столбика: 99^2 - 98 · 100.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">D3</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">Найди значение выражения 2x^2 - 3xy + y при x = 1/2 и y = -3.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">D4</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">Разложи на множители выражение x^2 - 81.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">D5</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">Сравни числа 0.2^10 и 0.04^5.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">D6</div>
+                    <div class="task-tag">чуть сложнее</div>
+                </div>
+                <div class="task-text">Вычисли: |-7 + 3| + |5 - 9|.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">D7</div>
+                    <div class="task-tag">чуть сложнее</div>
+                </div>
+                <div class="task-text">Вычисли устно: 1.01^2 - 0.99^2.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+        <div class="section-review">
+            <p><strong>Мини-итог по блоку.</strong> Если ошибки появляются на простых тождествах, полезно отдельно натренировать распознавание (a+b)^2, (a-b)^2 и a^2-b^2 без полного раскрытия скобок.</p>
+            <p>Сумма за блок: <span class="short-line"></span> / 14</p>
+            <p>Коды задач, где потребовалась подсказка: <span class="long-line"></span></p>
+            <p>Что повторить перед следующим занятием: <span class="long-line"></span></p>
+        </div>
+    </section>
+    
+    <section class="section">
+        <div class="section-header">
+            <span class="section-code">E</span>
+            <h2>Линейные уравнения, неравенства, системы</h2>
+            <p class="section-focus">Проверяем основной алгебраический каркас первого этапа: линейные уравнения, неравенства, системы и простейший модуль.</p>
+        </div>
+        
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">E1</div>
+                    <div class="task-tag">разогрев</div>
+                </div>
+                <div class="task-text">Реши уравнение: 3(x - 2) - 5 = 2x + 1.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">E2</div>
+                    <div class="task-tag">разогрев</div>
+                </div>
+                <div class="task-text">Реши уравнение: (x + 3)/4 + (x - 1)/2 = 5.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">E3</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">Реши неравенство: 5 - 2x &gt; 11.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">E4</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">Реши неравенство: (2x - 1)/3 ≤ (x + 2)/2.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">E5</div>
+                    <div class="task-tag">чуть сложнее</div>
+                </div>
+                <div class="task-text">Реши систему: { 3x - y = 7; x + y = 5 }.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">E6</div>
+                    <div class="task-tag">чуть сложнее</div>
+                </div>
+                <div class="task-text">Реши уравнение: |x - 4| = 3.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+        <div class="section-review">
+            <p><strong>Мини-итог по блоку.</strong> Если здесь появились ошибки, сначала вычищай аккуратность: перенос слагаемых, умножение на НОК и смену знака при делении неравенства на отрицательное число.</p>
+            <p>Сумма за блок: <span class="short-line"></span> / 12</p>
+            <p>Коды задач, где потребовалась подсказка: <span class="long-line"></span></p>
+            <p>Что повторить перед следующим занятием: <span class="long-line"></span></p>
+        </div>
+    </section>
+    
+    <section class="section">
+        <div class="section-header">
+            <span class="section-code">F</span>
+            <h2>Координаты, прямые, графики линейной функции</h2>
+            <p class="section-focus">Проверяем понимание наклона прямой, уравнения y = kx + b, параллельности, перпендикулярности и точки пересечения.</p>
+        </div>
+        
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">F1</div>
+                    <div class="task-tag">разогрев</div>
+                </div>
+                <div class="task-text">Найди уравнение прямой, проходящей через точки (1, 3) и (5, 11).</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">F2</div>
+                    <div class="task-tag">разогрев</div>
+                </div>
+                <div class="task-text">Найди уравнение прямой, параллельной прямой y = -3x + 4 и проходящей через точку (2, 1).</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">F3</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">Найди уравнение прямой, перпендикулярной прямой y = (1/2)x - 5 и проходящей через начало координат.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">F4</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">Найди точку пересечения прямых y = 2x + 3 и y = -x + 9.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">F5</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">Параллельны ли прямые AB и CD, если A(0, 1), B(2, 5), C(-1, 4), D(1, 8)?</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">F6</div>
+                    <div class="task-tag">чуть сложнее</div>
+                </div>
+                <div class="task-text">Найди k, если точка (3, 7) лежит на прямой y = kx + 1.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">F7</div>
+                    <div class="task-tag">чуть сложнее</div>
+                </div>
+                <div class="task-text">Найди k, если прямые y = 2x + 1 и y = kx - 4 перпендикулярны.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+        <div class="section-review">
+            <p><strong>Мини-итог по блоку.</strong> Если блок тормозит, полезно отдельно потренировать смысл коэффициентов k и b: как по двум точкам найти наклон и как устроена прямая с данным углом наклона.</p>
+            <p>Сумма за блок: <span class="short-line"></span> / 14</p>
+            <p>Коды задач, где потребовалась подсказка: <span class="long-line"></span></p>
+            <p>Что повторить перед следующим занятием: <span class="long-line"></span></p>
+        </div>
+    </section>
+    
+    <section class="section">
+        <div class="section-header">
+            <span class="section-code">G</span>
+            <h2>Текстовые задачи: скорость, средняя скорость, совместная работа</h2>
+            <p class="section-focus">Проверяем умение переводить сюжет в уравнение или формулу, следить за единицами и не путаться в средней скорости.</p>
+        </div>
+        
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">G1</div>
+                    <div class="task-tag">разогрев</div>
+                </div>
+                <div class="task-text">Автомобиль проехал первую половину пути со скоростью 60 км/ч, а вторую — со скоростью 90 км/ч. Найди среднюю скорость на всём пути.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">G2</div>
+                    <div class="task-tag">разогрев</div>
+                </div>
+                <div class="task-text">Велосипедист ехал из A в B со скоростью 15 км/ч, а обратно — со скоростью 10 км/ч. Найди среднюю скорость на всём пути.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">G3</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">Одна труба наполняет бассейн за 6 часов, другая — за 4 часа. За сколько часов они наполнят бассейн вместе?</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">G4</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">Первый рабочий выполняет заказ за 8 часов, второй — за 12 часов. Какую часть заказа они выполнят вместе за 3 часа?</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">G5</div>
+                    <div class="task-tag">чуть сложнее</div>
+                </div>
+                <div class="task-text">Поезд длиной 120 м проходит мимо столба за 8 секунд. Найди скорость поезда в км/ч.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">G6</div>
+                    <div class="task-tag">чуть сложнее</div>
+                </div>
+                <div class="task-text">Из города A в город B, расстояние между которыми 210 км, выехал автомобиль со скоростью 70 км/ч. Через час навстречу ему из B выехал мотоциклист со скоростью 35 км/ч. Через сколько времени после выезда автомобиля они встретятся?</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+        <div class="section-review">
+            <p><strong>Мини-итог по блоку.</strong> Если этот блок оказался тяжёлым, полезно отдельно отработать схему «таблица путь–скорость–время» и понять, что средняя скорость — это весь путь, делённый на всё время.</p>
+            <p>Сумма за блок: <span class="short-line"></span> / 12</p>
+            <p>Коды задач, где потребовалась подсказка: <span class="long-line"></span></p>
+            <p>Что повторить перед следующим занятием: <span class="long-line"></span></p>
+        </div>
+    </section>
+    
+    <section class="section">
+        <div class="section-header">
+            <span class="section-code">H</span>
+            <h2>Комбинаторика, вероятность, диаграммы Венна, статистика</h2>
+            <p class="section-focus">Проверяем правила суммы и произведения, простую вероятность, пересечение множеств и базовую статистику.</p>
+        </div>
+        
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">H1</div>
+                    <div class="task-tag">разогрев</div>
+                </div>
+                <div class="task-text">Сколько трёхзначных чётных чисел можно составить из цифр 1, 2, 3, 4, 5 без повторений?</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">H2</div>
+                    <div class="task-tag">разогрев</div>
+                </div>
+                <div class="task-text">Сколько четырёхзначных паролей можно составить из цифр 0–9, если повторения разрешены, а первая цифра не может быть нулём?</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">H3</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">В мешке 4 красных, 3 синих и 5 зелёных шаров. Какова вероятность вытащить красный шар?</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">H4</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">Из 30 учеников 18 ходят в математический кружок, 14 — в программирование, 6 — в оба кружка. Сколько учеников ходят хотя бы в один кружок? Сколько ходят только в программирование?</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">H5</div>
+                    <div class="task-tag">чуть сложнее</div>
+                </div>
+                <div class="task-text">Для набора чисел 4, 7, 7, 9, 10 найди среднее арифметическое, медиану и моду.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">H6</div>
+                    <div class="task-tag">чуть сложнее</div>
+                </div>
+                <div class="task-text">Дан упорядоченный ряд: 2, 4, 5, 6, 8, 10, 12, 14. Найди нижнюю и верхнюю квартиль, считая их медианами нижней и верхней половины ряда.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+        <div class="section-review">
+            <p><strong>Мини-итог по блоку.</strong> Если здесь провал, обычно помогает одно и то же правило: сначала чётко понять, что считается, а потом решить, нужно складывать варианты или перемножать.</p>
+            <p>Сумма за блок: <span class="short-line"></span> / 12</p>
+            <p>Коды задач, где потребовалась подсказка: <span class="long-line"></span></p>
+            <p>Что повторить перед следующим занятием: <span class="long-line"></span></p>
+        </div>
+    </section>
+    
+    <section class="section">
+        <div class="section-header">
+            <span class="section-code">I</span>
+            <h2>Геометрия: углы, треугольники, равнобедренные и равные треугольники</h2>
+            <p class="section-focus">Проверяем базовую геометрию первого этапа: углы, свойства равнобедренного треугольника, признаки равенства, биссектрисы и параллельные прямые.</p>
+        </div>
+        
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">I1</div>
+                    <div class="task-tag">разогрев</div>
+                </div>
+                <div class="task-text">Углы треугольника равны 2x, 3x и 4x. Найди все углы треугольника.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">I2</div>
+                    <div class="task-tag">разогрев</div>
+                </div>
+                <div class="task-text">В равнобедренном треугольнике угол при вершине равен 36°. Найди углы при основании.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">I3</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">Две параллельные прямые пересечены секущей. Один из острых углов равен 58°. Какие два разных значения имеют все углы на рисунке?</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">I4</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">Внешний угол треугольника при вершине C равен 125°, а угол A равен 47°. Найди угол B.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">I5</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">В треугольниках ABC и DEF известно, что AB = DE = 7, AC = DF = 9 и угол A равен углу D и равен 40°. Можно ли утверждать, что треугольники равны? Если да, то по какому признаку?</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">I6</div>
+                    <div class="task-tag">чуть сложнее</div>
+                </div>
+                <div class="task-text">В равнобедренном треугольнике ABC (AB = AC) высота AD образует с боковой стороной AB угол 27°. Найди угол A.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">I7</div>
+                    <div class="task-tag">чуть сложнее</div>
+                </div>
+                <div class="task-text">В треугольнике A = 50°, B = 70°. Найди угол между внутренними биссектрисами углов A и B.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+        <div class="section-review">
+            <p><strong>Мини-итог по блоку.</strong> Если блок идёт медленно, полезно вернуться к чертежам: почти каждая ошибка здесь — это не формула, а плохо нарисованная картинка или невидимое свойство.</p>
+            <p>Сумма за блок: <span class="short-line"></span> / 14</p>
+            <p>Коды задач, где потребовалась подсказка: <span class="long-line"></span></p>
+            <p>Что повторить перед следующим занятием: <span class="long-line"></span></p>
+        </div>
+    </section>
+    
+    <section class="section">
+        <div class="section-header">
+            <span class="section-code">J</span>
+            <h2>Геометрия: площади, окружность, многоугольники, составные фигуры</h2>
+            <p class="section-focus">Проверяем площади, составные фигуры, окружность, сумму углов многоугольника и связь массы с площадью при одинаковой толщине.</p>
+        </div>
+        
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">J1</div>
+                    <div class="task-tag">разогрев</div>
+                </div>
+                <div class="task-text">У прямоугольника размеры 12 см и 7 см. Из одного угла вырезали квадрат со стороной 4 см. Найди площадь оставшейся части.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">J2</div>
+                    <div class="task-tag">разогрев</div>
+                </div>
+                <div class="task-text">Найди площадь прямоугольного треугольника с катетами 9 см и 12 см.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">J3</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">Найди площадь круга радиуса 6 см.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">J4</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">Найди сумму внутренних углов восьмиугольника.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">J5</div>
+                    <div class="task-tag">чуть сложнее</div>
+                </div>
+                <div class="task-text">Площадь маленькой фигуры равна 5 см². Большая фигура подобна ей с коэффициентом 3. Найди площадь большой фигуры.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">J6</div>
+                    <div class="task-tag">чуть сложнее</div>
+                </div>
+                <div class="task-text">Плитка шоколада состоит из 20 одинаковых клеток и весит 120 г. Сколько весит кусок из 7 клеток?</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+        <div class="section-review">
+            <p><strong>Мини-итог по блоку.</strong> Если здесь появляются странные ошибки, почти всегда помогает один шаг назад: отдельно подписать все длины и только потом составлять формулу площади.</p>
+            <p>Сумма за блок: <span class="short-line"></span> / 12</p>
+            <p>Коды задач, где потребовалась подсказка: <span class="long-line"></span></p>
+            <p>Что повторить перед следующим занятием: <span class="long-line"></span></p>
+        </div>
+    </section>
+    
+    <section class="section">
+        <div class="section-header">
+            <span class="section-code">K</span>
+            <h2>Смешанный финальный блок в стиле 1 этапа</h2>
+            <p class="section-focus">Проверяем, умеет ли ученик переключаться между темами и держать темп на смешанном наборе задач без потери аккуратности.</p>
+        </div>
+        
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">K1</div>
+                    <div class="task-tag">разогрев</div>
+                </div>
+                <div class="task-text">Вычисли: (((1 - 1/3) : (1/2)) + 2 1/4) · 4/5.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">K2</div>
+                    <div class="task-tag">разогрев</div>
+                </div>
+                <div class="task-text">Реши неравенство: 3(2x - 1) - 4 ≤ 2(x + 5).</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">K3</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">Найди число от 100 до 150, которое делится и на 6, и на 11.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">K4</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">У прямоугольника периметр 34 см, а длина на 3 см больше ширины. Найди стороны и площадь прямоугольника.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">K5</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">Три числа относятся как 2 : 5 : 7, а их среднее арифметическое равно 56. Найди эти три числа.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">K6</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">Лодка проходит 30 км по течению и 30 км против течения. Скорость лодки в стоячей воде 12 км/ч, скорость течения 3 км/ч. Сколько времени займёт весь путь?</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">K7</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">Сколько диагоналей у десятиугольника?</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">K8</div>
+                    <div class="task-tag">основной уровень</div>
+                </div>
+                <div class="task-text">Найди уравнение прямой, проходящей через точку (2, -1) и перпендикулярной прямой y = 3x + 4.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">K9</div>
+                    <div class="task-tag">чуть сложнее</div>
+                </div>
+                <div class="task-text">Сколько пятизначных чисел можно составить из цифр 1, 2, 3, 4, 5 без повторений так, чтобы цифры 1 и 2 стояли рядом?</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+            <div class="task-card">
+                <div class="task-head">
+                    <div class="task-id">K10</div>
+                    <div class="task-tag">чуть сложнее</div>
+                </div>
+                <div class="task-text">В равнобедренном треугольнике ABC (AB = AC) основание BC равно 14, а боковая сторона AB равна 25. Точка D — середина BC. Найди периметр треугольника ABD.</div>
+                <div class="task-controls">
+                    <div>Ответ: <span class="answer-line"></span></div>
+                    <div class="rating">Оценка: □ 2 □ 1 □ 0</div>
+                </div>
+            </div>
+            
+        <div class="section-review">
+            <p><strong>Мини-итог по блоку.</strong> Если именно здесь всё рассыпается, значит отдельные темы уже есть, но ещё не собраны в цельную экзаменационную картину — нужен смешанный тренинг под таймер.</p>
+            <p>Сумма за блок: <span class="short-line"></span> / 20</p>
+            <p>Коды задач, где потребовалась подсказка: <span class="long-line"></span></p>
+            <p>Что повторить перед следующим занятием: <span class="long-line"></span></p>
+        </div>
+    </section>
+    
+    <section class="summary-page page-break">
+        <h2>Итоговая диагностическая таблица</h2>
+        <p>Эту страницу удобно заполнять после первого прохода. Она помогает быстро увидеть, какие блоки уже рабочие, а где нужны разбор и дополнительный мини-набор задач.</p>
+        <table class="summary-table">
+            <thead>
+                <tr>
+                    <th style="width: 7%;">Блок</th>
+                    <th style="width: 28%;">Тема</th>
+                    <th style="width: 11%;">Макс.</th>
+                    <th style="width: 13%;">Набрано</th>
+                    <th style="width: 14%;">Главные коды</th>
+                    <th>Что делать дальше</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            <tr>
+                <td><strong>A</strong></td>
+                <td>Арифметика: дроби, знаки, порядок действий</td>
+                <td>12</td>
+                <td>______________</td>
+                <td>______________</td>
+                <td>__________________________________</td>
+            </tr>
+            
+            <tr>
+                <td><strong>B</strong></td>
+                <td>Проценты, отношения, пропорции</td>
+                <td>12</td>
+                <td>______________</td>
+                <td>______________</td>
+                <td>__________________________________</td>
+            </tr>
+            
+            <tr>
+                <td><strong>C</strong></td>
+                <td>Делимость, простые числа, НОД, НОК, остатки</td>
+                <td>14</td>
+                <td>______________</td>
+                <td>______________</td>
+                <td>__________________________________</td>
+            </tr>
+            
+            <tr>
+                <td><strong>D</strong></td>
+                <td>Алгебраические выражения и тождества</td>
+                <td>14</td>
+                <td>______________</td>
+                <td>______________</td>
+                <td>__________________________________</td>
+            </tr>
+            
+            <tr>
+                <td><strong>E</strong></td>
+                <td>Линейные уравнения, неравенства, системы</td>
+                <td>12</td>
+                <td>______________</td>
+                <td>______________</td>
+                <td>__________________________________</td>
+            </tr>
+            
+            <tr>
+                <td><strong>F</strong></td>
+                <td>Координаты, прямые, графики линейной функции</td>
+                <td>14</td>
+                <td>______________</td>
+                <td>______________</td>
+                <td>__________________________________</td>
+            </tr>
+            
+            <tr>
+                <td><strong>G</strong></td>
+                <td>Текстовые задачи: скорость, средняя скорость, совместная работа</td>
+                <td>12</td>
+                <td>______________</td>
+                <td>______________</td>
+                <td>__________________________________</td>
+            </tr>
+            
+            <tr>
+                <td><strong>H</strong></td>
+                <td>Комбинаторика, вероятность, диаграммы Венна, статистика</td>
+                <td>12</td>
+                <td>______________</td>
+                <td>______________</td>
+                <td>__________________________________</td>
+            </tr>
+            
+            <tr>
+                <td><strong>I</strong></td>
+                <td>Геометрия: углы, треугольники, равнобедренные и равные треугольники</td>
+                <td>14</td>
+                <td>______________</td>
+                <td>______________</td>
+                <td>__________________________________</td>
+            </tr>
+            
+            <tr>
+                <td><strong>J</strong></td>
+                <td>Геометрия: площади, окружность, многоугольники, составные фигуры</td>
+                <td>12</td>
+                <td>______________</td>
+                <td>______________</td>
+                <td>__________________________________</td>
+            </tr>
+            
+            <tr>
+                <td><strong>K</strong></td>
+                <td>Смешанный финальный блок в стиле 1 этапа</td>
+                <td>20</td>
+                <td>______________</td>
+                <td>______________</td>
+                <td>__________________________________</td>
+            </tr>
+            
+            </tbody>
+        </table>
+        <div class="note-box">
+            <p><strong>Практический совет.</strong> Не объясняй всё подряд. Сначала добейся, чтобы ученик сам сформулировал, в чём именно застрял: вычисление, модель, чертёж, выбор формулы или аккуратность.</p>
+        </div>
+    </section>
+    
+    <section class="answers-page page-break">
+        <h2>Приложение: краткий ключ для тьютора</h2>
+        <p>Эта страница нужна для быстрой проверки. Если файл печатается для ученика, ключ лучше убрать или закрыть.</p>
+        <table class="answer-table">
+            <thead>
+                <tr>
+                    <th style="width: 10%;">Код</th>
+                    <th style="width: 35%;">Краткий ответ</th>
+                    <th>Блок</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>A1</strong></td><td>19/7</td><td>A. Арифметика: дроби, знаки, порядок действий</td></tr><tr><td><strong>A2</strong></td><td>1 1/4</td><td>A. Арифметика: дроби, знаки, порядок действий</td></tr><tr><td><strong>A3</strong></td><td>3/11</td><td>A. Арифметика: дроби, знаки, порядок действий</td></tr><tr><td><strong>A4</strong></td><td>равны</td><td>A. Арифметика: дроби, знаки, порядок действий</td></tr><tr><td><strong>A5</strong></td><td>-8</td><td>A. Арифметика: дроби, знаки, порядок действий</td></tr><tr><td><strong>A6</strong></td><td>1</td><td>A. Арифметика: дроби, знаки, порядок действий</td></tr><tr><td><strong>B1</strong></td><td>782</td><td>B. Проценты, отношения, пропорции</td></tr><tr><td><strong>B2</strong></td><td>80</td><td>B. Проценты, отношения, пропорции</td></tr><tr><td><strong>B3</strong></td><td>42, 63, 105</td><td>B. Проценты, отношения, пропорции</td></tr><tr><td><strong>B4</strong></td><td>21 мальчик, 24 девочки</td><td>B. Проценты, отношения, пропорции</td></tr><tr><td><strong>B5</strong></td><td>на 10%</td><td>B. Проценты, отношения, пропорции</td></tr><tr><td><strong>B6</strong></td><td>250 г</td><td>B. Проценты, отношения, пропорции</td></tr><tr><td><strong>C1</strong></td><td>462 и 1001</td><td>C. Делимость, простые числа, НОД, НОК, остатки</td></tr><tr><td><strong>C2</strong></td><td>2^3 · 3^2 · 5</td><td>C. Делимость, простые числа, НОД, НОК, остатки</td></tr><tr><td><strong>C3</strong></td><td>НОД = 42, НОК = 252</td><td>C. Делимость, простые числа, НОД, НОК, остатки</td></tr><tr><td><strong>C4</strong></td><td>15</td><td>C. Делимость, простые числа, НОД, НОК, остатки</td></tr><tr><td><strong>C5</strong></td><td>5</td><td>C. Делимость, простые числа, НОД, НОК, остатки</td></tr><tr><td><strong>C6</strong></td><td>72 секунды</td><td>C. Делимость, простые числа, НОД, НОК, остатки</td></tr><tr><td><strong>C7</strong></td><td>q = 28, r = 11</td><td>C. Делимость, простые числа, НОД, НОК, остатки</td></tr><tr><td><strong>D1</strong></td><td>4ab</td><td>D. Алгебраические выражения и тождества</td></tr><tr><td><strong>D2</strong></td><td>1</td><td>D. Алгебраические выражения и тождества</td></tr><tr><td><strong>D3</strong></td><td>2</td><td>D. Алгебраические выражения и тождества</td></tr><tr><td><strong>D4</strong></td><td>(x - 9)(x + 9)</td><td>D. Алгебраические выражения и тождества</td></tr><tr><td><strong>D5</strong></td><td>равны</td><td>D. Алгебраические выражения и тождества</td></tr><tr><td><strong>D6</strong></td><td>8</td><td>D. Алгебраические выражения и тождества</td></tr><tr><td><strong>D7</strong></td><td>0.04</td><td>D. Алгебраические выражения и тождества</td></tr><tr><td><strong>E1</strong></td><td>x = 12</td><td>E. Линейные уравнения, неравенства, системы</td></tr><tr><td><strong>E2</strong></td><td>x = 19/3</td><td>E. Линейные уравнения, неравенства, системы</td></tr><tr><td><strong>E3</strong></td><td>x &lt; -3</td><td>E. Линейные уравнения, неравенства, системы</td></tr><tr><td><strong>E4</strong></td><td>x ≤ 8</td><td>E. Линейные уравнения, неравенства, системы</td></tr><tr><td><strong>E5</strong></td><td>x = 3, y = 2</td><td>E. Линейные уравнения, неравенства, системы</td></tr><tr><td><strong>E6</strong></td><td>x = 1 или x = 7</td><td>E. Линейные уравнения, неравенства, системы</td></tr><tr><td><strong>F1</strong></td><td>y = 2x + 1</td><td>F. Координаты, прямые, графики линейной функции</td></tr><tr><td><strong>F2</strong></td><td>y = -3x + 7</td><td>F. Координаты, прямые, графики линейной функции</td></tr><tr><td><strong>F3</strong></td><td>y = -2x</td><td>F. Координаты, прямые, графики линейной функции</td></tr><tr><td><strong>F4</strong></td><td>(2, 7)</td><td>F. Координаты, прямые, графики линейной функции</td></tr><tr><td><strong>F5</strong></td><td>да, параллельны</td><td>F. Координаты, прямые, графики линейной функции</td></tr><tr><td><strong>F6</strong></td><td>k = 2</td><td>F. Координаты, прямые, графики линейной функции</td></tr><tr><td><strong>F7</strong></td><td>k = -1/2</td><td>F. Координаты, прямые, графики линейной функции</td></tr><tr><td><strong>G1</strong></td><td>72 км/ч</td><td>G. Текстовые задачи: скорость, средняя скорость, совместная работа</td></tr><tr><td><strong>G2</strong></td><td>12 км/ч</td><td>G. Текстовые задачи: скорость, средняя скорость, совместная работа</td></tr><tr><td><strong>G3</strong></td><td>2 ч 24 мин</td><td>G. Текстовые задачи: скорость, средняя скорость, совместная работа</td></tr><tr><td><strong>G4</strong></td><td>5/8</td><td>G. Текстовые задачи: скорость, средняя скорость, совместная работа</td></tr><tr><td><strong>G5</strong></td><td>54 км/ч</td><td>G. Текстовые задачи: скорость, средняя скорость, совместная работа</td></tr><tr><td><strong>G6</strong></td><td>через 2 ч 20 мин</td><td>G. Текстовые задачи: скорость, средняя скорость, совместная работа</td></tr><tr><td><strong>H1</strong></td><td>24</td><td>H. Комбинаторика, вероятность, диаграммы Венна, статистика</td></tr><tr><td><strong>H2</strong></td><td>9000</td><td>H. Комбинаторика, вероятность, диаграммы Венна, статистика</td></tr><tr><td><strong>H3</strong></td><td>1/3</td><td>H. Комбинаторика, вероятность, диаграммы Венна, статистика</td></tr><tr><td><strong>H4</strong></td><td>26 и 8</td><td>H. Комбинаторика, вероятность, диаграммы Венна, статистика</td></tr><tr><td><strong>H5</strong></td><td>7.4, 7, 7</td><td>H. Комбинаторика, вероятность, диаграммы Венна, статистика</td></tr><tr><td><strong>H6</strong></td><td>Q1 = 4.5, Q3 = 11</td><td>H. Комбинаторика, вероятность, диаграммы Венна, статистика</td></tr><tr><td><strong>I1</strong></td><td>40°, 60°, 80°</td><td>I. Геометрия: углы, треугольники, равнобедренные и равные треугольники</td></tr><tr><td><strong>I2</strong></td><td>по 72°</td><td>I. Геометрия: углы, треугольники, равнобедренные и равные треугольники</td></tr><tr><td><strong>I3</strong></td><td>58° и 122°</td><td>I. Геометрия: углы, треугольники, равнобедренные и равные треугольники</td></tr><tr><td><strong>I4</strong></td><td>78°</td><td>I. Геометрия: углы, треугольники, равнобедренные и равные треугольники</td></tr><tr><td><strong>I5</strong></td><td>да, по стороне-углу-стороне</td><td>I. Геометрия: углы, треугольники, равнобедренные и равные треугольники</td></tr><tr><td><strong>I6</strong></td><td>54°</td><td>I. Геометрия: углы, треугольники, равнобедренные и равные треугольники</td></tr><tr><td><strong>I7</strong></td><td>120°</td><td>I. Геометрия: углы, треугольники, равнобедренные и равные треугольники</td></tr><tr><td><strong>J1</strong></td><td>68</td><td>J. Геометрия: площади, окружность, многоугольники, составные фигуры</td></tr><tr><td><strong>J2</strong></td><td>54</td><td>J. Геометрия: площади, окружность, многоугольники, составные фигуры</td></tr><tr><td><strong>J3</strong></td><td>36π</td><td>J. Геометрия: площади, окружность, многоугольники, составные фигуры</td></tr><tr><td><strong>J4</strong></td><td>1080°</td><td>J. Геометрия: площади, окружность, многоугольники, составные фигуры</td></tr><tr><td><strong>J5</strong></td><td>45</td><td>J. Геометрия: площади, окружность, многоугольники, составные фигуры</td></tr><tr><td><strong>J6</strong></td><td>42 г</td><td>J. Геометрия: площади, окружность, многоугольники, составные фигуры</td></tr><tr><td><strong>K1</strong></td><td>43/15</td><td>K. Смешанный финальный блок в стиле 1 этапа</td></tr><tr><td><strong>K2</strong></td><td>x ≤ 17/4</td><td>K. Смешанный финальный блок в стиле 1 этапа</td></tr><tr><td><strong>K3</strong></td><td>132</td><td>K. Смешанный финальный блок в стиле 1 этапа</td></tr><tr><td><strong>K4</strong></td><td>7 и 10; площадь 70</td><td>K. Смешанный финальный блок в стиле 1 этапа</td></tr><tr><td><strong>K5</strong></td><td>24, 60, 84</td><td>K. Смешанный финальный блок в стиле 1 этапа</td></tr><tr><td><strong>K6</strong></td><td>5 ч 20 мин</td><td>K. Смешанный финальный блок в стиле 1 этапа</td></tr><tr><td><strong>K7</strong></td><td>35</td><td>K. Смешанный финальный блок в стиле 1 этапа</td></tr><tr><td><strong>K8</strong></td><td>y = -x/3 - 1/3</td><td>K. Смешанный финальный блок в стиле 1 этапа</td></tr><tr><td><strong>K9</strong></td><td>48</td><td>K. Смешанный финальный блок в стиле 1 этапа</td></tr><tr><td><strong>K10</strong></td><td>56</td><td>K. Смешанный финальный блок в стиле 1 этапа</td></tr>
+            </tbody>
+        </table>
+    </section>
+    
+</body>
+</html>

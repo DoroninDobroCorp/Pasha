@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eldoria: руны и первое знакомство с машинным обучением</title>
+    <style>
+        :root {
+            --bg: #eef4fb;
+            --paper: #ffffff;
+            --ink: #1f2d3d;
+            --muted: #5b6b7e;
+            --line: #d8e3f0;
+            --brand: #3b82f6;
+            --brand-dark: #1d4ed8;
+            --violet: #7c3aed;
+            --green: #059669;
+            --gold: #d97706;
+            --red: #dc2626;
+            --soft-blue: #eff6ff;
+            --soft-violet: #f5f3ff;
+            --soft-green: #ecfdf5;
+            --soft-gold: #fffbeb;
+            --soft-red: #fef2f2;
+            --shadow: 0 18px 50px rgba(20, 40, 80, 0.12);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #e8f1fb 0%, #f5f0ff 100%);
+            color: var(--ink);
+            line-height: 1.7;
+            padding: 22px 14px;
+        }
+
+        .page {
+            max-width: 980px;
+            margin: 0 auto;
+            background: var(--paper);
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .hero {
+            background: radial-gradient(circle at top left, rgba(255,255,255,0.18), transparent 35%),
+                        linear-gradient(135deg, #13293d 0%, #1d4ed8 52%, #7c3aed 100%);
+            color: #fff;
+            padding: 42px 28px 34px;
+            position: relative;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #93c5fd, #fde68a, #c4b5fd);
+        }
+
+        .eyebrow {
+            display: inline-block;
+            margin-bottom: 14px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.14);
+            border: 1px solid rgba(255,255,255,0.22);
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            line-height: 1.15;
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            max-width: 760px;
+            color: rgba(255,255,255,0.92);
+            font-size: 1.03rem;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 22px;
+        }
+
+        .hero-card {
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 16px;
+            padding: 14px 16px;
+        }
+
+        .hero-card strong {
+            display: block;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+
+        .content {
+            padding: 30px 24px 36px;
+        }
+
+        .quick-note,
+        .callout,
+        .mist,
+        .success,
+        .warning {
+            border-radius: 16px;
+            padding: 18px 20px;
+            margin-bottom: 18px;
+            border: 1px solid var(--line);
+        }
+
+        .quick-note {
+            background: linear-gradient(135deg, #f8fbff, #f6f4ff);
+        }
+
+        .phase-banner {
+            margin: 24px 0 18px;
+            padding: 18px 20px;
+            border-radius: 18px;
+            border: 2px dashed #7c3aed;
+            background: linear-gradient(135deg, #f5f3ff, #eef2ff);
+            box-shadow: inset 0 0 0 1px rgba(124, 58, 237, 0.08);
+        }
+
+        .phase-kicker {
+            display: inline-block;
+            margin-bottom: 8px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: #ede9fe;
+            color: #6d28d9;
+            font-size: 0.76rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .callout {
+            background: var(--soft-blue);
+            border-left: 5px solid var(--brand);
+            position: relative;
+        }
+
+        .mist {
+            background: var(--soft-violet);
+            border-left: 5px solid var(--violet);
+            position: relative;
+        }
+
+        .success {
+            background: var(--soft-green);
+            border-left: 5px solid var(--green);
+            position: relative;
+        }
+
+        .warning {
+            background: var(--soft-gold);
+            border-left: 5px solid var(--gold);
+            position: relative;
+        }
+
+        .box-tag {
+            display: inline-block;
+            margin-bottom: 10px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .callout > .box-tag {
+            background: #bfdbfe;
+            color: #1e3a8a;
+        }
+
+        .mist > .box-tag {
+            background: #ddd6fe;
+            color: #4c1d95;
+        }
+
+        .success > .box-tag {
+            background: #bbf7d0;
+            color: #14532d;
+        }
+
+        .warning > .box-tag {
+            background: #fde68a;
+            color: #78350f;
+        }
+
+        h2 {
+            margin-top: 28px;
+            margin-bottom: 16px;
+            font-size: 1.65rem;
+            color: #173b6c;
+            padding-left: 14px;
+            border-left: 5px solid var(--brand);
+            scroll-margin-top: 18px;
+        }
+
+        h3 {
+            margin-top: 18px;
+            margin-bottom: 10px;
+            font-size: 1.18rem;
+            color: #24456c;
+        }
+
+        h4 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.03rem;
+            color: #24456c;
+        }
+
+        section.quick-note > h2 {
+            margin-top: 0;
+            padding-left: 0;
+            border-left: none;
+            font-size: 1.38rem;
+        }
+
+        p + p,
+        ul,
+        ol,
+        table,
+        pre,
+        .grid,
+        .quiz,
+        .checklist,
+        .steps,
+        .compare-table,
+        .table-scroll {
+            margin-top: 14px;
+        }
+
+        p { margin-bottom: 10px; }
+        ul, ol { padding-left: 22px; }
+        li { margin-bottom: 8px; }
+        strong { color: #16283e; }
+        code {
+            font-family: Consolas, 'Courier New', monospace;
+            background: #edf2f7;
+            border-radius: 6px;
+            padding: 2px 6px;
+            font-size: 0.95em;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .mini-card {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 16px 18px;
+            box-shadow: 0 8px 18px rgba(30, 60, 120, 0.05);
+        }
+
+        .mini-card .label {
+            display: inline-block;
+            margin-bottom: 8px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .label-blue { background: #dbeafe; color: #1d4ed8; }
+        .label-green { background: #dcfce7; color: #15803d; }
+        .label-violet { background: #ede9fe; color: #6d28d9; }
+        .label-gold { background: #fef3c7; color: #b45309; }
+
+        .table-scroll {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            background: linear-gradient(180deg, #ffffff, #f8fbff);
+        }
+
+        .table-scroll table {
+            margin-top: 0;
+            min-width: 640px;
+            border: none;
+            border-radius: 0;
+        }
+
+        .table-scroll.table-scroll-compact table {
+            min-width: 360px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow: hidden;
+            border-radius: 14px;
+            border: 1px solid var(--line);
+            background: #fff;
+        }
+
+        th, td {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--line);
+            vertical-align: top;
+            text-align: left;
+        }
+
+        th {
+            background: #eaf2ff;
+            color: #173b6c;
+            font-weight: 700;
+        }
+
+        caption {
+            caption-side: top;
+            text-align: left;
+            padding: 12px 14px;
+            font-weight: 700;
+            color: #24456c;
+            background: #f8fbff;
+            border-bottom: 1px solid var(--line);
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        .compare-table td:first-child,
+        .compare-table th:first-child {
+            width: 26%;
+        }
+
+        .runes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .rune {
+            min-width: 62px;
+            text-align: center;
+            padding: 10px 12px;
+            border-radius: 14px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            white-space: nowrap;
+            color: #173b6c;
+            background: linear-gradient(135deg, #eff6ff, #eef2ff);
+            border: 1px solid #cfe0ff;
+        }
+
+        .formula-box {
+            background: #111827;
+            color: #f9fafb;
+            border-radius: 18px;
+            padding: 18px 20px;
+            margin-top: 14px;
+            overflow-x: auto;
+        }
+
+        .formula-box .big {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #fde68a;
+        }
+
+        pre {
+            background: #0f172a;
+            color: #e2e8f0;
+            border-radius: 18px;
+            padding: 18px;
+            overflow-x: auto;
+            font-size: 0.93rem;
+            line-height: 1.6;
+            border: 1px solid #1e293b;
+        }
+
+        .code-real {
+            background: linear-gradient(180deg, #0b1220, #111827);
+            border-color: #243244;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+        }
+
+        .code-real code {
+            display: block;
+            background: transparent;
+            padding: 0;
+            color: inherit;
+            font-size: inherit;
+            white-space: pre;
+        }
+
+        .code-real .tok-key { color: #93c5fd; font-weight: 700; }
+        .code-real .tok-fn { color: #f9a8d4; }
+        .code-real .tok-str { color: #fcd34d; }
+        .code-real .tok-com { color: #94a3b8; font-style: italic; }
+        .code-real .tok-num { color: #86efac; }
+        .code-real .tok-op { color: #cbd5e1; }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .step {
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid var(--line);
+            background: #fbfdff;
+        }
+
+        .step-wide {
+            grid-column: 1 / -1;
+        }
+
+        .step-final {
+            grid-column: 1 / -1;
+            border: 2px solid #f59e0b;
+            background: linear-gradient(135deg, #fff7ed, #eff6ff);
+            box-shadow: 0 14px 28px rgba(245, 158, 11, 0.14);
+        }
+
+        .step-final h3 {
+            margin-top: 0;
+        }
+
+        .step-final .step-number {
+            background: linear-gradient(135deg, #f59e0b, #2563eb);
+        }
+
+        .path-list {
+            margin-top: 14px;
+            padding: 14px 18px 14px 34px;
+            border-radius: 14px;
+            border: 1px dashed #c7dafd;
+            background: rgba(255, 255, 255, 0.92);
+        }
+
+        .path-list li {
+            margin-bottom: 10px;
+        }
+
+        .step-number {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: #fff;
+            background: linear-gradient(135deg, var(--brand), var(--violet));
+            margin-bottom: 10px;
+        }
+
+        .tree-demo,
+        .split-demo {
+            margin-top: 16px;
+            padding: 18px;
+            border-radius: 18px;
+            border: 1px solid var(--line);
+            background: linear-gradient(180deg, #ffffff, #f7faff);
+        }
+
+        figure {
+            margin: 0;
+        }
+
+        figcaption {
+            margin-bottom: 12px;
+            font-size: 0.94rem;
+            color: var(--muted);
+        }
+
+        .tree-map {
+            margin: 14px 0 0;
+            padding: 16px 18px;
+            border-radius: 16px;
+            border: 1px solid #cfe0ff;
+            background: #fff;
+            color: #173b6c;
+            font-size: 0.97rem;
+            line-height: 1.7;
+            font-weight: 700;
+            white-space: pre-wrap;
+        }
+
+        .split-stack {
+            display: grid;
+            gap: 14px;
+            margin-top: 14px;
+        }
+
+        .split-card {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 14px;
+        }
+
+        .split-title {
+            font-weight: 800;
+            color: #24456c;
+            margin-bottom: 10px;
+        }
+
+        .split-files {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .split-file {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 14px;
+            border-radius: 14px;
+            border: 1px solid var(--line);
+            font-size: 0.95rem;
+        }
+
+        .split-file strong {
+            font-size: 1rem;
+        }
+
+        .split-file-train {
+            background: #eff6ff;
+            color: #1d4ed8;
+            border-color: #bfdbfe;
+        }
+
+        .split-file-test {
+            background: #fffbeb;
+            color: #b45309;
+            border-color: #fde68a;
+        }
+
+        .split-bar {
+            display: flex;
+            overflow: hidden;
+            border-radius: 999px;
+            border: 1px solid #d6e1f0;
+            min-height: 42px;
+        }
+
+        .split-segment {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 10px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.92rem;
+        }
+
+        .split-learn {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .split-valid {
+            background: #ede9fe;
+            color: #6d28d9;
+        }
+
+        .split-test {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .checklist {
+            background: #f8fbff;
+            border: 2px dashed #aac8ff;
+            border-radius: 18px;
+            padding: 18px 20px;
+        }
+
+        .checklist ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            margin-bottom: 12px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.72);
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-top: 3px;
+            accent-color: var(--brand-dark);
+            flex: 0 0 auto;
+        }
+
+        .checklist-item label {
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .quiz {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .quiz-card {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 16px 18px;
+        }
+
+        .quiz-answer {
+            margin-top: 12px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: #f8fbff;
+            border: 1px dashed #bfd4ff;
+        }
+
+        .quiz-answer summary {
+            cursor: pointer;
+            display: inline-block;
+            border-radius: 8px;
+            font-weight: 700;
+            color: var(--brand-dark);
+        }
+
+        .quiz-answer p {
+            margin-top: 10px;
+        }
+
+        .footer {
+            padding: 18px 24px 26px;
+            color: var(--muted);
+            font-size: 0.92rem;
+            text-align: center;
+            border-top: 1px solid var(--line);
+            background: #fbfcff;
+        }
+
+        .tiny {
+            font-size: 0.99rem;
+            line-height: 1.6;
+            color: #475569;
+        }
+
+        .toc {
+            background: linear-gradient(135deg, #eff6ff, #f8faff);
+        }
+
+        .toc-heading {
+            margin-top: 0;
+            margin-bottom: 8px;
+            padding-left: 0;
+            border-left: none;
+            font-size: 1.28rem;
+        }
+
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .jump-link,
+        .back-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 12px;
+            border: 1px solid #c7dafd;
+            background: rgba(255,255,255,0.82);
+            color: #173b6c;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .jump-link:hover,
+        .back-links a:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 18px rgba(29, 78, 216, 0.10);
+        }
+
+        .jump-link:focus-visible,
+        .back-links a:focus-visible,
+        .quiz-answer summary:focus-visible,
+        .checklist-item input[type="checkbox"]:focus-visible {
+            outline: 3px solid #7c3aed;
+            outline-offset: 3px;
+            box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.14);
+        }
+
+        .jump-link:focus-visible,
+        .back-links a:focus-visible {
+            transform: translateY(-1px);
+        }
+
+        .checklist-item input[type="checkbox"]:focus-visible + label {
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+        }
+
+        .back-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        @media (max-width: 760px) {
+            .toc-grid {
+                grid-template-columns: 1fr;
+            }
+            .back-links {
+                flex-direction: column;
+            }
+            .back-links a {
+                width: 100%;
+            }
+            .hero-grid,
+            .grid,
+            .steps,
+            .quiz {
+                grid-template-columns: 1fr;
+            }
+
+            .content { padding: 24px 16px 30px; }
+            .hero { padding: 34px 18px 28px; }
+            h2 { font-size: 1.4rem; }
+            .table-scroll table { min-width: 560px; }
+            .table-scroll.table-scroll-compact table { min-width: 320px; }
+        }
+
+        @media print {
+            body {
+                background: #fff;
+                padding: 0;
+                font-size: 11.5pt;
+            }
+
+            .page {
+                box-shadow: none;
+                border-radius: 0;
+            }
+
+            .hero {
+                background: #fff !important;
+                color: #111827 !important;
+                border-bottom: 2px solid #d1d5db;
+            }
+
+            .hero p,
+            .eyebrow,
+            .hero-card {
+                color: #111827 !important;
+                background: #fff !important;
+                border-color: #cbd5e1 !important;
+            }
+
+            .hero::after { display: none; }
+            .mini-card,
+            .step,
+            .quiz-card,
+            .phase-banner,
+            .callout,
+            .mist,
+            .success,
+            .warning,
+            .quick-note {
+                box-shadow: none;
+                page-break-inside: avoid;
+                background: #fff !important;
+                border-color: #94a3b8 !important;
+            }
+
+            .box-tag {
+                background: #fff !important;
+                color: #111827 !important;
+                border: 1px solid #94a3b8 !important;
+            }
+
+            .formula-box,
+            pre {
+                background: #f8fafc !important;
+                color: #111827 !important;
+                border: 1px solid #cbd5e1 !important;
+                box-shadow: none !important;
+            }
+
+            .formula-box .big {
+                color: #173b6c !important;
+            }
+
+            .formula-box .tiny {
+                color: #334155 !important;
+            }
+
+            pre {
+                white-space: pre-wrap;
+                word-break: break-word;
+            }
+
+            .code-real .tok-com {
+                color: #374151 !important;
+            }
+        }
+    </style>
+</head>
+<body id="top">
+    <div class="page">
+        <header class="hero">
+            <div class="eyebrow">Мягкий старт в ML</div>
+            <h1>🪄 Eldoria: руны и первое знакомство с машинным обучением</h1>
+            <p>
+                Это вводный и дружелюбный урок для ученика 8 класса: что вообще происходит в задаче,
+                зачем нужны <strong>train</strong> и <strong>test</strong>, как мыслить как программист и почему маленькое
+                пространство из <strong>243</strong> строк помогает анализу, но не отменяет идею модели.
+            </p>
+            <div class="hero-grid">
+                <div class="hero-card"><strong>Алфавит</strong>Только символы <code>F</code>, <code>W</code>, <code>E</code></div>
+                <div class="hero-card"><strong>Длина</strong>Каждая руна — строка из 5 символов</div>
+                <div class="hero-card"><strong>Цель</strong>Предсказать <code>spell = 0/1</code> с хорошей accuracy</div>
+            </div>
+        </header>
+
+        <main class="content">
+            <nav class="quick-note toc" id="contents" aria-labelledby="contents-title">
+                <h2 class="toc-heading" id="contents-title">Оглавление и быстрые переходы</h2>
+                <p>Урок длинный, поэтому можно сразу прыгнуть к нужному месту и потом вернуться сюда.</p>
+                <div class="toc-grid">
+                    <a class="jump-link" href="#task">Что за задача</a>
+                    <a class="jump-link" href="#accuracy">Что такое accuracy</a>
+                    <a class="jump-link" href="#route">Один рекомендуемый путь</a>
+                    <a class="jump-link" href="#features">Признаки</a>
+                    <a class="jump-link" href="#workflow">Практический workflow</a>
+                    <a class="jump-link" href="#practice">Мини-практика</a>
+                    <a class="jump-link" href="#second-pass-theory">🔁 243 и дерево</a>
+                    <a class="jump-link" href="#pseudocode">🔁 Схема и код</a>
+                    <a class="jump-link" href="#validation">🔁 Валидация и ошибки</a>
+                    <a class="jump-link" href="#checklist">Чеклист</a>
+                    <a class="jump-link" href="#next">🔁 Куда копать дальше</a>
+                    <a class="jump-link" href="#quiz">🔁 Самопроверка</a>
+                </div>
+            </nav>
+            <section class="quick-note">
+                <h2>Главная идея урока</h2>
+                <p>Здесь машинное обучение — это не магия и не "чёрный ящик". Это попытка по примерам понять, какие последовательности похожи на <code>spell=1</code>, а какие — на <code>spell=0</code>.</p>
+                <div class="runes">
+                    <div class="rune">F W E F W</div>
+                    <div class="rune">E E W F F</div>
+                    <div class="rune">W F W E E</div>
+                </div>
+            </section>
+
+            <section class="quick-note">
+                <h2>После урока ты сможешь</h2>
+                <ul>
+                    <li>объяснить, что в этой задаче означают <code>train</code>, <code>test</code>, признаки и <code>spell</code>;</li>
+                    <li>понять, зачем переводить руну в понятные столбцы <code>0/1</code> по позициям;</li>
+                    <li>собрать базовый путь: признаки → модель → валидация → финальный файл с ответами.</li>
+                </ul>
+            </section>
+
+            <section class="quick-note">
+                <h2>Как проходить урок впервые</h2>
+                <p>Пройди только цепочку <strong>«Что за задача» → «Что такое accuracy» → «Один рекомендуемый путь» → «Признаки» → «Workflow» → «Мини-практика»</strong>, а потом можно спокойно сделать паузу. Блоки второго прохода, код, чеклист перед отправкой, «куда копать дальше» и самопроверку можно читать уже потом.</p>
+                <p><strong>Пять опорных слов первого прохода:</strong> <code>train</code>, <code>test</code>, <code>spell</code>, <code>признаки</code>, <code>validation</code>. Всё остальное в уроке — полезные уточнения, но не то, что нужно удержать в голове сразу.</p>
+            </section>
+
+            <section>
+            <h2 id="task">Что это вообще за задача?</h2>
+            <p>Представь, что у нас есть много древних рунных записей. Каждая запись — это последовательность из 5 символов: <code>F</code>, <code>W</code>, <code>E</code>. Для части записей уже известно, срабатывает ли заклинание: <code>spell = 1</code> или не срабатывает: <code>spell = 0</code>.</p>
+            <div class="callout" role="note" aria-label="Идея"><p class="box-tag">Идея</p>
+                <p><strong>По-человечески:</strong> нам показывают примеры с правильными ответами, а потом просят научиться угадывать ответ для новых примеров.</p>
+                <p><strong>Это называется классификация по примерам.</strong> Есть два класса: 0 и 1.</p>
+            </div>
+            <div class="success" role="note" aria-label="Итог"><p class="box-tag">Итог</p>
+                <p><strong>Если говорить языком Элдории:</strong> <code>train</code> — это архив уже проверенных рун из башни артефакторов, <code>test</code> — новые руны из руин без подписи, а модель — это правило, которое помогает совету магов быстро понять, какие руны похожи на настоящие заклинания.</p>
+            </div>
+
+            <div class="callout" role="note" aria-label="Идея"><p class="box-tag">Идея</p>
+                <p><strong>Короткий словарь:</strong> <strong>train</strong> — таблица с правильными ответами; <strong>test</strong> — новые строки без ответов; <strong>столбец с ответом</strong> — это <code>spell</code>; <strong>признаки</strong> — то, на что смотрит модель, например символы по позициям; <strong>validation</strong> — маленькая часть <code>train</code> для честной проверки; <strong>модель</strong> — правило, которое по признакам предсказывает <code>0</code> или <code>1</code>.</p>
+                <p class="tiny">Если позже встретишь слова <code>target</code>, <code>label</code> или <code>features</code>, знай: это просто английские названия тех же идей.</p>
+            </div>
+            <div class="quick-note">
+                <p><strong>Откуда взять файлы:</strong> у задачи обычно есть три CSV-файла — <code>train_runes.csv</code>, <code>test_runes.csv</code> и <code>example.csv</code>. Их нужно скачать со страницы задания и положить рядом с ноутбуком или <code>.py</code>-файлом.</p>
+            </div>
+            <div class="grid">
+                <div class="mini-card">
+                    <h3><code>train_runes.csv</code></h3>
+                    <div class="table-scroll table-scroll-compact">
+                        <table>
+                            <caption>Мини-пример обучающей таблицы: здесь есть и руна, и правильный ответ.</caption>
+                            <thead>
+                                <tr><th scope="col">rune</th><th scope="col">spell</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>FWFEF</code></td><td>1</td></tr>
+                                <tr><td><code>EFEEE</code></td><td>0</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="mini-card">
+                    <h3><code>test_runes.csv</code></h3>
+                    <div class="table-scroll table-scroll-compact">
+                        <table>
+                            <caption>Мини-пример тестовой таблицы: здесь есть руна, но нет правильного ответа.</caption>
+                            <thead>
+                                <tr><th scope="col">rune</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>WEEFF</code></td></tr>
+                                <tr><td><code>FWEWF</code></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            </section>
+            <section>
+            <h2 id="accuracy">Что значит accuracy?</h2>
+            <p><strong>Accuracy</strong> — это доля правильных ответов.</p>
+            <div class="formula-box">
+                <div class="big">accuracy = число верных предсказаний / общее число предсказаний</div>
+                <p class="tiny" style="color:#cbd5e1; margin-top:10px;">Например: если из 100 строк ты угадал 87, то accuracy = 0.87 = 87%.</p>
+            </div>
+            <div class="table-scroll table-scroll-compact">
+                <table>
+                    <caption>Мини-пример: считаем accuracy на четырёх строках.</caption>
+                    <thead>
+                        <tr><th scope="col">Руна</th><th scope="col">Правильный <code>spell</code></th><th scope="col">Ответ модели</th><th scope="col">Итог</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>FWFEF</code></td><td>1</td><td>1</td><td>верно</td></tr>
+                        <tr><td><code>EFEEE</code></td><td>0</td><td>0</td><td>верно</td></tr>
+                        <tr><td><code>WEEFF</code></td><td>1</td><td>0</td><td>ошибка</td></tr>
+                        <tr><td><code>FWEWF</code></td><td>1</td><td>1</td><td>верно</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="tiny"><strong>Подсчёт по шагам:</strong> здесь 4 строки, из них 3 угаданы верно. Значит <code>accuracy = 3 / 4 = 0.75 = 75%</code>.</p>
+            <div class="callout" role="note" aria-label="Идея"><p class="box-tag">Идея</p>
+                <p><strong>Как понять, хороший ли у тебя результат:</strong> сначала посмотри на <strong>baseline</strong> — что даст самая ленивая стратегия. Если классы в <code>train</code> примерно поровну, случайное угадывание даст около <code>50%</code>. А если один класс сильно доминирует, то даже ответ «везде самый частый класс» уже может дать большой процент.</p>
+                <p class="tiny"><strong>Простая калибровка:</strong> если baseline около <code>50%</code>, то <code>0.62</code> уже лучше случайности, а <code>0.80</code> выглядит сильно. Но если baseline уже <code>0.90</code>, то <code>0.62</code> — плохой результат. Значит первый вопрос новичка такой: <strong>я уже обогнал простейшую стратегию или ещё нет?</strong></p>
+            </div>
+            <div class="mist" role="note" aria-label="Проверка"><p class="box-tag">Проверка</p>
+                <p><strong>Главная оговорка:</strong> высокий <code>accuracy</code> сам по себе ещё не гарантирует, что модель правда поняла задачу. Если один ответ встречается намного чаще другого, красивый процент может обманывать.</p>
+            </div>
+            <details class="quiz-answer">
+                <summary>Если хочешь понять маленькую тонкость: когда accuracy может обмануть</summary>
+                <div class="mist" role="note" aria-label="Проверка"><p class="box-tag">Проверка</p>
+                    <p><strong>Ловушка accuracy:</strong> если один класс сильно доминирует, модель может почти всё время отвечать только им и всё равно показать высокую accuracy. Поэтому хороший процент ещё не гарантирует, что модель действительно умная.</p>
+                    <p class="tiny">Мини-пример: если 90 рун из 100 имеют <code>spell = 0</code>, то даже ленивый ответ «везде 0» даст <code>90%</code> accuracy, хотя модель почти ничего не поняла. Но именно в этом соревновании главный способ проверки — <code>accuracy</code>, так что он правда важен; просто полезно ещё одним взглядом проверить, сколько классов <code>0</code> и <code>1</code> в <code>train</code>, чтобы красивый процент не ввёл в заблуждение.</p>
+                </div>
+            </details>
+            <div class="warning" role="note" aria-label="Важно"><p class="box-tag">Важно</p>
+                <p><strong>Важно:</strong> в этой задаче не нужно предсказывать "насколько сильно" сработает руна. Нужен только один из двух классов: <code>0</code> или <code>1</code>.</p>
+            </div>
+            <div class="success" role="note" aria-label="Итог"><p class="box-tag">Итог</p>
+                <p><strong>Весь маршрут задачи за 30 секунд:</strong> пусть в <code>train</code> мы увидели <code>WFFEE → 1</code> и <code>FEWFF → 0</code>. Придумываем простое правило: если первый символ <code>W</code>, ставим <code>1</code>, иначе <code>0</code>.</p>
+                <p>Тогда для новой строки <code>WEEFF</code> правило предскажет <code>1</code>. Если на двух строках из маленькой validation-проверки мы угадали только одну, получим <code>1/2 = 50%</code>. А если потом такая же руна лежит в <code>test</code>, мы просто записываем <code>spell = 1</code> в <code>answers.csv</code>. Это и есть задача в миниатюре: <strong>примеры → правило/модель → честная проверка → финальный файл</strong>.</p>
+            </div>
+            <div class="callout" role="note" aria-label="Идея"><p class="box-tag">Идея</p>
+                <p><strong>Сделай прямо сейчас за 10 секунд:</strong> возьми руну <code>FWEWF</code> и подпиши <code>pos1</code>, <code>pos2</code>, <code>pos3</code>, <code>pos4</code>, <code>pos5</code>. Если получилось <code>F</code>, <code>W</code>, <code>E</code>, <code>W</code>, <code>F</code>, значит ты уже сделал первый маленький шаг из ML-задачи.</p>
+            </div>
+
+            <div class="quick-note">
+                <p><strong>Две идеи на второй проход:</strong> почему в задаче полезно помнить про <code>243</code> варианта и как не дать дереву зазубрить <code>train</code>. Они специально перенесены ниже, после стоп-точки первого прохода.</p>
+                <div class="back-links">
+                    <a href="#route">↓ Сразу к главному маршруту</a>
+                    <a href="#second-pass-theory">↓ Открыть отложенную теорию позже</a>
+                </div>
+            </div>
+
+            </section>
+            <section>
+            <h2 id="route">Один рекомендуемый путь</h2>
+            <div class="callout" role="note" aria-label="Идея"><p class="box-tag">Идея</p>
+                <p><strong>Для первого запуска бери только это:</strong> разбить руну на 5 позиций → сделать позиционные признаки <code>0/1</code> → обучить одно дерево решений → проверить accuracy на валидации → после выбора заново обучить модель на всём <code>train</code> → сделать финальные предсказания для <code>test</code>.</p>
+            </div>
+            <ol>
+                <li>Прочитать <code>train_runes.csv</code> и <code>test_runes.csv</code>, проверить столбцы и убедиться, что каждая руна имеет длину 5.</li>
+                <li>Отложить примерно <strong>20%</strong> строк из <code>train</code> на validation, а остальные <strong>80%</strong> оставить для обучения.</li>
+                <li>Разбить <code>rune</code> на <code>pos1...pos5</code> и превратить буквы в one-hot-признаки.</li>
+                <li>Обучить одно дерево решений. Для первого старта удобно взять <code>max_depth=4</code>.</li>
+                <li>Сравнить, как модель работает на обучающей части и на validation.</li>
+                <li>Посмотреть хотя бы на 2–3 ошибки и понять, что именно модель путает.</li>
+                <li>Если подход тебя устраивает, заново обучить его на всём <code>train</code> и сделать по одному предсказанию для каждой строки из <code>test</code>.</li>
+            </ol>
+            <p class="tiny"><strong>Что можно пробовать позже:</strong> ручные правила, подсчёт всех 243 строк и другие модели. Но для первого понимания задачи это не нужно.</p>
+
+            </section>
+            <section>
+            <h2 id="features">Сначала думаем о признаках</h2>
+            <p>Прежде чем писать код, полезно решить, <strong>что именно компьютер будет замечать</strong> в руне. Для первого запуска здесь достаточно самой простой идеи: смотреть на символ на каждой из 5 позиций.</p>
+            <div class="mini-card">
+                <h3>Стартовые признаки</h3>
+                <ul>
+                    <li>что стоит на позиции 1, 2, 3, 4, 5;</li>
+                    <li>после one-hot каждая позиция превращается в три столбца <code>0/1</code>;</li>
+                    <li>этого уже хватает для первого понятного решения.</li>
+                </ul>
+            </div>
+            <div class="warning" role="note" aria-label="Важно"><p class="box-tag">Важно</p>
+                <p><strong>Важная техническая привычка:</strong> для этого урока самый безопасный и понятный старт — <code>one-hot encoding</code> или отдельные признаки по позициям. Если название <code>one-hot</code> пока звучит страшно, думай так: мы просто создаём понятные столбцы вида "на этой позиции стоит W" со значением <code>0</code> или <code>1</code>. Запись вроде <code>F=0, W=1, E=2</code> иногда тоже может сработать, особенно в отдельных экспериментах, но для новичка она менее прозрачна, а в некоторых моделях и правда внушает лишнюю мысль, будто между буквами есть порядок. Поэтому для первого решения one-hot здесь надёжнее как привычка.</p>
+                <p class="tiny"><strong>Почему это называется <code>one-hot</code>:</strong> на каждой позиции из трёх столбцов ровно <strong>один</strong> становится "горячим", то есть равным <code>1</code>, а остальные остаются <code>0</code>.</p>
+            </div>
+            <p class="tiny"><strong>Совет для первого прохода:</strong> не усложняй базовое решение раньше времени. Дополнительные признаки вроде количества <code>W</code> или повторяющихся соседей стоит пробовать уже после того, как базовая версия честно проверена на валидации.</p>
+            <div class="back-links">
+                <a href="#contents">↩ К оглавлению</a>
+                <a href="#workflow">↓ К workflow</a>
+            </div>
+
+            </section>
+            <section>
+            <h2 id="workflow">Практический workflow программиста</h2>
+            <div class="callout" role="note" aria-label="Идея"><p class="box-tag">Идея</p>
+                <p><strong>Теперь идём по короткому маршруту:</strong> прочитать CSV → разложить руну на 5 позиций → сделать one-hot-признаки → обучить одно дерево решений → честно проверить его на валидации.</p>
+            </div>
+            <details class="quiz-answer">
+                <summary>Если понадобится запускать код: где это проще всего сделать</summary>
+                <p class="tiny">Самый простой вариант — <code>Google Colab</code> в браузере. Ещё подойдут <code>Jupyter Notebook</code> или обычный локальный Python.</p>
+                <p class="tiny"><strong>Что уже полезно уметь для code-части:</strong> запускать Python или Colab, читать CSV через <code>pandas</code> и понимать, что такое строки и столбцы таблицы. Если этого пока нет, не страшно: сам урок можно пройти без кода, а к спойлерам вернуться позже.</p>
+                <p class="tiny">Если запускаешь локально, обычно хватает команды <code>python -m pip install "pandas&gt;=2.0" "scikit-learn&gt;=1.3"</code>. Для этого урока лучше брать достаточно свежие версии: так меньше шансов споткнуться о старое поведение библиотек.</p>
+            </details>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Прочитать CSV</h3>
+                    <p>Открыть <code>train_runes.csv</code> и <code>test_runes.csv</code>, а потом быстро посмотреть первые строки и названия столбцов.</p>
+                    <p class="tiny"><strong>Сразу полезная проверка:</strong> посмотри, сколько в <code>train</code> ответов <code>spell = 0</code> и сколько <code>spell = 1</code>. Это помогает не переоценить красивый <code>accuracy</code>, если один класс встречается намного чаще.</p>
+                    <p class="tiny"><strong>Сделай baseline за полминуты:</strong> найди, какого ответа в <code>train</code> больше. Если, например, <code>70</code> строк из <code>100</code> имеют <code>spell = 0</code>, то стратегия «везде 0» уже даёт <code>70%</code>. Значит твоя модель должна обогнать этот процент хотя бы на validation.</p>
+                    <div class="mini-card" style="margin-top: 14px;">
+                        <h4>Мини-debug до модели</h4>
+                        <ul>
+                            <li>в <code>train</code> есть столбцы <code>rune</code> и <code>spell</code>;</li>
+                            <li>в <code>test</code> есть столбец <code>rune</code>;</li>
+                            <li>каждая строка <code>rune</code> имеет длину ровно <code>5</code>;</li>
+                            <li>в рунах встречаются только символы <code>F</code>, <code>W</code>, <code>E</code> и нет пустых значений;</li>
+                            <li><code>example.csv</code> открыт рядом, и ты понимаешь, какой формат нужен для <code>answers.csv</code>.</li>
+                        </ul>
+                        <p class="tiny"><strong>Почему это важно:</strong> очень часто проблема не в модели, а в формате таблицы. Такой быстрый sanity-check экономит много времени.</p>
+                    </div>
+                </div>
+                <div class="step step-wide">
+                    <div class="step-number">2</div>
+                    <h3>Спокойно превратить буквы в признаки</h3>
+                    <p>Безопасный старт: разложить руну на 5 позиций и для каждой позиции сделать понятные признаки. <code>one-hot encoding</code> — это разворот буквы в несколько столбцов <code>0/1</code>: например, «на 1-й позиции стоит W?» → <code>1</code> или <code>0</code>.</p>
+                    <div class="grid" style="margin-top: 12px;">
+                        <div class="mini-card">
+                            <h3>До: одна руна</h3>
+                            <div class="table-scroll table-scroll-compact">
+                                <table>
+                                    <caption>Одна руна, разложенная по пяти позициям перед кодированием.</caption>
+                                    <thead>
+                                        <tr><th scope="col">pos1</th><th scope="col">pos2</th><th scope="col">pos3</th><th scope="col">pos4</th><th scope="col">pos5</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>W</td><td>E</td><td>E</td><td>F</td><td>F</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="tiny">Слева просто буквы по позициям.</p>
+                        </div>
+                        <div class="mini-card">
+                            <h3>После one-hot: как это увидит pandas</h3>
+                            <div class="table-scroll table-scroll-compact">
+                                <table>
+                                    <caption>Та же руна после one-hot в виде одной широкой строки из 15 столбцов.</caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">pos1_F</th><th scope="col">pos1_W</th><th scope="col">pos1_E</th>
+                                            <th scope="col">pos2_F</th><th scope="col">pos2_W</th><th scope="col">pos2_E</th>
+                                            <th scope="col">pos3_F</th><th scope="col">pos3_W</th><th scope="col">pos3_E</th>
+                                            <th scope="col">pos4_F</th><th scope="col">pos4_W</th><th scope="col">pos4_E</th>
+                                            <th scope="col">pos5_F</th><th scope="col">pos5_W</th><th scope="col">pos5_E</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>0</td><td>1</td><td>0</td>
+                                            <td>0</td><td>0</td><td>1</td>
+                                            <td>0</td><td>0</td><td>1</td>
+                                            <td>1</td><td>0</td><td>0</td>
+                                            <td>1</td><td>0</td><td>0</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="tiny"><strong>Это и есть буквальная форма для модели:</strong> одна руна превращается в <strong>одну широкую строку</strong> из <strong>15 столбцов</strong>.</p>
+                            <details class="quiz-answer" style="margin-top: 10px;">
+                                <summary>Тот же самый one-hot в более человеческом, компактном виде</summary>
+                                <div class="table-scroll table-scroll-compact">
+                                    <table>
+                                        <caption>Тот же one-hot в компактном виде: по одной строке на позицию.</caption>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Позиция</th>
+                                                <th scope="col">Буква</th>
+                                                <th scope="col">_F</th>
+                                                <th scope="col">_W</th>
+                                                <th scope="col">_E</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">pos1</th><td>W</td><td>0</td><td>1</td><td>0</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">pos2</th><td>E</td><td>0</td><td>0</td><td>1</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">pos3</th><td>E</td><td>0</td><td>0</td><td>1</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">pos4</th><td>F</td><td>1</td><td>0</td><td>0</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">pos5</th><td>F</td><td>1</td><td>0</td><td>0</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Обучить простую модель</h3>
+                    <p>Начать с <strong>одного дерева решений</strong>. Его удобно читать как серию развилок с вопросами «да/нет».</p>
+                    <p class="tiny"><strong>Что делает <code>fit()</code> без магии:</strong> модель перебирает простые вопросы вроде «на первой позиции стоит <code>W</code>?» или «на третьей позиции стоит <code>E</code>?» и смотрит, какой вопрос лучше разделяет уже известные <code>0</code> и <code>1</code>. Из удачных вопросов потом собирается дерево.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Устроить честный пробный экзамен</h3>
+                    <p><strong>Валидация</strong> — это отложенная часть <code>train</code>, которую модель заранее не видела. На ней мы проверяем, не обманывает ли нас красивый результат на обучении.</p>
+                    <p class="tiny"><strong>Хороший старт без лишних мучений:</strong> отложить примерно <strong>20%</strong> строк на validation и оставить около <strong>80%</strong> на обучение. Для первого запуска этого достаточно.</p>
+                    <p class="tiny"><strong>Зачем сравнивать train и validation:</strong> если на учебной части всё почти идеально, а на validation заметно хуже, модель больше запоминает примеры, чем понимает правило. Если результаты ближе друг к другу, это более честный знак.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <h3>Разобрать ошибки</h3>
+                    <p>Посмотреть, какие строки модель путает. Часто именно там рождаются идеи для новых признаков или более удачного дерева.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <h3>После выбора — обучить заново на всём train</h3>
+                    <p>Валидация нужна для выбора хорошего подхода. Когда выбор сделан, обычно ту же идею заново обучают уже на всём доступном <code>train</code>, чтобы перед финалом модель увидела больше примеров.</p>
+                </div>
+                <div class="step step-final">
+                    <div class="step-number">7</div>
+                    <h3>Финальный шаг: сделать <code>answers.csv</code> и проверить его перед отправкой</h3>
+                    <p><strong>Это и есть итоговый артефакт задачи.</strong> Получи предсказания для <code>test_runes.csv</code>, запиши их точно по шаблону <code>example.csv</code> и перед отправкой быстро перепроверь: совпадают ли названия столбцов, порядок столбцов и количество строк.</p>
+                </div>
+            </div>
+            <figure class="split-demo" role="group" aria-label="Схема честной проверки: сначала организаторы уже дали два готовых файла — train_runes.csv с ответами и test_runes.csv без ответов. Затем внутри train примерно 80 процентов идут на обучение модели и около 20 процентов на validation. test остается только для финальных предсказаний.">
+                <figcaption><strong>Схема честной проверки:</strong> сначала отделяем validation внутри <code>train</code>, а <code>test</code> оставляем только для финала.</figcaption>
+                <p class="tiny">Смысл очень простой: <code>train</code> учит, <code>validation</code> честно проверяет, <code>test</code> ждёт финала и не подсказывает заранее.</p>
+                <div class="split-stack">
+                    <div class="split-card">
+                        <div class="split-title">Шаг 1. Организаторы уже дали два разных файла</div>
+                        <div class="split-files">
+                            <div class="split-file split-file-train">
+                                <strong>train_runes.csv</strong>
+                                <span>Есть <code>rune</code> и правильный ответ <code>spell</code>.</span>
+                            </div>
+                            <div class="split-file split-file-test">
+                                <strong>test_runes.csv</strong>
+                                <span>Есть <code>rune</code>, а <code>spell</code> надо предсказать.</span>
+                            </div>
+                        </div>
+                        <p class="tiny" style="margin-top: 10px;"><strong>Важно:</strong> размер этих файлов задаёт конкурс. Мы не выбираем пропорцию между <code>train</code> и <code>test</code>.</p>
+                    </div>
+                    <div class="split-card">
+                        <div class="split-title">Шаг 2. Внутри train делаем честную проверку</div>
+                        <div class="split-bar">
+                            <div class="split-segment split-learn" style="width:80%;">учим модель</div>
+                            <div class="split-segment split-valid" style="width:20%;">validation</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="tiny">Запомни маршрут: <strong>учимся на синем → проверяемся на фиолетовом → только потом предсказываем золотой test</strong>.</p>
+            </figure>
+
+            <div class="success" role="note" aria-label="Итог"><p class="box-tag">Итог</p>
+                <p><strong>Формат <code>answers.csv</code> без сюрпризов:</strong> открой <code>example.csv</code> и сделай свой файл по нему один в один. Меняй только столбец с предсказаниями.</p>
+                <p class="tiny"><strong>Главное правило:</strong> оставь ту же структуру, что и в <code>example.csv</code>: те же столбцы, тот же порядок и то же число строк.</p>
+                <p><strong>Очень важное уточнение:</strong> в таком конкурсе <code>example.csv</code> нужен не как «одна показательная строка», а как <strong>шаблон финальной отправки</strong>. Обычно в нём уже есть по одной строке на каждый объект из <code>test</code> и, если нужно, столбец <code>id</code>. Поэтому полезная быстрая проверка звучит так: <code>len(example.csv) = len(test_runes.csv)</code>. Если в <code>test</code> 500 строк, то и в <code>answers.csv</code> должно быть 500 строк с предсказаниями.</p>
+                <div class="table-scroll table-scroll-compact">
+                    <table>
+                        <caption>Мини-пример шаблона <code>example.csv</code>.</caption>
+                        <thead>
+                            <tr><th scope="col">id</th><th scope="col">spell</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>0</td><td>1</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="tiny">Если в твоём реальном <code>example.csv</code> нет столбца <code>id</code>, оставь только <code>spell</code>. Главное правило всё равно одно: копируй <strong>свой настоящий</strong> шаблон один в один и проверь, что строк столько же, сколько в <code>test</code>.</p>
+            </div>
+            <div class="quick-note" style="margin-top: 20px;">
+                <p><strong>Если это место уже понятно, значит каркас решения у тебя в голове есть:</strong> ты понимаешь, что такое <code>train</code> и <code>test</code>, зачем нужны признаки, почему есть validation и как собрать <code>answers.csv</code>. Ниже — короткое закрепление перед переходом ко второму проходу.</p>
+                <div class="back-links">
+                    <a href="#checklist">↓ Позже: к чеклисту перед отправкой</a>
+                    <a href="#practice">↓ А если хочешь закрепить — к мини-практике</a>
+                </div>
+            </div>
+
+            </section>
+            <section>
+            <h2 id="practice">Мини-практика перед кодом</h2>
+            <div class="callout" role="note" aria-label="Идея"><p class="box-tag">Идея</p>
+                <p><strong>Сделай три очень маленьких шага сам:</strong> сначала разложи руну по позициям, потом отметь one-hot-столбцы и после этого вручную примени простое правило. Код ниже будет ощущаться намного спокойнее.</p>
+            </div>
+            <div class="grid">
+                <div class="mini-card">
+                    <span class="label label-green">Сделай сам</span>
+                    <h3>Разложи руну на позиции</h3>
+                    <p>Возьми руну <code>FWEWF</code> и сам запиши, что стоит в <code>pos1</code>, <code>pos2</code>, <code>pos3</code>, <code>pos4</code>, <code>pos5</code>.</p>
+                    <details class="quiz-answer">
+                        <summary>Показать ответ</summary>
+                        <p><code>pos1=F</code>, <code>pos2=W</code>, <code>pos3=E</code>, <code>pos4=W</code>, <code>pos5=F</code>.</p>
+                    </details>
+                </div>
+                <div class="mini-card">
+                    <span class="label label-violet">Предскажи сам</span>
+                    <h3>Применим одно игрушечное правило</h3>
+                    <p>Пусть временное правило такое: если <code>pos1 = W</code>, предсказываем <code>spell = 1</code>, иначе <code>spell = 0</code>. Что получится для руны <code>WEEFF</code>?</p>
+                    <details class="quiz-answer">
+                        <summary>Показать ответ</summary>
+                        <p><code>spell = 1</code>, потому что первый символ — <code>W</code>. Правило игрушечное, но оно показывает, как из признака рождается прогноз.</p>
+                    </details>
+                </div>
+                <div class="mini-card">
+                    <span class="label label-blue">One-hot за минуту</span>
+                    <h3>Отметь одну единицу</h3>
+                    <p>Возьми ту же руну <code>FWEWF</code> и смотри только на <code>pos2</code>. Там стоит буква <code>W</code>. Какие значения должны получить столбцы <code>pos2_F</code>, <code>pos2_W</code> и <code>pos2_E</code>?</p>
+                    <div class="table-scroll table-scroll-compact">
+                        <table>
+                            <caption>Мини-задача на one-hot для второй позиции.</caption>
+                            <thead>
+                                <tr><th scope="col">pos2_F</th><th scope="col">pos2_W</th><th scope="col">pos2_E</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>?</td><td>?</td><td>?</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <details class="quiz-answer">
+                        <summary>Показать ответ</summary>
+                        <p><code>pos2_F = 0</code>, <code>pos2_W = 1</code>, <code>pos2_E = 0</code>. В one-hot на этой позиции единицу получает только столбец с настоящей буквой.</p>
+                    </details>
+                </div>
+            </div>
+            <div class="success" role="note" aria-label="Итог"><p class="box-tag">Итог</p>
+                <p><strong>Главная мысль:</strong> сначала ты формулируешь признаки и пробуешь один шаг руками. <strong>Код дальше не добавляет новую магию</strong> — он просто быстро повторяет эти же действия для всей таблицы.</p>
+            </div>
+            <div class="callout" role="note" aria-label="Идея"><p class="box-tag">Идея</p>
+                <p><strong>Мостик «руками → код»:</strong> в мини-практике ты уже сделал три вещи сам: разложил руну по позициям, поставил <code>0/1</code> в one-hot-столбцах и применил простое правило. Код ниже автоматизирует ровно эти же шаги, только сразу для всех строк в <code>train</code> и <code>test</code>.</p>
+            </div>
+            <div class="success" role="note" aria-label="Итог"><p class="box-tag">Итог</p>
+                <p><strong>Стоп-точка первого прохода:</strong> если до этого места всё понятно, уже отлично. Основной маршрут ты уже прошёл. Всё ниже — второй проход: схема, код, дополнительные пояснения, чеклист перед отправкой и самопроверка.</p>
+                <div class="back-links">
+                    <a href="#checklist">↓ Позже: к чеклисту перед отправкой</a>
+                    <a href="#contents">↩ К оглавлению</a>
+                </div>
+            </div>
+            </section>
+            <div class="phase-banner" aria-label="Начало второго прохода">
+                <p class="phase-kicker">Второй проход</p>
+                <p><strong>Ниже начинается необязательная часть урока.</strong> Если первый проход уже уложился в голове, здесь можно остановиться и вернуться позже. Всё дальше — углубление: почему полезно помнить про 243 варианта, как думать про дерево, как читать код, как разбирать ошибки и что изучать после первого решения.</p>
+            </div>
+            <section class="quick-note" id="second-pass-theory">
+                <h2>Две идеи, которые мы специально отложили</h2>
+                <h3>1. Почему здесь полезно помнить про 243 варианта</h3>
+                <p>У каждой руны <strong>5 позиций</strong>, а на каждой позиции может стоять один из <strong>3 символов</strong>. Поэтому всего возможны <code>3^5 = 243</code> строк.</p>
+                <div class="callout" role="note" aria-label="Идея"><p class="box-tag">Идея</p>
+                    <p><strong>Честный вопрос:</strong> если вариантов всего 243, можно ли вообще обойтись без ML и просто хранить словарь <code>rune → spell</code>?</p>
+                    <p><strong>Да, можно — но только если</strong> в твоих данных уже есть все нужные строки с правильными ответами. Тогда lookup-таблица будет нормальным решением: увидел <code>FWFEF</code> → нашёл её в словаре → выдал ответ.</p>
+                    <p><strong>Почему всё равно полезно говорить про модель:</strong> в реальных задачах и даже в таких маленьких конкурсах <code>train</code> не обязан покрывать вообще все варианты. Для новой строки lookup скажет «я такого ещё не видел», а модель попытается ответить по похожим примерам. Именно это умение и хочется понять: не просто запомнить увиденное, а построить правило для новых строк.</p>
+                </div>
+                <p><strong>Что даёт число 243 на практике:</strong> мир рун маленький, значит его удобно исследовать, вручную проверять идеи и даже при желании перебрать все комбинации отдельно. Но сам учебный маршрут всё равно полезнее строить через признаки и правило, потому что это переносится и на большие задачи.</p>
+
+                <h3>2. Как не дать дереву просто зазубрить train</h3>
+                <p>Здесь главная мысль простая: модель должна не запомнить ответы из <code>train</code>, а научиться отвечать на новые строки.</p>
+                <div class="warning" role="note" aria-label="Важно"><p class="box-tag">Важно</p>
+                    <p><strong>Практическое правило:</strong> проверяй модель на отдельной части <code>train</code> и для первого запуска не делай дерево слишком глубоким. Удобный старт — <code>max_depth=4</code>.</p>
+                </div>
+                <figure class="tree-demo">
+                    <figcaption><strong>Схема дерева решений:</strong> от одного вопроса идут две ветки — «да» и «нет».</figcaption>
+                    <pre class="tree-map" role="img" aria-label="Схема дерева решений: стартовый вопрос pos1 равно ли W. Если да, предсказать spell равно 1. Если нет, задать вопрос pos3 равно ли E. Если да, предсказать spell равно 1. Если нет, предсказать spell равно 0.">Старт: pos1 = W?
+├─ Да  → предсказать spell = 1
+└─ Нет → спросить: pos3 = E?
+   ├─ Да  → предсказать spell = 1
+   └─ Нет → предсказать spell = 0</pre>
+                </figure>
+                <p class="tiny"><strong>Короткий словарь:</strong> <code>one-hot encoding</code> = столбцы <code>0/1</code> вроде «на позиции 1 стоит W?»; <strong>валидация</strong> = маленькая часть <code>train</code> для честной проверки; <code>max_depth</code> = сколько уровней вопросов можно разрешить дереву.</p>
+            </section>
+            <section id="pseudocode">
+            <h2>Схема шагов и необязательный код</h2>
+            <p><strong>Ниже — короткая карта действий.</strong> Если она понятна, этого уже достаточно для первого прохода.</p>
+            <p class="tiny"><strong>Код под спойлером необязателен.</strong> Открывай его только после того, как спокойно понимаешь признаки, validation и шаблон <code>example.csv</code>.</p>
+            <pre>СХЕМА ПОТОКА (не код, не запускается)
+1) Прочитать train_runes.csv и test_runes.csv
+2) Превратить rune из train в признаки X, а spell взять как ответы y
+3) Отделить validation — маленькую подписанную часть train для честной проверки
+4) Обучить пробную модель на учебной части
+5) Сравнить accuracy на train и validation
+6) Если подход устраивает, заново обучить его на всём train
+7) Сделать такие же признаки для test
+8) Сохранить predictions в answers.csv по шаблону example.csv</pre>
+            <p class="tiny"><strong>По-человечески:</strong> читаем таблицы → превращаем руны в признаки → делаем маленький честный экзамен → обучаем дерево → сохраняем ответ по шаблону.</p>
+            <div class="warning" role="note" aria-label="Важно"><p class="box-tag">Важно</p>
+                <p><strong>Для code-части этого уже достаточно:</strong> если схема понятна, дальше можно открывать пример кода только по желанию.</p>
+            </div>
+            <div class="success" role="note" aria-label="Итог"><p class="box-tag">Итог</p>
+                <p><strong>Если код читаешь впервые, держись за карту чтения ниже:</strong> она нужна не для запуска, а чтобы быстро увидеть, какие команды за что отвечают.</p>
+                <ul>
+                    <li><code>pd.read_csv(...)</code> — прочитать таблицу;</li>
+                    <li><code>make_features(...)</code> — превратить <code>rune</code> в признаки;</li>
+                    <li><code>train_test_split(...)</code> — выделить validation из <code>train</code>;</li>
+                    <li><code>DecisionTreeClassifier(...)</code> и <code>fit(...)</code> — обучить дерево на учебной части;</li>
+                    <li><code>to_csv(...)</code> — сохранить финальный <code>answers.csv</code>.</li>
+                </ul>
+                <p class="tiny"><strong>Важно:</strong> это именно карта чтения, а не кусок для copy-paste. Ниже идёт уже настоящий рабочий пример со split и validation.</p>
+            </div>
+            <div class="quick-note">
+                <p><strong>Как смотреть на код без паники:</strong> сначала найди только пять якорей — <code>read_csv</code>, <code>make_features</code>, <code>train_test_split</code>, <code>DecisionTreeClassifier(...)</code> с <code>fit(...)</code> и <code>to_csv</code>. Все остальные служебные строки нужны лишь затем, чтобы пример не ломался на маленьких данных и не терял столбцы.</p>
+            </div>
+            <details class="quiz-answer">
+                <summary>Второй проход: рабочая версия с validation и защитой от мелких сюрпризов</summary>
+                <pre class="code-real"><code><span class="tok-key">import</span> pandas as pd
+<span class="tok-key">from</span> sklearn.model_selection <span class="tok-key">import</span> <span class="tok-fn">train_test_split</span>
+<span class="tok-key">from</span> sklearn.tree <span class="tok-key">import</span> <span class="tok-fn">DecisionTreeClassifier</span>
+
+<span class="tok-key">def</span> make_features(series):
+    frame = pd.<span class="tok-fn">DataFrame</span>({<span class="tok-str">f&quot;pos{i+1}&quot;</span>: series.str[i] <span class="tok-key">for</span> i <span class="tok-key">in</span> <span class="tok-fn">range</span>(<span class="tok-num">5</span>)})
+    <span class="tok-key">for</span> col <span class="tok-key">in</span> frame.columns:
+        frame[col] = pd.<span class="tok-fn">Categorical</span>(frame[col], categories=[<span class="tok-str">&quot;F&quot;</span>, <span class="tok-str">&quot;W&quot;</span>, <span class="tok-str">&quot;E&quot;</span>])
+    <span class="tok-key">return</span> pd.<span class="tok-fn">get_dummies</span>(frame, dtype=<span class="tok-fn">int</span>)
+
+<span class="tok-key">def</span> validate_runes(name, series):
+    cleaned = series.<span class="tok-fn">fillna</span>(<span class="tok-str">&quot;&quot;</span>).<span class="tok-fn">astype</span>(<span class="tok-fn">str</span>)
+    bad_mask = ~cleaned.str.<span class="tok-fn">fullmatch</span>(<span class="tok-str">r&quot;[FWE]{5}&quot;</span>)
+    <span class="tok-key">if</span> bad_mask.<span class="tok-fn">any</span>():
+        bad_examples = cleaned[bad_mask].<span class="tok-fn">head</span>(<span class="tok-num">3</span>).<span class="tok-fn">tolist</span>()
+        <span class="tok-key">raise</span> <span class="tok-fn">ValueError</span>(
+            <span class="tok-str">f&quot;{name}: каждая rune должна состоять ровно из 5 символов F/W/E. Примеры проблемных строк: {bad_examples}&quot;</span>
+        )
+
+train = pd.<span class="tok-fn">read_csv</span>(<span class="tok-str">&quot;train_runes.csv&quot;</span>)
+test = pd.<span class="tok-fn">read_csv</span>(<span class="tok-str">&quot;test_runes.csv&quot;</span>)
+validate_runes(<span class="tok-str">&quot;train&quot;</span>, train[<span class="tok-str">&quot;rune&quot;</span>])
+validate_runes(<span class="tok-str">&quot;test&quot;</span>, test[<span class="tok-str">&quot;rune&quot;</span>])
+
+class_counts = train[<span class="tok-str">&quot;spell&quot;</span>].value_counts()
+<span class="tok-fn">print</span>(<span class="tok-str">&quot;class counts:&quot;</span>)
+<span class="tok-fn">print</span>(class_counts)
+n_classes = train[<span class="tok-str">&quot;spell&quot;</span>].<span class="tok-fn">nunique</span>()
+validation_size = <span class="tok-fn">max</span>(<span class="tok-num">1</span>, <span class="tok-fn">min</span>(len(train) - <span class="tok-num">1</span>, len(train) // <span class="tok-num">5</span>))
+train_size = len(train) - validation_size
+can_stratify = (
+    class_counts.min() &gt;= <span class="tok-num">2</span>
+    <span class="tok-key">and</span> validation_size &gt;= n_classes
+    <span class="tok-key">and</span> train_size &gt;= n_classes
+)
+<span class="tok-com"># train_test_split — это имя функции sklearn; здесь она делит train на учебную часть и validation, а не трогает test_runes.csv</span>
+<span class="tok-com"># random_state=42 = один и тот же случайный выбор при каждом запуске</span>
+split_kwargs = {<span class="tok-str">&quot;train_size&quot;</span>: train_size, <span class="tok-str">&quot;random_state&quot;</span>: <span class="tok-num">42</span>}
+<span class="tok-key">if</span> can_stratify:
+    <span class="tok-com"># stratify = постараться сохранить похожую долю spell=0 и spell=1 в обеих частях</span>
+    split_kwargs[<span class="tok-str">&quot;stratify&quot;</span>] = train[<span class="tok-str">&quot;spell&quot;</span>]
+
+rune_train, rune_valid, y_train, y_valid = <span class="tok-fn">train_test_split</span>(
+    train[<span class="tok-str">&quot;rune&quot;</span>], train[<span class="tok-str">&quot;spell&quot;</span>], **split_kwargs
+)
+X_train = <span class="tok-fn">make_features</span>(rune_train)
+X_valid = <span class="tok-fn">make_features</span>(rune_valid).<span class="tok-fn">reindex</span>(columns=X_train.columns, fill_value=<span class="tok-num">0</span>)
+
+trial_model = <span class="tok-fn">DecisionTreeClassifier</span>(max_depth=<span class="tok-num">4</span>, random_state=<span class="tok-num">42</span>)
+trial_model.<span class="tok-fn">fit</span>(X_train, y_train)
+pred_valid = trial_model.<span class="tok-fn">predict</span>(X_valid)
+<span class="tok-fn">print</span>(<span class="tok-str">&quot;train accuracy:&quot;</span>, trial_model.<span class="tok-fn">score</span>(X_train, y_train))
+<span class="tok-fn">print</span>(<span class="tok-str">&quot;validation accuracy:&quot;</span>, trial_model.<span class="tok-fn">score</span>(X_valid, y_valid))
+
+mistakes = pd.<span class="tok-fn">DataFrame</span>({
+    <span class="tok-str">&quot;rune&quot;</span>: rune_valid.<span class="tok-fn">to_numpy</span>(),
+    <span class="tok-str">&quot;true_spell&quot;</span>: y_valid.<span class="tok-fn">to_numpy</span>(),
+    <span class="tok-str">&quot;pred_spell&quot;</span>: pred_valid
+})
+<span class="tok-fn">print</span>(mistakes[mistakes[<span class="tok-str">&quot;true_spell&quot;</span>] != mistakes[<span class="tok-str">&quot;pred_spell&quot;</span>]].<span class="tok-fn">head</span>(<span class="tok-num">3</span>))
+
+X = <span class="tok-fn">make_features</span>(train[<span class="tok-str">&quot;rune&quot;</span>])
+X_test = <span class="tok-fn">make_features</span>(test[<span class="tok-str">&quot;rune&quot;</span>]).<span class="tok-fn">reindex</span>(columns=X.columns, fill_value=<span class="tok-num">0</span>)
+final_model = <span class="tok-fn">DecisionTreeClassifier</span>(max_depth=<span class="tok-num">4</span>, random_state=<span class="tok-num">42</span>)
+final_model.<span class="tok-fn">fit</span>(X, train[<span class="tok-str">&quot;spell&quot;</span>])
+pred = final_model.<span class="tok-fn">predict</span>(X_test)
+
+answer = pd.<span class="tok-fn">read_csv</span>(<span class="tok-str">&quot;example.csv&quot;</span>)
+<span class="tok-key">if</span> len(answer) != len(test):
+    <span class="tok-key">raise</span> <span class="tok-fn">ValueError</span>(<span class="tok-str">&quot;example.csv должен иметь столько же строк, сколько test_runes.csv&quot;</span>)
+<span class="tok-key">if</span> <span class="tok-str">&quot;spell&quot;</span> <span class="tok-key">not</span> <span class="tok-key">in</span> answer.columns:
+    <span class="tok-key">raise</span> <span class="tok-fn">ValueError</span>(<span class="tok-str">&quot;В example.csv должен быть столбец spell&quot;</span>)
+answer[<span class="tok-str">&quot;spell&quot;</span>] = pred
+answer.<span class="tok-fn">to_csv</span>(<span class="tok-str">&quot;answers.csv&quot;</span>, index=<span class="tok-key">False</span>)</code></pre>
+                <p class="tiny"><strong>Не пытайся понять всё сразу:</strong> для первого чтения найди только пять якорей — <code>read_csv</code>, <code>make_features</code>, <code>train_test_split</code>, <code>DecisionTreeClassifier(...)</code> с <code>fit(...)</code> и <code>to_csv("answers.csv")</code>. Этого уже достаточно.</p>
+                <div class="quick-note">
+                    <p class="tiny"><code>validate_runes(...)</code> — это тот самый sanity-check из workflow: каждая строка должна быть длины <code>5</code> и состоять только из <code>F/W/E</code>. <code>pd.Categorical(..., categories=["F", "W", "E"])</code> помогает не потерять нужные one-hot-столбцы, даже если в маленьком куске данных какая-то буква временно не встретилась. Блок с <code>class_counts</code> показывает соотношение классов, а слово <code>stratify</code> означает простую идею: постараться сохранить примерно ту же долю <code>0</code> и <code>1</code> и в учебной части, и в validation. Связка <code>validation_size</code> + <code>train_size</code> + <code>can_stratify</code> проверяет, безопасно ли так делать. Если нет, пример честно переключается на обычный вариант без <code>stratify</code>. <code>random_state=42</code> нужен для повторяемого запуска, строки с <code>train accuracy</code> и <code>validation accuracy</code> помогают сравнить учебную часть и честную проверку, <code>reindex(..., fill_value=0)</code> выравнивает столбцы, блок с <code>len(answer)</code> напоминает, что <code>example.csv</code> должен быть полным шаблоном на все строки <code>test</code>, а <code>mistakes = ...</code> показывает, как вывести 2–3 ошибки вместо одного числа accuracy.</p>
+                </div>
+            </details>
+
+            <div class="mist" role="note" aria-label="Проверка"><p class="box-tag">Проверка</p>
+                <p><strong>Хорошая привычка:</strong> сначала добиться понятного базового решения, а потом уже улучшать. Не надо сразу строить слишком сложную систему.</p>
+            </div>
+            </section>
+
+            <section id="validation">
+            <h2>Как мыслить про валидацию и ошибки</h2>
+            <p>Если модель отлично работает на train, это ещё не значит, что она правда поняла закономерность. Возможно, она просто запомнила примеры.</p>
+            <div class="callout" role="note" aria-label="Идея"><p class="box-tag">Идея</p>
+                <p><strong>Валидация</strong> — это маленький честный экзамен: часть обучающих данных временно прячем, а потом проверяем, насколько хорошо модель угадывает их без подсказки.</p>
+            </div>
+            <div class="warning" role="note" aria-label="Важно"><p class="box-tag">Важно</p>
+                <p><strong>Два разных сбоя:</strong> <strong>недообучение (<code>underfitting</code>)</strong> — модель слишком слабая и плохо справляется даже с <code>train</code>; <strong>переобучение (<code>overfitting</code>)</strong> — модель почти выучила <code>train</code> наизусть, но проседает на новых данных.</p>
+            </div>
+            <div class="quick-note">
+                <p><strong>Запомнить на простом образе:</strong> если модель как ученик, который даже на тренировочных карточках отвечает плохо, это похоже на <strong>недообучение</strong>. А если он выучил карточки наизусть, но путается на новых — это уже <strong>переобучение</strong>.</p>
+            </div>
+            <div class="quick-note">
+                <p><strong>Как смотреть ошибки по-простому:</strong> выпиши маленькую таблицу вида <code>руна | правильный spell | ответ модели</code> и посмотри хотя бы на 2–3 несовпадения. Именно такие строки лучше всего подсказывают, чего модели не хватает.</p>
+            </div>
+            <ul>
+                <li>Если плохо и на <code>train</code>, и на валидации — это похоже на недообучение: модель или признаки пока слишком слабые.</li>
+                <li>Если на <code>train</code> почти идеально, а на валидации заметно хуже — это уже похоже на переобучение, то есть на запоминание вместо понимания.</li>
+                <li>Если модель часто путает похожие строки — надо лучше описать сходство или добавить полезные признаки.</li>
+                <li>Если непонятно, где ошибка, полезно смотреть конкретные примеры, а не только итоговый процент.</li>
+            </ul>
+            <div class="success" role="note" aria-label="Итог"><p class="box-tag">Итог</p>
+                <p><strong>Обычный финальный шаг:</strong> валидация нужна не для того, чтобы навсегда оставить модель на кусочке данных, а чтобы выбрать хороший подход. После этого тот же выбранный способ обычно заново обучают на всём <code>train</code>, и только потом делают предсказания для <code>test</code>.</p>
+            </div>
+            <div class="back-links">
+                <a href="#contents">↩ К оглавлению</a>
+                <a href="#workflow">↑ К workflow</a>
+            </div>
+            </section>
+
+            <section id="checklist">
+            <h2>Чеклист второго прохода: перед отправкой</h2>
+            <p class="tiny"><strong>Это не обязательная часть первого чтения.</strong> Возвращайся сюда, когда уже запускал код, посмотрел на validation и готовишь финальный <code>answers.csv</code>.</p>
+            <div class="checklist" data-storage-key="eldoria-checklist-state">
+                <p class="tiny" id="checklist-status" role="status" aria-live="polite" aria-atomic="true">Если в браузере доступен JavaScript и localStorage, отметки для этого урока будут сохраняться автоматически.</p>
+                <ul>
+                    <li><div class="checklist-item"><input type="checkbox" id="check-target"><label for="check-target">Я понял, что предсказываю столбец <code>spell</code>.</label></div></li>
+                    <li><div class="checklist-item"><input type="checkbox" id="check-read"><label for="check-read">Я прочитал и train, и test.</label></div></li>
+                    <li><div class="checklist-item"><input type="checkbox" id="check-features"><label for="check-features">Я закодировал символы <code>F/W/E</code> в признаки.</label></div></li>
+                    <li><div class="checklist-item"><input type="checkbox" id="check-valid"><label for="check-valid">Я проверил accuracy хотя бы на валидации.</label></div></li>
+                    <li><div class="checklist-item"><input type="checkbox" id="check-errors"><label for="check-errors">Я посмотрел хотя бы на 2–3 ошибки в табличке <code>руна | правильный ответ | ответ модели</code>, а не только на одно число.</label></div></li>
+                    <li><div class="checklist-item"><input type="checkbox" id="check-retrain"><label for="check-retrain">После проверки на валидации я заново обучил выбранную модель на всём <code>train</code>.</label></div></li>
+                    <li><div class="checklist-item"><input type="checkbox" id="check-save"><label for="check-save">Я сохранил предсказания в <code>answers.csv</code> точно по шаблону <code>example.csv</code>.</label></div></li>
+                </ul>
+            </div>
+            </section>
+
+            <section id="next">
+            <h2>Куда копать дальше</h2>
+            <div class="callout" role="note" aria-label="Идея"><p class="box-tag">Идея</p>
+                <p><strong>Выбирай только один следующий шаг за раз.</strong> Самый полезный режим для новичка: 15–20 минут на маленькую задачу, потом короткая пауза и только после этого новый шаг.</p>
+            </div>
+            <div class="table-scroll">
+                <table>
+                    <caption>Короткая карта следующих шагов после первого рабочего решения: с мини-задачами и фразами для поиска.</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Шаг</th>
+                            <th scope="col">Что делать дальше</th>
+                            <th scope="col">Чем помочь себе</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row"><strong>1</strong></th>
+                            <td>Научиться уверенно читать таблицы и смотреть примеры строк.</td>
+                            <td><strong>Мини-задача:</strong> открой любой маленький CSV, выполни <code>head()</code>, <code>shape</code> и <code>value_counts()</code> для одного столбца. <strong>Ищи:</strong> <code>pandas read_csv head shape tutorial</code>.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><strong>2</strong></th>
+                            <td>Потренироваться превращать категории в признаки без ошибок.</td>
+                            <td><strong>Мини-задача:</strong> возьми 3–5 рун и вручную распиши их в <code>pos1...pos5</code>, затем попробуй сделать one-hot-столбцы на бумаге или в таблице. <strong>Ищи:</strong> <code>one hot encoding categories simple example</code>.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><strong>3</strong></th>
+                            <td>Освоить честную проверку: отделять кусочек train для валидации.</td>
+                            <td><strong>Мини-задача:</strong> объясни вслух разницу между <code>train</code>, <code>validation</code> и <code>test</code>, а потом повтори это на маленьком примере из 10 строк. <strong>Ищи:</strong> <code>train validation test split explained for beginners</code>.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><strong>4</strong></th>
+                            <td>Научиться обучать и читать простую модель.</td>
+                            <td><strong>Мини-задача:</strong> нарисуй от руки дерево из 2–3 вопросов и проверь, куда попадут две разные руны. <strong>Ищи:</strong> <code>decision tree classifier visual explanation beginner</code>.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><strong>5</strong></th>
+                            <td>Разбирать ошибки и улучшать признаки, а не просто гоняться за одним числом.</td>
+                            <td><strong>Мини-задача:</strong> выпиши 3 неверных примера в табличку «руна → правильный ответ → ответ модели → что могло запутать». <strong>Ищи:</strong> <code>classification error analysis beginner</code>.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            </section>
+
+            <section id="quiz">
+            <h2>Быстрая самопроверка</h2>
+            <div class="quiz">
+                <div class="quiz-card">
+                    <h3>Вопрос 1</h3>
+                    <p><strong>Что здесь является столбцом с ответом?</strong></p>
+                    <details class="quiz-answer">
+                        <summary>Показать ответ</summary>
+                        <p class="tiny">Столбец <code>spell</code>, то есть 0 или 1.</p>
+                    </details>
+                </div>
+                <div class="quiz-card">
+                    <h3>Вопрос 2</h3>
+                    <p><strong>Почему 243 варианта полезны, но не заменяют модель?</strong></p>
+                    <details class="quiz-answer">
+                        <summary>Показать ответ</summary>
+                        <p class="tiny">Потому что маленькое пространство удобно исследовать, но в <code>train</code> может не хватить каких-то строк. Как только встретилась новая руна, простой список увиденного больше не помогает — нужен понятный способ получить ответ и для неё тоже.</p>
+                    </details>
+                </div>
+                <div class="quiz-card">
+                    <h3>Вопрос 3</h3>
+                    <p><strong>Почему одной accuracy иногда мало?</strong></p>
+                    <details class="quiz-answer">
+                        <summary>Показать ответ</summary>
+                        <p class="tiny">Если один класс сильно преобладает, модель может часто угадывать его и показывать красивый процент, почти ничего не поняв про задачу.</p>
+                    </details>
+                </div>
+                <div class="quiz-card">
+                    <h3>Вопрос 4</h3>
+                    <p><strong>Что делать после обучения модели?</strong></p>
+                    <details class="quiz-answer">
+                        <summary>Показать ответ</summary>
+                        <p class="tiny">Проверить accuracy на валидации, выбрать удачный подход, заново обучить его на всём <code>train</code> и только потом предсказывать <code>test</code>.</p>
+                    </details>
+                </div>
+                <div class="quiz-card">
+                    <h3>Вопрос 5</h3>
+                    <p><strong>Чем validation отличается от test?</strong></p>
+                    <details class="quiz-answer">
+                        <summary>Показать ответ</summary>
+                        <p class="tiny">Validation — это отложенная подписанная часть <code>train</code> для выбора подхода, а <code>test</code> — финальный набор без ответов, который не трогаем до конца.</p>
+                    </details>
+                </div>
+                <div class="quiz-card">
+                    <h3>Вопрос 6</h3>
+                    <p><strong>Что по-простому делает <code>max_depth</code>?</strong></p>
+                    <details class="quiz-answer">
+                        <summary>Показать ответ</summary>
+                        <p class="tiny"><code>max_depth</code> ограничивает, сколько уровней вопросов может задать дерево, и тем самым помогает не зазубрить <code>train</code>.</p>
+                    </details>
+                </div>
+                <div class="quiz-card">
+                    <h3>Вопрос 7</h3>
+                    <p><strong>Что означает <code>0</code> или <code>1</code> в столбце вроде <code>pos1_W</code>?</strong></p>
+                    <details class="quiz-answer">
+                        <summary>Показать ответ</summary>
+                        <p class="tiny"><code>1</code> значит «на первой позиции действительно W», а <code>0</code> значит «нет, там другой символ».</p>
+                    </details>
+                </div>
+                <div class="quiz-card">
+                    <h3>Вопрос 8</h3>
+                    <p><strong>Зачем выравнивать столбцы validation и test по тем же признакам, что и train?</strong></p>
+                    <details class="quiz-answer">
+                        <summary>Показать ответ</summary>
+                        <p class="tiny">Чтобы модель везде видела одну и ту же структуру признаков; если какого-то столбца нет, его просто заполняют нулём.</p>
+                    </details>
+                </div>
+            </div>
+
+            <div class="success" role="note" aria-label="Итог" style="margin-top: 22px;"><p class="box-tag">Итог</p>
+                <p><strong>Финальная мысль:</strong> эта задача хороша тем, что она учит не просто нажимать кнопку "обучить модель", а думать. Мир рун маленький — всего 243 случая, — поэтому его удобно исследовать. Но настоящая сила появляется тогда, когда ты умеешь по признакам и проверке на валидации делать вывод даже для новой руны.</p>
+                <div class="back-links">
+                    <a href="#contents">↩ К оглавлению</a>
+                    <a href="#top">↑ Наверх</a>
+                </div>
+            </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Урок-подготовка к задаче Eldoria: классификация рунных последовательностей, базовые идеи ML и практический план действий.</p>
+            <div class="back-links" style="justify-content:center; margin-top: 14px;">
+                <a href="#contents">К оглавлению</a>
+                <a href="#top">Наверх</a>
+            </div>
+        </footer>
+    </div>
+    <script>
+        (() => {
+            const checklist = document.querySelector(".checklist[data-storage-key]");
+            if (!checklist) return;
+
+            const storageKey = checklist.dataset.storageKey;
+            const status = document.getElementById("checklist-status");
+            const checkboxes = Array.from(checklist.querySelectorAll('input[type="checkbox"][id]'));
+            if (!checkboxes.length) return;
+
+            let storage = null;
+            try {
+                const probeKey = `${storageKey}:probe`;
+                localStorage.setItem(probeKey, "1");
+                localStorage.removeItem(probeKey);
+                storage = localStorage;
+            } catch (error) {
+                storage = null;
+            }
+
+            let saved = {};
+            if (storage) {
+                try {
+                    saved = JSON.parse(storage.getItem(storageKey) || "{}");
+                } catch (error) {
+                    saved = {};
+                }
+            }
+
+            checkboxes.forEach((checkbox) => {
+                checkbox.checked = saved[checkbox.id] === true;
+                checkbox.addEventListener("change", () => {
+                    saved[checkbox.id] = checkbox.checked;
+                    if (!storage) return;
+                    try {
+                        storage.setItem(storageKey, JSON.stringify(saved));
+                    } catch (error) {
+                        if (status) status.textContent = "Не удалось сохранить отметки в этом браузере.";
+                    }
+                });
+            });
+
+            if (status && !storage) {
+                status.textContent = "Отметки работают, но в этом браузере они не сохраняются после перезагрузки.";
+            }
+        })();
+    </script>
+</body>
+</html>
