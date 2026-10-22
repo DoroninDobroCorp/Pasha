@@ -18,3 +18,7 @@ out/
 *.pem
 .vercel
 *.tsbuildinfo
+
+# Python
+__pycache__/
+*.pyc
